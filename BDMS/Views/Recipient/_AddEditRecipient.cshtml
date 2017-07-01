@@ -1,0 +1,67 @@
+﻿@model BDMS.Models.RecipientModel
+
+<div>
+
+    <form id="myRecipientsForm">
+
+        @Html.HiddenFor(m => m.RecipientID)
+        <p>@Html.DropDownListFor(model => model.DonorID, ViewBag.DonorList as SelectList, "--Select donor--", new { @class = "form-control" }) </p>
+        @Html.ValidationMessageFor(model => model.DonorID, "", new { @class = "text-danger" })
+
+        <p>@Html.DropDownListFor(model => model.DonationID, ViewBag.DonationList as SelectList, "--Select donation type--", new { @class = "form-control" }) </p>
+        @Html.ValidationMessageFor(model => model.DonationID, "", new { @class = "text-danger" })
+
+        <p>@Html.TextBoxFor(model => model.DateOfUse, new { @class = "form-control", @placeholder = "Date of Use", @type = "date" }) </p>
+        @Html.ValidationMessageFor(model => model.DateOfUse, "", new { @class = "text-danger" })
+
+        <p>@Html.TextBoxFor(model => model.RelatedCondition, new { @class = "form-control", @placeholder = "Related condition" }) </p>
+        @Html.ValidationMessageFor(model => model.RelatedCondition, "", new { @class = "text-danger" })
+
+        <p>@Html.TextBoxFor(model => model.RecipientCodedName, new { @class = "form-control", @placeholder = "Recipient coded name" }) </p>
+        @Html.ValidationMessageFor(model => model.RecipientCodedName, "", new { @class = "text-danger" })
+
+        <a href="#" id="btnSubmit" class="btn btn-success btn-block">
+            @if (Model.RecipientID > 0)
+            { <span>Update</span>}
+            else
+            { <span>Save</span>}
+        </a>
+
+
+    </form>
+
+    <div style="text-align:center; display:none" id="loader">
+        <img src="~/Content/giphy-downsized.gif" width="150" />
+    </div>
+
+</div>
+
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script>
+
+        $(document).ready(function () {
+
+            $("#btnSubmit").click(function () {
+
+                $("#loader").show();
+
+                var data = $("#myRecipientsForm").serialize();
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "/Recipient/Recipients",
+                    data: data,
+                    success: function (response) {
+                        $("#loader").hide();
+                        $("#myAddEditModal").modal("hide");
+                        window.location.href = "/Recipient/Recipients";
+                    }
+
+                });
+            });
+        });
+
+</script>

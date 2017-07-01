@@ -1,0 +1,45 @@
+﻿@model List<BDMS.Models.Recipient>
+
+@{
+    ViewBag.Title = "RecipientsArchive";
+    var grid = new WebGrid(source: Model, canPage: false);
+}
+
+<link href="~/Content/archives.css" rel="stylesheet" />
+<link href="~/Content/add user.css" rel="stylesheet" />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form_main">
+                    <h4 class="heading"><strong>Recipient </strong> Archives <span></span></h4>
+                    <div class="form">
+                        <form action="contact_send_mail.php" method="post" id="contactFrm" name="contactFrm">
+                            <div class="col-md-12">
+                                @grid.GetHtml(
+                tableStyle: "gridtable",
+                columns: grid.Columns(
+                        grid.Column("RecipientID", "ID"),
+                        grid.Column("DateOfUse", "Date of use"),
+                        grid.Column("RelatedCondition", "Condition"),
+                        grid.Column("RecipientCodedName", "Coded name"),
+                        grid.Column("DonationID", "Donation"),
+                        grid.Column("RecipientIsDeleted", "Archived"),
+                        grid.Column("DonorID", "Donor")
+                    )
+                )
+                            </div>
+                            <div class="col-md-12" style="padding-top:40px;">
+                                <p style="font-size:18px;"> <i class="glyphicon glyphicon-download-alt"></i> Export Data : @Html.ActionLink("Export to PDF", "GETPdfRecipients", "Archives") </p>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

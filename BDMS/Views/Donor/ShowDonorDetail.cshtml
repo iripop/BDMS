@@ -1,0 +1,44 @@
+﻿<table class="table table-bordered">
+    @if (ViewBag.DonorsList != null)
+    {
+        foreach (var item in ViewBag.DonorsList)
+        {
+            <tr>
+                <td><b>Active Donor</b></td>
+                <td>@item.ActiveDonor</td>
+            </tr>
+            <tr>
+                <td><b>First name</b></td>
+                <td>@item.DonorFullName</td>
+            </tr>
+            <tr>
+                <td><b>Blood type</b></td>
+                <td>@item.BloodType</td>
+            </tr>
+            <tr>
+                <td><b>Rh factor</b></td>
+                <td>@item.RhFactor</td>
+            </tr>
+            <tr>
+                <td><b>Date of birth</b></td>
+                <td>@item.DateOfBirth</td>
+            </tr>
+            <tr>
+                <td><b>Weight</b></td>
+                <td>@item.Weight</td>
+            </tr>
+            <tr>
+                <td><b>Email</b></td>
+                <td>@item.DonorEmail</td>
+            </tr>
+            <tr>
+                <td><b>Phone number</b></td>
+                <td>@item.DonorPhoneNumber</td>
+            </tr>
+            <tr>
+                <td><b>Last screening date</b></td>
+                <td>@item.LastScreeningDate</td>
+            </tr>
+        }
+    }
+</table>

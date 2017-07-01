@@ -1,0 +1,107 @@
+﻿body {
+    background: #f4f4f4;
+}
+
+/* Custom */
+.main-color-bg {
+    background-color: #C01D01 !important;
+    border-color: #5a211c !important;
+    border-radius: 0;
+    box-shadow: none;
+    color: #ffffff !important;
+}
+
+.col-md-12 {
+    width: 100%;
+}
+/* Breadcrumb */
+.breadcrumb {
+    background: #f4f4f4;
+    color: #111111;
+}
+
+    .breadcrumb a {
+        color: #111111;
+    }
+
+/* Progress Bars */
+.progress-bar {
+    background: #333333;
+    color: #ffffff;
+}
+
+.dash-box {
+    text-align: center;
+}
+
+#login {
+    margin-top: 30px;
+}
+
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+        color: #ecf0f1;
+    }
+
+        .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+        .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+            color: #f29b9c;
+        }
+
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+        color: #f29b9c;
+        background-color: #d62102;
+    }
+}
+
+.modal-dialog {
+    width: 1200px;
+    height: 1500px;
+}
+
+.modal-header {
+    background-color: #C01D01 !important;
+    border-color: #5a211c !important;
+    border-radius: 0;
+    box-shadow: none;
+    color: #ffffff !important;
+}
+
+.modal-body {
+    background-color: #ffffff !important;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.modal-footer {
+    background-color: #ffffff !important;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.pagination > li > a {
+    color: #000000;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.pagination > li.active > a {
+    background: #D2604D;
+    border: #D2604D;
+    color: #000000;
+}
+
+    .pagination > li.active > a:hover {
+        background: #C01D01;
+        border: #C01D01;
+        color: #000000;
+    }
+
+.txt {
+    border: 1px solid #ccc;
+    margin: 5px 0;
+    padding: 10px 0 10px 5px;
+    width: 100%;
+}

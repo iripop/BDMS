@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Column";
+}
+
+<h2>Column</h2>
+<br />
+<div id="visualization" style="width:600px; height:300px">
+
+</div>
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+@section Scripts{
+    <script>
+        var chartData; // globar variable for hold chart data
+        google.load("visualization", "1", { packages: ["corechart"] });
+
+         $(document).ready(function () {
+            //Load Data Here
+            $.ajax({
+                url: '/GoogleChart/GetSalesData',
+                data: "",
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; chartset=utf-8",
+                success: function (data) {
+                    chartData = data.d;
+                },
+                error: function () {
+                    alert("Error loading data! Please try again.");
+                }
+            }).done(function () {
+                // after complete loading data
+                google.setOnLoadCallback(drawChart);
+                drawChart();
+            });
+        });
+
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable(chartData);
+
+            var options = {
+                title: "Company Revenue",
+                pointSize: 5
+            };
+
+            var columnChart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+            columnChart.draw(data, options);
+
+        }
+
+    </script>
+}
+
+
+
+

@@ -1,0 +1,220 @@
+﻿@model BDMS.Models.DonorModel
+
+@{
+    ViewBag.Title = "Donor";
+}
+
+<link href="~/Content/pageContent.css" rel="stylesheet" />
+<script src="http://cdn.ckeditor.com/4.6.1/standard/ckeditor.js"></script>
+
+<section id="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="#" onclick="AddEditDonor(0)"><i class="glyphicon glyphicon-plus" style="color:#C01D01;"></i> Add new donor</a></li>
+        </ol>
+    </div>
+</section>
+
+<section id="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Website Overview -->
+                <div class="panel panel-default">
+                    <div class="panel-heading main-color-bg">
+                        <h3 class="panel-title">Donors</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @*  @Html.TextBoxFor(m => m.DonorFullName, new { @class = "txt", @placeholder = "Search here" }) *@
+                                <img src="~/Content/giphy-downsized.gif" id="loaderDiv" height="20" width="20" style="display:none" />
+                            </div>
+                        </div>
+                        <br>
+                        <table class="table table-hover">
+                            <tr>
+                                <th class="danger">Active donor</th>
+                                <th>Blood type</th>
+                                <th>Rh factor</th>
+                                <th>Donor Name</th>
+                                <th>Phone number</th>
+                                <th>Email</th>
+                                <th>Last screening date</th>
+                                <th></th>
+                            </tr>
+
+                            <tbody id="donorRow">
+
+                                @if (ViewBag.DonorsList != null)
+            {
+                foreach (var item in ViewBag.DonorsList)
+                {
+                                        <tr id="row_@item.DonorID">
+                                            <td class="danger">@item.ActiveDonor</td>
+                                            <td>@item.BloodType</td>
+                                            <td>@item.RhFactor</td>
+                                            <td>@item.DonorFullName</td>
+                                            <td>@item.DonorPhoneNumber</td>
+                                            <td>@item.DonorEmail</td>
+                                            <td>@item.LastScreeningDate</td>
+                                            <td><a href="#" onclick="ConfirmDelete(@item.DonorID)"><i class="glyphicon glyphicon-trash" style="color:#C01D01;"></i> </a></td>
+                                            <td><a href="#" onclick="ShowDonor(@item.DonorID)"><i class="glyphicon glyphicon-eye-open" style="color:#FFA500;"></i> </a></td>
+                                            <td><a href="#" onclick="AddEditDonor(@item.DonorID)"><i class="glyphicon glyphicon-edit" aria-hidden="true" style="color:#6799CC;"></i> </a></td>
+                                        </tr>
+                                    }
+                                }
+                                <tr></tr>
+                            </tbody>
+                        </table>
+                        <br />
+                 @*       @Html.PagedListPager(Model, page => Url.Action("Donor", new { page, pageSize = Model.PageSize }))
+    Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount Donors  *@
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="myDeleteModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h3 class="modal-title">Archive Donor</h3>
+            </div>
+
+            <div class="modal-body">
+                <h4>Are you sure you want to archive this donor?</h4>
+                <div style="text-align:center; display:none" id="loader">
+                    <img src="~/Content/giphy-downsized.gif" width="150" /> @*This is a page is loading gif*@
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+                <a href="#" class="btn btn-success" onclick="DeleteDonor()">Confirm</a> @*When clicking on the btn, The function DeleteDonation is called, and record is deleted from database*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myShowModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h3 class="modal-title">Donor details</h3>
+            </div>
+
+            <div class="modal-body" id="showModalBody">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myAddEditModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h3 class="modal-title">Add or Edit Donor</h3>
+            </div>
+
+            <div class="modal-body" id="myAddEditModalBody">
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<input class="hidden" id="hiddenDonor" />
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        var ConfirmDelete = function (donorID) {
+
+            $("#hiddenDonor").val(donorID);
+            $("#myDeleteModal").modal("show");
+        }
+
+        var DeleteDonor = function () {
+
+            $("#loader").show();
+
+            var donorID = $("#hiddenDonor").val();
+            @*--Ajax call to delete the record-- *@
+            $.ajax({
+
+                type: "POST",
+                url: "/Donor/DeleteDonor",
+                data: { donorID: donorID },
+                success: function (result) {
+                    $("#loader").hide();
+                    $("#myDeleteModal").modal("hide");
+
+                    @*--Remove the deleted row-- *@
+                    $("#row_" + donorID).remove();
+                }
+            });
+
+        }
+
+        var ShowDonor = function (donorID) {
+
+            var url = "/Donor/ShowDonorDetail?DonorID=" + donorID;
+                $("#showModalBody").load(url, function () {
+                    $("#myShowModal").modal("show");
+                })
+
+        }
+
+        var AddEditDonor = function (donorID) {
+
+            var url = "/Donor/AddEditDonor?DonorID=" + donorID;
+            $("#myAddEditModalBody").load(url, function () {
+                $("#myAddEditModal").modal("show");
+            })
+        }
+
+    </script>
+
+    <script>
+                $(document).ready(function () {
+
+                    $("#DonorFirstName").keydown(function () {
+
+                        $("#loaderDiv").show();
+
+                        var searchtext = $(this).val();
+
+                        $.ajax({
+
+                            type: "POST",
+                            url: "/Donor/GetSearchDonor?SearchText=" + searchtext,
+                            contentType: "html",
+                            success: function (response) {
+
+                                $("#loaderDiv").hide();
+                                $("#donorRow").html(response);
+                            }
+                        })
+                    })
+                })
+    </script>
+
+}
+

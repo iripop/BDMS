@@ -1,0 +1,51 @@
+﻿@model List<BDMS.Models.DonationSite>
+
+@{
+    ViewBag.Title = "DonationSitesArchive";
+    var grid = new WebGrid(source: Model, canPage: false);
+}
+
+<link href="~/Content/archives.css" rel="stylesheet" />
+<link href="~/Content/add user.css" rel="stylesheet" />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form_main">
+                    <h4 class="heading"><strong>Donation site </strong> Archives <span></span></h4>
+                    <div class="form">
+                        <form action="contact_send_mail.php" method="post" id="contactFrm" name="contactFrm">
+                            <div class="col-md-12">
+                                @grid.GetHtml(
+                tableStyle: "gridtable",
+                columns: grid.Columns(
+                        grid.Column("DonationSiteID", "ID"),
+                        grid.Column("SiteName", "Name"),
+                        grid.Column("EventStartDate", "Start date"),
+                        grid.Column("EventEndDate", "End date"),
+                        grid.Column("RegistrationEmail", "Email"),
+                        grid.Column("RegistrationPhone", "Phone"),
+                        grid.Column("Address", "Address"),
+                        grid.Column("City", "City"),
+                        grid.Column("Zip", "Zip"),
+                        grid.Column("StaffingRequired", "Staff"),
+                        grid.Column("MobileSite", "Drive"),
+                        grid.Column("IsArchived", "Archived")
+                    )
+                )
+                            </div>
+                            <div class="col-md-12" style="padding-top:40px;">
+                                <p style="font-size:18px;"> <i class="glyphicon glyphicon-download-alt"></i> Export Data : @Html.ActionLink("Export to PDF", "GETPdf", "Archives") </p>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

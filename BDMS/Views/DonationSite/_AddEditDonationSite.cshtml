@@ -1,0 +1,78 @@
+﻿@model BDMS.Models.DonationSiteModel
+
+<div>
+
+    <form id="myDonationSiteForm">
+
+        @Html.HiddenFor(m => m.DonationSiteID)
+
+        <p>@Html.TextBoxFor(model => model.SiteName, new { @class = "form-control", @placeholder = "Site name" }) </p>
+        @Html.ValidationMessageFor(model => model.SiteName, "", new { @class = "text-danger" })
+
+        <p>@Html.TextBoxFor(model => model.EventStartDate, new { @class = "form-control", @placeholder = "Start date", @type = "date" }) </p>
+
+        <p>@Html.TextBoxFor(model => model.EventEndDate, new { @class = "form-control", @placeholder = "End date", @type = "date" }) </p>
+
+        <p>@Html.TextBoxFor(model => model.RegistrationEmail, new { @class = "form-control", @placeholder = "Email" }) </p>
+        @Html.ValidationMessageFor(model => model.RegistrationEmail, "", new { @class = "text-danger" })
+
+        <p>@Html.TextBoxFor(model => model.RegistrationPhone, new { @class = "form-control", @placeholder = "Phone" }) </p>
+        @Html.ValidationMessageFor(model => model.RegistrationPhone, "", new { @class = "text-danger" })
+
+        <p>@Html.TextBoxFor(model => model.Address, new { @class = "form-control", @placeholder = "Address" }) </p>
+        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+
+        <p>@Html.TextBoxFor(model => model.City, new { @class = "form-control", @placeholder = "City" }) </p>
+        @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+
+        <p>@Html.TextBoxFor(model => model.Zip, new { @class = "form-control", @placeholder = "Zip code" }) </p>
+        @Html.ValidationMessageFor(model => model.Zip, "", new { @class = "text-danger" })
+
+        <p>@Html.TextBoxFor(model => model.StaffingRequired, new { @class = "form-control", @placeholder = "Number of staff required" }) </p>
+
+        <p>@Html.DropDownListFor(model => model.MobileSite, ViewBag.MobileSiteList as SelectList, "--Is mobile site--", new { @class = "form-control" }) </p>
+        @Html.ValidationMessageFor(model => model.MobileSite, "", new { @class = "text-danger" })
+
+        <a href="#" id="btnSubmit" class="btn btn-success btn-block">
+            @if (Model.DonationSiteID > 0)
+            { <span>Update</span>}
+            else
+            { <span>Save</span>}
+        </a>
+
+    </form>
+
+    <div style="text-align:center; display:none" id="loader">
+        <img src="~/Content/giphy-downsized.gif" width="150" />
+    </div>
+
+</div>
+
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+
+        $("#btnSubmit").click(function () {
+
+            $("#loader").show();
+
+            var data = $("#myDonationSiteForm").serialize();
+
+            $.ajax({
+
+                type: "POST",
+                url: "/DonationSite/DonationSite",
+                data: data,
+                success: function (response) {
+                    $("#loader").hide();
+                    $("#myAddEditModal").modal("hide");
+                    window.location.href = "/DonationSite/DonationSite";
+                }
+
+            });
+        });
+    });
+
+</script>

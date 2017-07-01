@@ -1,0 +1,53 @@
+﻿
+<table class="table table-bordered">
+    @if (ViewBag.DonationSitesList != null)
+    {
+        foreach (var item in ViewBag.DonationSitesList)
+        {
+            <tr>
+                <td><b>ID</b></td>
+                <td>@item.DonationSiteID</td>
+            </tr>
+            <tr>
+                <td><b>Site name</b></td>
+                <td>@item.SiteName</td>
+            </tr>
+            <tr>
+                <td><b>Event start date</b></td>
+                <td>@item.EventStartDate</td>
+            </tr>
+            <tr>
+                <td><b>Event end date</b></td>
+                <td>@item.EventEndDate</td>
+            </tr>
+            <tr>
+                <td><b>Registration email</b></td>
+                <td>@item.RegistrationEmail</td>
+            </tr>
+            <tr>
+                <td><b>Phone number</b></td>
+                <td>@item.RegistrationPhone</td>
+            </tr>
+            <tr>
+                <td><b>Address</b></td>
+                <td>@item.Address</td>
+            </tr>
+            <tr>
+                <td><b>City</b></td>
+                <td>@item.City</td>
+            </tr>
+            <tr>
+                <td><b>Zip</b></td>
+                <td>@item.Zip</td>
+            </tr>
+            <tr>
+                <td><b>Staff required</b></td>
+                <td>@item.StaffingRequired</td>
+            </tr>
+            <tr>
+                <td><b>Mobile site</b></td>
+                <td>@item.MobileSite</td>
+            </tr>
+        }
+    }
+</table>

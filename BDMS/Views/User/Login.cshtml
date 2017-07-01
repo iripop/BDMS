@@ -1,0 +1,73 @@
+﻿@model BDMS.Models.Login
+
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link href="~/Content/login.css" rel="stylesheet" />
+
+<div class="main">
+    <div class="container">
+        <center>
+            <div class="middle">
+                <div id="login">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <form action="javascript:void(0);" method="get" id="togglingForm">
+                            @if (ViewBag.Message != null)
+                            {
+                                <div class="alert alert-success">
+                                    @Html.ViewBag.Message
+                                </div>
+                            }
+
+                            <fieldset class="clearfix">
+                                <p>
+                                    <div class="form-group">
+                                        <span class="fa fa-envelope"></span>
+                                        @Html.TextBoxFor(model => model.EmailAddress, new { @class = "form-control", placeholder = "Email address", @name = "emailAddress" })
+                                        @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger", @style = "color:yellow;" })
+                                    </div>
+                                </p> <!-- JS because of IE support; better: placeholder="Username" -->
+
+                                <p>
+                                    <div class="form-group">
+                                        <span class="fa fa-lock"></span>
+                                        @Html.TextBoxFor(model => model.Password, new { @class = "form-control", placeholder = "Password", @type = "Password", @name = "pass" })
+                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger", @style = "color:yellow;" })
+                                    </div>
+                                </p>
+
+
+                                <div>
+                                    <span style="width:48%; text-align:left;  display: inline-block;">
+                                        <a class="small-text" href="#">
+                                            @Html.ActionLink("Forgot password?", "ForgotPassword", "User")
+                                        </a>
+                                    </span>
+                                    <span style="width:50%; text-align:right;  display: inline-block;"><input type="submit" value="Sign In"></span>
+                                </div>
+                            </fieldset>
+                            <div class="clearfix"></div>
+                        </form>
+                    }
+
+                    <div class="clearfix"></div>
+                </div> <!-- end login -->
+                <div class="logo">
+                    <img src="~/Content/images/LOGO.png" class="img-responsive" />
+                    <div class="clearfix"></div>
+                </div>
+
+            </div>
+        </center>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

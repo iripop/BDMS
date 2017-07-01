@@ -1,0 +1,24 @@
+﻿table.gridtable {
+    font-family: verdana,arial,sans-serif;
+    font-size: 11px;
+    color: #333333;
+    border-width: 1px;
+    border-color: #D2604D;
+    border-collapse: collapse;
+}
+
+    table.gridtable th {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #D2604D;
+        background-color: #F8E7E4;
+    }
+
+    table.gridtable td {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #D2604D;
+        background-color: #ffffff;
+    }

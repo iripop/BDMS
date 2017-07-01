@@ -1,0 +1,99 @@
+﻿@model BDMS.Models.DonorModel
+
+<div>
+
+    <form id="myDonorsForm">
+
+        @if (Model.DonorID > 0)
+        {
+            @Html.HiddenFor(m => m.DonorID)
+
+            <p>@Html.DropDownListFor(model => model.ActiveDonor, ViewBag.IsDonorActiveList as SelectList, "--Is donor Active--", new { @class = "form-control" }) </p>
+
+            <p>@Html.TextBoxFor(model => model.DonorFullName, new { @class = "form-control", @placeholder = "First name", @readonly = "readonly" }) </p>
+
+            <p>@Html.DropDownListFor(model => model.CrossBloodType, ViewBag.BloodTypeList as SelectList, "--Blood type--", new { @class = "form-control", @readonly = "readonly" }) </p>
+
+            <p>@Html.DropDownListFor(model => model.RhFactor, ViewBag.RhFactorList as SelectList, "--Rh factor--", new { @class = "form-control", @readonly = "readonly" }) </p>
+
+            <p>@Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control", @placeholder = "Date of birth", @readonly = "readonly" }) </p>
+
+            <p>@Html.TextBoxFor(model => model.Weight, new { @class = "form-control", @placeholder = "Weight", @readonly = "readonly" }) </p>
+
+            <p>@Html.TextBoxFor(model => model.DonorEmail, new { @class = "form-control", @placeholder = "Email", @readonly = "readonly" }) </p>
+
+            <p>@Html.TextBoxFor(model => model.DonorPhoneNumber, new { @class = "form-control", @placeholder = "Phone number", @readonly = "readonly" }) </p>
+
+            <p>@Html.TextBoxFor(model => model.LastScreeningDate, new { @class = "form-control", @placeholder = "Last screening date", @readonly = "readonly" }) </p>
+
+            <a href="#" id="btnSubmit" class="btn btn-success btn-block">
+                @if (Model.DonorID > 0)
+                { <span>Update</span>}
+                else
+                { <span>Save</span>}
+            </a>
+        }
+        else
+        {
+            @Html.HiddenFor(m => m.DonorID)
+
+            <p>@Html.DropDownListFor(model => model.ActiveDonor, ViewBag.IsDonorActiveList as SelectList, "--Is donor Active--", new { @class = "form-control" }) </p>
+
+            <p>@Html.TextBoxFor(model => model.DonorFullName, new { @class = "form-control", @placeholder = "First name" }) </p>
+
+            <p>@Html.DropDownListFor(model => model.DonorBloodType, ViewBag.BloodTypeList as SelectList, "--Blood type--", new { @class = "form-control" }) </p>
+
+            <p>@Html.DropDownListFor(model => model.RhFactor, ViewBag.RhFactorList as SelectList, "--Rh factor--", new { @class = "form-control" }) </p>
+
+            <p>@Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control", @placeholder = "Date of birth", @type = "date" }) </p>
+
+            <p>@Html.TextBoxFor(model => model.Weight, new { @class = "form-control", @placeholder = "Weight" }) </p>
+
+            <p>@Html.TextBoxFor(model => model.DonorEmail, new { @class = "form-control", @placeholder = "Email" }) </p>
+
+            <p>@Html.TextBoxFor(model => model.DonorPhoneNumber, new { @class = "form-control", @placeholder = "Phone number" }) </p>
+
+            <p>@Html.TextBoxFor(model => model.LastScreeningDate, new { @class = "form-control", @placeholder = "Last screening date", @type = "date" }) </p>
+
+            <a href="#" id="btnSubmit" class="btn btn-success btn-block">
+                @if (Model.DonorID > 0)
+                { <span>Update</span>}
+                else
+                { <span>Save</span>}
+            </a>
+        }
+
+    </form>
+
+    <div style="text-align:center; display:none" id="loader">
+        <img src="~/Content/giphy-downsized.gif" width="150" />
+    </div>
+
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#btnSubmit").click(function () {
+
+            $("#loader").show();
+
+            var data = $("#myDonorsForm").serialize();
+
+            $.ajax({
+
+                type: "POST",
+                url: "/Donor/Donor",
+                data: data,
+                success: function (response) {
+                    $("#loader").hide();
+                    $("#myAddEditModal").modal("hide");
+                    window.location.href = "/Donor/Donor";
+                }
+
+            });
+        });
+    });
+
+</script>

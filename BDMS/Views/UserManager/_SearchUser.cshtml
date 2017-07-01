@@ -1,0 +1,18 @@
+﻿@model IEnumerable<BDMS.Models.UserModel>
+
+@if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+        <tr id="row_@item.UserID">
+            <td>@item.UserID</td>
+            <td>@item.FirstName</td>
+            <td>@item.LastName</td>
+            <td>@item.EmailAddress</td>
+            <td>@item.PhoneNumber</td>
+            <td>@item.IsAdmin</td>
+            <td><a href="#" onclick="ConfirmDelete(@item.UserID)"><i class="glyphicon glyphicon-remove" style="color:#C01D01;"></i></a> </td>
+        </tr>
+    }
+}
+

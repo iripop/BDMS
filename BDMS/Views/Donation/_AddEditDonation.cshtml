@@ -1,0 +1,75 @@
+﻿@model BDMS.Models.DonationModel
+
+<div>
+
+    <form id="myDonationForm">
+        @Html.HiddenFor(m => m.DonationID)
+
+        <p>@Html.DropDownListFor(model => model.DonorID, ViewBag.DonorsList as SelectList, "--Select a donor--", new { @class = "txt" }) </p>
+
+        <p>@Html.DropDownListFor(model => model.DonationType, ViewBag.DonationTypeList as SelectList, "--Select a donation type--", new { @class = "txt" }) </p>
+
+        <p>@Html.DropDownListFor(model => model.CrossBloodType, ViewBag.BloodTypeList as SelectList, "--Blood type--", new { @class = "txt" }) </p>
+
+        <p>@Html.DropDownListFor(model => model.CrossRhFactor, ViewBag.RhFactorList as SelectList, "--Rh factor--", new { @class = "txt" }) </p>
+
+        <p>@Html.TextBoxFor(model => model.NumberOfUnits, new { @class = "txt", @placeholder = "Number of Units" }) </p>
+
+        <p>@Html.DropDownListFor(model => model.DonationSiteID, ViewBag.DonationSiteList as SelectList, "--Select donation site--", new { @class = "txt" }) </p>
+
+        <p>@Html.DropDownListFor(model => model.RecipientID, ViewBag.RecipientsList as SelectList, "--Select recipient--", new { @class = "txt" }) </p>
+
+        <p>@Html.DropDownListFor(model => model.AcceptedDonation, ViewBag.IsAcceptedList as SelectList, "--Is donation accepted?--", new { @class = "txt" }) </p>
+
+        @if (Model.AcceptedDonation == false)
+        {
+            <p>@Html.TextBoxFor(model => model.ReasonsForRejection, new { @class = "txt", @placeholder = "Reason for rejection" }) </p>
+        }
+        else
+        {
+            @Html.HiddenFor(m => m.ReasonsForRejection)
+        }
+
+        <a href="#" id="btnSubmit" class="btn btn-success btn-block">
+            @if (Model.DonationID > 0)
+            { <span>Update</span>}
+            else
+            { <span>Save</span>}
+        </a>
+
+
+    </form>
+
+    <div style="text-align:center; display:none" id="loader">
+        <img src="~/Content/giphy-downsized.gif" width="150" />
+    </div>
+
+</div>
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $("#btnSubmit").click(function () {
+
+            $("#loader").show();
+
+            var data = $("#myDonationForm").serialize();
+
+            $.ajax({
+
+                type: "POST",
+                url: "/Donation/Donation",
+                data: data,
+                success: function (response) {
+                    $("#loader").hide();
+                    $("#myAddEditModal").modal("hide");
+                    window.location.href = "/Donation/Donation";
+                }
+
+            });
+        });
+    });
+
+</script>
