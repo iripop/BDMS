@@ -6,7 +6,7 @@
 }
 
 <link href="~/Content/archives.css" rel="stylesheet" />
-<link href="~/Content/add user.css" rel="stylesheet" />
+<link href="~/Content/adduser.css" rel="stylesheet" />
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -25,15 +25,14 @@
                         grid.Column("DonorID", "ID"),
                         grid.Column("ActiveDonor", "Active donor"),
                         grid.Column("DonorFullName", "Name"),
-                        grid.Column("BloodType", "Blood type"),
+                        grid.Column("DonorBloodType", "Blood type"),
                         grid.Column("RhFactor", "Rh"),
                         grid.Column("DateOfBirth", "Date of birth"),
                         grid.Column("Weight", "Weight"),
                         grid.Column("DonorEmail", "Email"),
                         grid.Column("DonorPhoneNumber", "Phone"),
                         grid.Column("LastScreeningDate", "Last screening date"),
-                        grid.Column("DonorIsDeleted", "Archived donor"),
-                        grid.Column("DonationID", "Donation id")
+                        grid.Column("ArchivedDonor", "Archived donor")
                     )
                 )
                             </div>

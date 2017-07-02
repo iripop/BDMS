@@ -76,7 +76,6 @@ namespace BMDS.Controllers
         }
         #endregion
 
-
         #region Forgot password get action
         [HttpGet]
         public ActionResult ForgotPassword()
@@ -87,52 +86,52 @@ namespace BMDS.Controllers
 
         #region Forgot password post action
         [HttpPost]
-        public ActionResult ForgotPassword([Bind(Exclude = "IsEmailVerified, ActivationCode")] User userModel)
+        public ActionResult ForgotPassword([Bind(Exclude = "IsEmailVerified, ActivationCode")] ForgotPasswordModel model)
         {
             bool Status = false;
             string message = "";
-
-            //Model Validation
             if (ModelState.IsValid)
             {
-                #region Check if Email already exists
-                var IsExist = IsEmailExist(userModel.EmailAddress);
-                if (!IsExist)
-                {
-                    ModelState.AddModelError("EmailExist", "Email does not exist");
-                    return View(userModel);
-                }
-                #endregion
-
                 #region Generate activation code
-                userModel.ActivationCode = Guid.NewGuid();
+                model.ActivationCode = Guid.NewGuid();
                 #endregion
 
                 #region Password generate
-                userModel.Password = Membership.GeneratePassword(12, 1);
+                model.Password = Membership.GeneratePassword(12, 1);
                 #endregion
-                userModel.IsEmailVerified = false;
+                model.IsEmailVerified = false;
 
-                #region Save data to database
+                #region Save data to DB
                 using (BloodforLifeEntities db = new BloodforLifeEntities())
-                    if (userModel.EmailAddress != null)
+                {
+                    var v = db.Users.Where(a => a.EmailAddress == model.EmailAddress).FirstOrDefault();
+                    if (v != null)
                     {
-                        //Update a user
-                        User user = db.Users.SingleOrDefault(x => x.EmailAddress == userModel.EmailAddress);
-
-                        user.ActivationCode = userModel.ActivationCode;
-                        user.Password = userModel.Password;
-                        db.SaveChanges();
-
+                        if (string.Compare(model.EmailAddress, v.EmailAddress) == 0)
+                        {
+                            User user = db.Users.SingleOrDefault(x => x.UserID == model.UserID);
+                            user.Password = model.Password;
+                            user.ActivationCode = model.ActivationCode;
+                           // user.IsEmailVerified = model.IsEmailVerified;
+                            db.SaveChanges();
+                            //Send email to user
+                            SendVerificationLinkEmailForPasswordReset(model.EmailAddress, model.ActivationCode.ToString(), model.Password);
+                            message = "Request successful. Account activation link" +
+                                " has been sent to your email address:" + model.EmailAddress;
+                            Status = true;
+                        }
+                        else
+                        {
+                            message = "Invalid email provided";
+                        }
                     }
-
-                //Send email to user
-                SendVerificationLinkEmailForPasswordReset(userModel.EmailAddress, userModel.ActivationCode.ToString(), userModel.Password);
-                message = "Request successful. Account activation link" +
-                    " has been sent to your email address:" + userModel.EmailAddress;
-                Status = true;
-
+                    else
+                    {
+                        message = "Invalid email provided";
+                    }
+                }
                 #endregion
+
             }
             else
             {
@@ -141,9 +140,9 @@ namespace BMDS.Controllers
 
             ViewBag.Message = message;
             ViewBag.Status = Status;
-            return View(userModel);
-
+            return View(model);
         }
+
         #endregion
 
         #region Verify account
@@ -173,16 +172,6 @@ namespace BMDS.Controllers
         #endregion
 
         [NonAction]
-        public bool IsEmailExist(string userEmail)
-        {
-            using (BloodforLifeEntities db = new BloodforLifeEntities())
-            {
-                var v = db.Users.Where(a => a.EmailAddress == userEmail).FirstOrDefault();
-                return v != null;
-            }
-        }
-
-        [NonAction]
         protected void SendVerificationLinkEmailForPasswordReset(string userEmail, string activationCode, string password)
         {
             var verifyUrl = "/User/VerifyAccount/" + activationCode;
@@ -192,7 +181,7 @@ namespace BMDS.Controllers
             var toEmail = new MailAddress(userEmail);
             var fromEmailPassword = "Frunzulitza.1"; //Replace with actual password
             string subject = "Your password was succesfully reset";
-            string body = "<br/><b/r>Please click on the link below to activate the new password and login" +
+            string body = "<br/><b/r>Please click on the link below to activate the new account and login" +
                 "Your current password is:" + password + " After login, please go to settings and change your password" +
                 "<b/r><br/> <a href='" + link + "'>" + link + "</a> ";
 

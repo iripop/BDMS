@@ -38,8 +38,8 @@ namespace BMDS.Controllers
                     columns: grid.Columns(
                         grid.Column("DonationSiteID", "ID"),
                         grid.Column("SiteName", "Name"),
-                        grid.Column("EventStartDate", "Start date"),
-                        grid.Column("EventEndDate", "End date"),
+                        grid.Column("StartDate", "Start date"),
+                        grid.Column("EndDate", "End date"),
                         grid.Column("RegistrationEmail", "Email"),
                         grid.Column("RegistrationPhone", "Phone"),
                         grid.Column("Address", "Address"),
@@ -47,7 +47,7 @@ namespace BMDS.Controllers
                         grid.Column("Zip", "Zip"),
                         grid.Column("StaffingRequired", "Staff"),
                         grid.Column("MobileSite", "Drive"),
-                        grid.Column("IsArchived", "Archived")
+                        grid.Column("IsSiteArchived", "Archived")
                         )
                     ).ToString();
 
@@ -102,8 +102,8 @@ namespace BMDS.Controllers
                         grid.Column("RecipientID", "Recipient"),
                         grid.Column("DonorID", "Donor"),
                         grid.Column("CreationDate", "Creation date"),
-                        grid.Column("Accepted", "Accepted donation"),
-                        grid.Column("ReasonForRejection", "Resons for not being accepted")
+                        grid.Column("AcceptedDonation", "Accepted donation"),
+                        grid.Column("ReasonsForRejection", "Resons for not being accepted")
                         )
                     ).ToString();
 
@@ -152,15 +152,14 @@ namespace BMDS.Controllers
                         grid.Column("DonorID", "ID"),
                         grid.Column("ActiveDonor", "Active donor"),
                         grid.Column("DonorFullName", "Name"),
-                        grid.Column("BloodType", "Blood type"),
+                        grid.Column("DonorBloodType", "Blood type"),
                         grid.Column("RhFactor", "Rh"),
                         grid.Column("DateOfBirth", "Date of birth"),
                         grid.Column("Weight", "Weight"),
                         grid.Column("DonorEmail", "Email"),
                         grid.Column("DonorPhoneNumber", "Phone"),
                         grid.Column("LastScreeningDate", "Last screening date"),
-                        grid.Column("DonorIsDeleted", "Archived donor"),
-                        grid.Column("DonationID", "Donation id")
+                        grid.Column("ArchivedDonor", "Archived donor")
                         )
                     ).ToString();
 
@@ -211,7 +210,7 @@ namespace BMDS.Controllers
                         grid.Column("RelatedCondition", "Condition"),
                         grid.Column("RecipientCodedName", "Coded name"),
                         grid.Column("DonationID", "Donation"),
-                        grid.Column("RecipientIsDeleted", "Archived"),
+                        grid.Column("IsRecipientArchived", "Archived"),
                         grid.Column("DonorID", "Donor")
                         )
                     ).ToString();

@@ -6,7 +6,7 @@
 }
 
 <link href="~/Content/archives.css" rel="stylesheet" />
-<link href="~/Content/add user.css" rel="stylesheet" />
+<link href="~/Content/adduser.css" rel="stylesheet" />
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -24,8 +24,8 @@
                 columns: grid.Columns(
                         grid.Column("DonationSiteID", "ID"),
                         grid.Column("SiteName", "Name"),
-                        grid.Column("EventStartDate", "Start date"),
-                        grid.Column("EventEndDate", "End date"),
+                        grid.Column("StartDate", "Start date"),
+                        grid.Column("EndDate", "End date"),
                         grid.Column("RegistrationEmail", "Email"),
                         grid.Column("RegistrationPhone", "Phone"),
                         grid.Column("Address", "Address"),
@@ -33,7 +33,7 @@
                         grid.Column("Zip", "Zip"),
                         grid.Column("StaffingRequired", "Staff"),
                         grid.Column("MobileSite", "Drive"),
-                        grid.Column("IsArchived", "Archived")
+                        grid.Column("IsSiteArchived", "Archived")
                     )
                 )
                             </div>

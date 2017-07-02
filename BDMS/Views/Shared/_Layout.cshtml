@@ -21,7 +21,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <!-- logo -->
-                <a class="navbar-brand" href="#"><img alt="alternative text" src="~/Content/images/LOGO.png" /></a>
+                <a class="navbar-brand" href="#"><img alt="alternative text" src="~/Content/LOGO.png" /></a>
             </div>
             <div class="collapse navbar-collapse animated fadeIn" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav animated fadeIn text16">
@@ -42,9 +42,9 @@
                         <ul id="login-dp" class="dropdown-menu">
                             <li><a href="#"><span class="glyphicon glyphicon-envelope"></span> @HttpContext.Current.User.Identity.Name</a></li>
                             <li class="divider"></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-road"></span>   Profile</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-road"></span>  @Html.ActionLink("Profile", "UserManager","UserProfile", new { id = User.Identity.Name })</a></li>
                             <li class="divider"></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-barcode"></span>  Change Password</a></li>
+                            <li><a href="/UserManager/ChangePassword/"><span class="glyphicon glyphicon-barcode"></span>  Change Password</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -119,18 +119,19 @@
         </div><!-- /.container-fluid -->
     </nav>
 
+    <nav class="navbar navbar-fixed-bottom">
+       &copy; @DateTime.Now.Year - Copyright <strong> Pop Irina</strong>
+    </nav>
 
     <div class="container body-content">
         @RenderBody()
         <hr />
     </div>
 
-    <footer>
-        <div class="footer">&copy; @DateTime.Now.Year - Copyright <strong> Pop Irina</strong></div>
-    </footer>
+   
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
 </body>
 </html>

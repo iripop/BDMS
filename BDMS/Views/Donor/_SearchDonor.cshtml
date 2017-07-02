@@ -1,0 +1,22 @@
+﻿@model IEnumerable<BDMS.Models.DonorModel>
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <tr id="row_@item.DonorID">
+            <td class="danger">@item.ActiveDonor</td>
+            <td>@item.DonorBloodType</td>
+            <td>@item.RhFactor</td>
+            <td>@item.DonorFullName</td>
+            <td>@item.DonorPhoneNumber</td>
+            <td>@item.DonorEmail</td>
+            <td>@item.LastScreeningDate</td>
+            <td><a href="#" onclick="AddEditDonor(@item.DonorID)"><i class="glyphicon glyphicon-edit" aria-hidden="true" style="color:#6799CC;"></i> </a></td>
+            <td><a href="#" onclick="ShowDonor(@item.DonorID)"><i class="glyphicon glyphicon-eye-open" style="color:#006600;"></i> </a></td>
+            <td><a href="#" onclick="ConfirmDelete(@item.DonorID)"><i class="glyphicon glyphicon-remove" style="color:#C01D01;"></i> </a></td>
+
+        </tr>
+    }
+}
+

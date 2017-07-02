@@ -15,11 +15,11 @@ namespace BMDS.Controllers
         {
             BloodforLifeEntities db = new BloodforLifeEntities();
 
-            List<Donation> donationlist = db.Donations.ToList();
-            ViewBag.DonationList = new SelectList(donationlist.Where(x => x.IsDeleted == false), "DonationID", "DonationType");
+            List<Donation> donationlist = db.Donations.Where(x => x.IsDeleted == false).ToList();
+            ViewBag.DonationList = new SelectList(donationlist, "DonationID", "DonationType");
 
-            List<Donor> donorlist = db.Donors.ToList();
-            ViewBag.DonorList = new SelectList(donorlist.Where(x => x.ArchivedDonor == false), "DonorID", "DonorFullName");
+            List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == "Yes" && x.ArchivedDonor == false).ToList();
+            ViewBag.DonorsList = new SelectList(listDonor, "DonorID", "DonorFullName");
 
             List<RecipientModel> listRec = db.Recipients.Where(x => x.IsRecipientArchived == false).Select(x => new RecipientModel
             {
@@ -44,11 +44,11 @@ namespace BMDS.Controllers
             try
             {
                 BloodforLifeEntities db = new BloodforLifeEntities();
-                List<Donation> list = db.Donations.ToList();
-                ViewBag.DonationList = new SelectList(list.Where(x => x.IsDeleted == false), "DonationID", "DonationType");
+                List<Donation> donationlist = db.Donations.Where(x => x.IsDeleted == false).ToList();
+                ViewBag.DonationList = new SelectList(donationlist, "DonationID", "DonationType");
 
-                List<Donor> donorlist = db.Donors.ToList();
-                ViewBag.DonorList = new SelectList(donorlist.Where(x => x.ArchivedDonor == false), "DonorID", "DonorFullName");
+                List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == "Yes" && x.ArchivedDonor == false).ToList();
+                ViewBag.DonorsList = new SelectList(listDonor, "DonorID", "DonorFullName");
 
                 if (model.RecipientID > 0)
                 {
@@ -138,13 +138,11 @@ namespace BMDS.Controllers
         public ActionResult AddEditRecipient(int RecipientID)
         {
             BloodforLifeEntities db = new BloodforLifeEntities();
-            List<Donor> donorlist = db.Donors.ToList();
-            ViewBag.DonorList = new SelectList(donorlist.Where(x => x.ArchivedDonor == false), "DonorID", "DonorFullName");
+            List<Donation> donationlist = db.Donations.Where(x => x.IsDeleted == false).ToList();
+            ViewBag.DonationList = new SelectList(donationlist, "DonationID", "DonationType");
 
-            List<Donation> list = db.Donations.ToList();
-            ViewBag.DonationList = new SelectList(list.Where(x => x.IsDeleted == false), "DonationID", "DonationType");
-
-
+            List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == "Yes" && x.ArchivedDonor == false).ToList();
+            ViewBag.DonorsList = new SelectList(listDonor, "DonorID", "DonorFullName");
 
             RecipientModel model = new RecipientModel();
 

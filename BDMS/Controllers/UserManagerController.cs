@@ -10,7 +10,7 @@ using System.Web.Security;
 
 namespace BMDS.Controllers
 {
-    [Authorize]
+    
     public class UserManagerController : Controller
     {
         #region Add  a user action
@@ -156,10 +156,9 @@ namespace BMDS.Controllers
         }
         #endregion
 
-       /*
         #region Change pasword POST action
         [HttpPost]
-        public ActionResult ChangePassword(User userModel)
+        public ActionResult ChangePassword(ChangePasswordModel model)
         {
             bool Status = false;
             string message = "";
@@ -167,35 +166,35 @@ namespace BMDS.Controllers
             //Model Validation
             if (ModelState.IsValid)
             {
-                #region Check if passwords match
-                var IsExist = IsPasswordCorrect(userModel.Password);
-                if (IsExist)
-                {
-                    ModelState.AddModelError("PasswordExist", "Current password incorrect");
-                    return View(userModel);
-                }
-                #endregion
-
                 #region Password hashing
-                userModel.NewPassword = Crypto.Hash(userModel.NewPassword);
-                userModel.ConfirmPassword = Crypto.Hash(userModel.ConfirmPassword);
+                model.NewPassword = Crypto.Hash(model.NewPassword);
+                model.ConfirmPassword = Crypto.Hash(model.ConfirmPassword);
                 #endregion
 
                 #region Save data to database
                 try
                 {
-                    BloodDonorDBEntities db = new BloodDonorDBEntities();
-                    if (userModel.U > 0)
+                    BloodforLifeEntities db = new BloodforLifeEntities();
+                    var v = db.Users.Where(a => a.UserID == model.UserID).FirstOrDefault();
+                    if (v!=null)
                     {
-                        //Update a donor
-                        User user = db.Users.SingleOrDefault(x => x.UserID == userModel.UserID);
 
-                        user.Password = userModel.Password;
+                        if (string.Compare(Crypto.Hash(model.Password), v.Password) == 0)
+                        {
+                            //Update a user password
+                            User user = db.Users.SingleOrDefault(x => x.UserID == model.UserID);
+                            user.Password = model.NewPassword;
+                            db.SaveChanges();
+                            message = "Password change successful";
+                            Status = true;
 
-                        db.SaveChanges();
+                        }
+                        else
+                        {
+                            message = "Invalid password";
+                        }
 
                     }
-                    return View(userModel);
                 }
                 catch (Exception ex)
                 {
@@ -211,23 +210,12 @@ namespace BMDS.Controllers
 
             ViewBag.Message = message;
             ViewBag.Status = Status;
-            return View(userModel);
+            return View(model);
 
 
         }
         #endregion
-    */
-
-        [NonAction]
-        public bool IsPasswordCorrect(string password)
-        {
-            using (BloodforLifeEntities db = new BloodforLifeEntities())
-            {
-                var v = db.Users.Where(a => a.Password == password).FirstOrDefault();
-                return v != null;
-            }
-        }
-
+    
         #region Users GET
         public ActionResult Users()
         {
@@ -243,8 +231,8 @@ namespace BMDS.Controllers
                 IsUserAdmin = x.IsUserAdmin
 
             }).ToList();
-            ViewBag.UsersList = listUsers;
 
+            ViewBag.UsersList = listUsers;
             return View();
 
         }
@@ -252,7 +240,7 @@ namespace BMDS.Controllers
 
         #region Users POST
         [HttpPost]
-        public ActionResult Users(User model)
+        public ActionResult Users(UserModel model)
         {
             try
             {
@@ -327,5 +315,15 @@ namespace BMDS.Controllers
             return PartialView("_SearchUser", listUsers);
         }
         #endregion
+
+        #region User Profile 
+        public ActionResult UserProfile(string id)
+        {
+            BloodforLifeEntities db = new BloodforLifeEntities();
+            var user = db.Users.Single(u => u.EmailAddress == id);
+            return View(user);
+        }
+        #endregion
+
     }
 }

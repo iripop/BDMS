@@ -6,7 +6,7 @@
 }
 
 <link href="~/Content/archives.css" rel="stylesheet" />
-<link href="~/Content/add user.css" rel="stylesheet" />
+<link href="~/Content/adduser.css" rel="stylesheet" />
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -27,7 +27,7 @@
                         grid.Column("RelatedCondition", "Condition"),
                         grid.Column("RecipientCodedName", "Coded name"),
                         grid.Column("DonationID", "Donation"),
-                        grid.Column("RecipientIsDeleted", "Archived"),
+                        grid.Column("IsRecipientArchived", "Archived"),
                         grid.Column("DonorID", "Donor")
                     )
                 )

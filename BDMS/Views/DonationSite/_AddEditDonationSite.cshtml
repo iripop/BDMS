@@ -6,34 +6,34 @@
 
         @Html.HiddenFor(m => m.DonationSiteID)
 
-        <p>@Html.TextBoxFor(model => model.SiteName, new { @class = "form-control", @placeholder = "Site name" }) </p>
+        <p>@Html.TextBoxFor(model => model.SiteName, new { @class = "txt", @placeholder = "Site name" }) </p>
         @Html.ValidationMessageFor(model => model.SiteName, "", new { @class = "text-danger" })
 
-        <p>@Html.TextBoxFor(model => model.EventStartDate, new { @class = "form-control", @placeholder = "Start date", @type = "date" }) </p>
+        <p>@Html.TextBoxFor(model => model.StartDate, new { @class = "txt", @placeholder = "Start date", @type = "date" }) </p>
 
-        <p>@Html.TextBoxFor(model => model.EventEndDate, new { @class = "form-control", @placeholder = "End date", @type = "date" }) </p>
+        <p>@Html.TextBoxFor(model => model.EndDate, new { @class = "txt", @placeholder = "End date", @type = "date" }) </p>
 
-        <p>@Html.TextBoxFor(model => model.RegistrationEmail, new { @class = "form-control", @placeholder = "Email" }) </p>
+        <p>@Html.TextBoxFor(model => model.RegistrationEmail, new { @class = "txt", @placeholder = "Email" }) </p>
         @Html.ValidationMessageFor(model => model.RegistrationEmail, "", new { @class = "text-danger" })
 
-        <p>@Html.TextBoxFor(model => model.RegistrationPhone, new { @class = "form-control", @placeholder = "Phone" }) </p>
+        <p>@Html.TextBoxFor(model => model.RegistrationPhone, new { @class = "txt", @placeholder = "Phone" }) </p>
         @Html.ValidationMessageFor(model => model.RegistrationPhone, "", new { @class = "text-danger" })
 
-        <p>@Html.TextBoxFor(model => model.Address, new { @class = "form-control", @placeholder = "Address" }) </p>
+        <p>@Html.TextBoxFor(model => model.Address, new { @class = "txt", @placeholder = "Address" }) </p>
         @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
 
-        <p>@Html.TextBoxFor(model => model.City, new { @class = "form-control", @placeholder = "City" }) </p>
+        <p>@Html.TextBoxFor(model => model.City, new { @class = "txt", @placeholder = "City" }) </p>
         @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
 
-        <p>@Html.TextBoxFor(model => model.Zip, new { @class = "form-control", @placeholder = "Zip code" }) </p>
+        <p>@Html.TextBoxFor(model => model.Zip, new { @class = "txt", @placeholder = "Zip code" }) </p>
         @Html.ValidationMessageFor(model => model.Zip, "", new { @class = "text-danger" })
 
-        <p>@Html.TextBoxFor(model => model.StaffingRequired, new { @class = "form-control", @placeholder = "Number of staff required" }) </p>
+        <p>@Html.TextBoxFor(model => model.StaffingRequired, new { @class = "txt", @placeholder = "Number of staff required" }) </p>
 
-        <p>@Html.DropDownListFor(model => model.MobileSite, ViewBag.MobileSiteList as SelectList, "--Is mobile site--", new { @class = "form-control" }) </p>
+        <p>@Html.DropDownListFor(model => model.MobileSite, ViewBag.MobileSiteList as SelectList, "--Is mobile site--", new { @class = "txt" }) </p>
         @Html.ValidationMessageFor(model => model.MobileSite, "", new { @class = "text-danger" })
 
-        <a href="#" id="btnSubmit" class="btn btn-success btn-block">
+        <a href="#" id="btnSubmit" class="btn btn-success">
             @if (Model.DonationSiteID > 0)
             { <span>Update</span>}
             else

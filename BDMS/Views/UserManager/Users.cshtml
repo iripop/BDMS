@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "Users";
 }
-
 <link href="~/Content/pageContent.css" rel="stylesheet" />
 
 @using (Html.BeginForm())
@@ -15,7 +14,6 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li>@Html.TextBoxFor(m => m.FirstName, new { @class = "txt", @placeholder = "Search here" })</li>
-                <li><i class="glyphicon glyphicon-search"></i></li>
                 <li class="active">System Users</li>
             </ol>
         </div>
@@ -31,7 +29,6 @@
                         <div class="col-md-12">
                             <table class="table table-striped">
                                 <tr class="danger">
-                                    <th>ID</th>
                                     <th>First name</th>
                                     <th>Last name</th>
                                     <th>Email</th>
@@ -47,12 +44,11 @@
                                         foreach (var item in ViewBag.UsersList)
                                         {
                                             <tr id="row_@item.UserID">
-                                                <td>@item.UserID</td>
                                                 <td>@item.FirstName</td>
                                                 <td>@item.LastName</td>
                                                 <td>@item.EmailAddress</td>
                                                 <td>@item.PhoneNumber</td>
-                                                <td>@item.IsAdmin</td>
+                                                <td>@item.IsUserAdmin</td>
                                                 <td><a href="#" onclick="ConfirmDelete(@item.UserID)"><i class="glyphicon glyphicon-remove" style="color:#C01D01;"></i></a> </td>
                                             </tr>
                                         }
@@ -142,7 +138,7 @@
                 $.ajax({
 
                     type: "POST",
-                    url: "/Manage/GetSearchUser?SearchText=" + searchtext,
+                    url: "/UserManager/GetSearchUser?SearchText=" + searchtext,
                     contentType: "html",
                     success: function (response) {
                         $("#loaderID").hide();

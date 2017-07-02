@@ -198,9 +198,11 @@
     <Compile Include="Models\Donor.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Extended\ChangePasswordModel.cs" />
     <Compile Include="Models\Extended\DonationModel.cs" />
     <Compile Include="Models\Extended\DonationSiteModel.cs" />
     <Compile Include="Models\Extended\DonorModel.cs" />
+    <Compile Include="Models\Extended\ForgotPasswordModel.cs" />
     <Compile Include="Models\Extended\Login.cs" />
     <Compile Include="Models\Extended\RecipientModel.cs" />
     <Compile Include="Models\Extended\User.cs" />
@@ -221,6 +223,7 @@
     <Content Include="Content\archives.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\loading.gif" />
     <Content Include="Content\login.css" />
     <Content Include="Content\LOGO.png" />
     <Content Include="Content\pageContent.css" />
@@ -290,7 +293,6 @@
     <Content Include="Views\DonationSite\_AddEditDonationSite.cshtml" />
     <Content Include="Views\DonationSite\_SearchDonationSite.cshtml" />
     <Content Include="Views\Donor\Donor.cshtml" />
-    <Content Include="Views\Donor\ShowDonorDetail.cshtml" />
     <Content Include="Views\Donor\_AddEditDonor.cshtml" />
     <Content Include="Views\GoogleChart\Column.cshtml" />
     <Content Include="Views\Recipient\Recipients.cshtml" />
@@ -304,6 +306,10 @@
     <Content Include="Views\UserManager\VerifyAccount.cshtml" />
     <Content Include="Views\UserManager\Users.cshtml" />
     <Content Include="Views\UserManager\_SearchUser.cshtml" />
+    <Content Include="Views\UserManager\ChangePassword.cshtml" />
+    <Content Include="Views\UserManager\UserProfile.cshtml" />
+    <Content Include="Views\Donor\_SearchDonor.cshtml" />
+    <Content Include="Views\Donor\_ShowDonorDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -36,13 +36,12 @@ namespace BMDS.Controllers
             }).ToList();
 
             ViewBag.DonationSiteList = listDonSite;
-
             return View();
 
         }
         #endregion
 
-        #region Recipients POST
+        #region Donation Site POST
         [HttpPost]
         public ActionResult DonationSite(DonationSiteModel model)
         {
@@ -74,7 +73,7 @@ namespace BMDS.Controllers
                 }
                 else
                 {
-                    //Insert a recipient in database
+                    //Insert a donation site in database
                     DonationSite don = new DonationSite();
                     don.SiteName = model.SiteName;
                     don.StartDate = model.StartDate;
@@ -103,13 +102,13 @@ namespace BMDS.Controllers
         }
         #endregion
 
-        #region Delete recipients
-        public JsonResult DeleteDonationSite(int donsiteID)
+        #region Delete donation site
+        public JsonResult DeleteDonationSite(int donationSiteID)
         {
             BloodforLifeEntities db = new BloodforLifeEntities();
 
             bool result = false;
-            DonationSite don = db.DonationSites.SingleOrDefault(x => x.IsSiteArchived == false && x.DonationSiteID == donsiteID);
+            DonationSite don = db.DonationSites.SingleOrDefault(x => x.IsSiteArchived == false && x.DonationSiteID == donationSiteID);
 
             if (don != null)
             {
@@ -122,7 +121,7 @@ namespace BMDS.Controllers
         }
         #endregion
 
-        #region Recipient details
+        #region Donation site details
         public ActionResult ShowDonationSiteDetail(int DonationSiteID)
         {
             BloodforLifeEntities db = new BloodforLifeEntities();
@@ -186,7 +185,7 @@ namespace BMDS.Controllers
         public ActionResult GetSearchDonationSite(string SearchText)
         {
             BloodforLifeEntities db = new BloodforLifeEntities();
-            List<DonationSiteModel> list = db.DonationSites.Where(x => x.SiteName.Contains(SearchText) ||
+            List<DonationSiteModel> list = db.DonationSites.Where(x =>x.IsSiteArchived==false && x.SiteName.Contains(SearchText) ||
             x.Address.Contains(SearchText) ||
             x.City.Contains(SearchText) ||
             x.Zip.Contains(SearchText) ||

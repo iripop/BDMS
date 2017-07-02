@@ -15,13 +15,13 @@ namespace BMDS.Controllers
         {
             BloodforLifeEntities db = new BloodforLifeEntities();
 
-            List<Donor> listDonor = db.Donors.ToList();
-            ViewBag.DonorsList = new SelectList(listDonor.Where(x => x.ActiveDonor == "Yes" && x.ArchivedDonor == false), "DonorID", "DonorFullName");
+            List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == "Yes" && x.ArchivedDonor == false).ToList();
+            ViewBag.DonorsList = new SelectList(listDonor, "DonorID", "DonorFullName");
 
-            List<Recipient> listRecipient = db.Recipients.ToList();
+            List<Recipient> listRecipient = db.Recipients.Where(x => x.IsRecipientArchived == false).ToList();
             ViewBag.RecipientsList = new SelectList(listRecipient, "RecipientID", "RecipientCodedName");
 
-            List<DonationSite> listDonationSite = db.DonationSites.ToList();
+            List<DonationSite> listDonationSite = db.DonationSites.Where(x => x.IsSiteArchived == false).ToList();
             ViewBag.DonationSiteList = new SelectList(listDonationSite, "DonationSiteID", "SiteName");
 
             List<string> listDonationTypes = new List<string>(new string[] { "Whole Blood", "Packed Red Blood Cells", "Platelets", "Plasma" });
@@ -57,10 +57,7 @@ namespace BMDS.Controllers
 
             }).ToList();
 
-            //PagedList<DonationModel> model = new PagedList<DonationModel>(listDonations, page, pageSize);
-            //ViewBag.DonationsList = model;
             ViewBag.DonationsList = listDonations;
-
             return View();
 
 
@@ -75,13 +72,13 @@ namespace BMDS.Controllers
             {
                 BloodforLifeEntities db = new BloodforLifeEntities();
 
-                List<Donor> listDonor = db.Donors.ToList();
-                ViewBag.DonorsList = new SelectList(listDonor.Where(x => x.ActiveDonor == "Yes" && x.ArchivedDonor == false), "DonorID", "DonorFullName");
+                List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == "Yes" && x.ArchivedDonor == false).ToList();
+                ViewBag.DonorsList = new SelectList(listDonor, "DonorID", "DonorFullName");
 
-                List<Recipient> listRecipient = db.Recipients.ToList();
+                List<Recipient> listRecipient = db.Recipients.Where(x => x.IsRecipientArchived == false).ToList();
                 ViewBag.RecipientsList = new SelectList(listRecipient, "RecipientID", "RecipientCodedName");
 
-                List<DonationSite> listDonationSite = db.DonationSites.ToList();
+                List<DonationSite> listDonationSite = db.DonationSites.Where(x => x.IsSiteArchived == false).ToList();
                 ViewBag.DonationSiteList = new SelectList(listDonationSite, "DonationSiteID", "SiteName");
 
                 List<string> listDonationTypes = new List<string>(new string[] { "Whole Blood", "Packed Red Blood Cells", "Platelets", "Plasma" });
@@ -195,13 +192,13 @@ namespace BMDS.Controllers
         {
             BloodforLifeEntities db = new BloodforLifeEntities();
 
-            List<Donor> listDonor = db.Donors.ToList();
-            ViewBag.DonorsList = new SelectList(listDonor.Where(x => x.ArchivedDonor == false), "DonorID", "DonorFullName");
+            List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == "Yes" && x.ArchivedDonor == false).ToList();
+            ViewBag.DonorsList = new SelectList(listDonor, "DonorID", "DonorFullName");
 
-            List<Recipient> listRecipient = db.Recipients.ToList();
+            List<Recipient> listRecipient = db.Recipients.Where(x => x.IsRecipientArchived == false).ToList();
             ViewBag.RecipientsList = new SelectList(listRecipient, "RecipientID", "RecipientCodedName");
 
-            List<DonationSite> listDonationSite = db.DonationSites.ToList();
+            List<DonationSite> listDonationSite = db.DonationSites.Where(x => x.IsSiteArchived == false).ToList();
             ViewBag.DonationSiteList = new SelectList(listDonationSite, "DonationSiteID", "SiteName");
 
             List<string> listDonationTypes = new List<string>(new string[] { "Whole Blood", "Packed Red Blood Cells", "Platelets", "Plasma" });
@@ -244,12 +241,24 @@ namespace BMDS.Controllers
         {
             BloodforLifeEntities db = new BloodforLifeEntities();
 
-            List<Donor> listDonor = db.Donors.ToList();
-            ViewBag.DonorsList = new SelectList(listDonor.Where(x => x.ActiveDonor == "Yes" && x.ArchivedDonor == false), "DonorID", "DonorFullName");
-            List<Recipient> listRecipient = db.Recipients.ToList();
+            List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == "Yes" && x.ArchivedDonor == false).ToList();
+            ViewBag.DonorsList = new SelectList(listDonor, "DonorID", "DonorFullName");
+
+            List<Recipient> listRecipient = db.Recipients.Where(x => x.IsRecipientArchived == false).ToList();
             ViewBag.RecipientsList = new SelectList(listRecipient, "RecipientID", "RecipientCodedName");
-            List<DonationSite> listDonationSite = db.DonationSites.ToList();
+
+            List<DonationSite> listDonationSite = db.DonationSites.Where(x => x.IsSiteArchived == false).ToList();
             ViewBag.DonationSiteList = new SelectList(listDonationSite, "DonationSiteID", "SiteName");
+
+            List<string> listDonationTypes = new List<string>(new string[] { "Whole Blood", "Packed Red Blood Cells", "Platelets", "Plasma" });
+            ViewBag.DonationTypeList = new SelectList(listDonationTypes);
+
+            List<string> bloodType = new List<string>(new string[] { "A", "AB", "B", "0" });
+            ViewBag.BloodTypeList = new SelectList(bloodType);
+
+            List<string> rhFactor = new List<string>(new string[] { "+(positive)", "-(negative)" });
+            ViewBag.RhFactorList = new SelectList(rhFactor);
+
             List<string> accepted = new List<string>(new string[] { "True", "False" });
             ViewBag.IsAcceptedList = new SelectList(accepted);
 

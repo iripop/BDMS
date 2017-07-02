@@ -5,7 +5,6 @@
 }
 
 <link href="~/Content/pageContent.css" rel="stylesheet" />
-<script src="http://cdn.ckeditor.com/4.6.1/standard/ckeditor.js"></script>
 
 @using (Html.BeginForm())
 {
@@ -14,7 +13,6 @@
     <section id="breadcrumb">
         <div class="container">
             <ol class="breadcrumb">
-
                 <li><a href="#" onclick="AddEditDonationSite(0)"><i class="glyphicon glyphicon-plus" style="color:#C01D01;"></i> Add donation site</a></li>
             </ol>
         </div>
@@ -23,7 +21,6 @@
     <section id="main">
         <div class="container">
             <div class="row">
-
                 <div class="col-md-12">
                     <!-- Website Overview -->
                     <div class="panel panel-default">
@@ -60,13 +57,13 @@
                                                 {
                                                     <tr id="row_@item.DonationSiteID">
                                                         <td>@item.SiteName</td>
-                                                        <td>@item.EventStartDate</td>
-                                                        <td>@item.EventEndDate</td>
+                                                        <td>@item.StartDate</td>
+                                                        <td>@item.EndDate</td>
                                                         <td>@item.RegistrationEmail</td>
                                                         <td>@item.RegistrationPhone</td>
                                                         <td>@item.MobileSite</td>
                                                         <td><a href="#" onclick="AddEditDonationSite(@item.DonationSiteID)"><i class="glyphicon glyphicon-edit" aria-hidden="true" style="color:#6799CC;"></i></a> </td>
-                                                        <td><a href="#" onclick="ShowDonationSite(@item.DonationSiteID)"><i class="glyphicon glyphicon-eye-open" style="color:#FFA500;"></i></a> </td>
+                                                        <td><a href="#" onclick="ShowDonationSite(@item.DonationSiteID)"><i class="glyphicon glyphicon-eye-open" style="color:#006600;"></i></a> </td>
                                                         <td><a href="#" onclick="ConfirmDelete(@item.DonationSiteID)"><i class="glyphicon glyphicon-remove" style="color:#C01D01;"></i></a> </td>
                                                     </tr>
                                                 }
@@ -102,7 +99,7 @@
                 <div class="modal-body">
                     <h4>Are you sure you want to archive this donation site?</h4>
                     <div style="text-align:center; display:none" id="loader">
-                        <img src="~/Content/images/loading.gif" width="150" /> @*This is a page is loading gif*@
+                        <img src="~/Content/loading.gif" width="150" /> @*This is a page is loading gif*@
                     </div>
                 </div>
 
@@ -333,7 +330,7 @@
 
         $(document).ready(function () {
 
-            $('#donationSiteRow').pageMe({ pagerSelector: '#myPager', showPrevNext: true, hidePageNumbers: false, perPage: 2 });
+            $('#donationSiteRow').pageMe({ pagerSelector: '#myPager', showPrevNext: true, hidePageNumbers: false, perPage: 5 });
 
         });
     </script>

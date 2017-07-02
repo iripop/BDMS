@@ -10,7 +10,7 @@ namespace BMDS.Controllers
     public class DonorController : Controller
     {
         #region Donors GET
-        public ActionResult Donor(int page = 1, int pageSize = 4)
+        public ActionResult Donor()
         {
             BloodforLifeEntities db = new BloodforLifeEntities();
 
@@ -38,9 +38,6 @@ namespace BMDS.Controllers
 
             }).ToList();
 
-            //  PagedList<DonorModel> model = new PagedList<DonorModel>(listDonors, page, pageSize);
-            //  ViewBag.DonorsList = model;
-            // return View(ViewBag.DonorsList);
             ViewBag.DonorsList = listDonors;
             return View();
 
@@ -85,7 +82,7 @@ namespace BMDS.Controllers
                 }
                 else
                 {
-                    //Insert a recipient in database
+                    //Insert a donor in database
                     Donor don = new Donor();
                     don.ActiveDonor = model.ActiveDonor;
                     don.DonorFullName = model.DonorFullName;
@@ -201,7 +198,7 @@ namespace BMDS.Controllers
         public ActionResult GetSearchDonor(string SearchText)
         {
             BloodforLifeEntities db = new BloodforLifeEntities();
-            List<DonorModel> list = db.Donors.Where(x => x.DonorFullName.Contains(SearchText) ||
+            List<DonorModel> list = db.Donors.Where(x =>x.ArchivedDonor==false && x.DonorFullName.Contains(SearchText) ||
             x.ActiveDonor.Contains(SearchText) ||
             x.DonorBloodType.Contains(SearchText) ||
             x.RhFactor.Contains(SearchText) ||
