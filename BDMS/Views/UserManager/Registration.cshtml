@@ -33,14 +33,14 @@ else
 
                                 <div class="form-group">
                                     <div class="col-md-5">
-                                        @Html.TextBoxFor(model => model.FirstName, new { @class = "txt", placeholder = "Enter first name", @name = "name", required = "" })
+                                        @Html.TextBoxFor(model => model.FirstName, new { @class = "txt", placeholder = "Enter first name", @name = "name", required = "Required" })
                                         @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-md-1">
                                         <span style="color:red;">*</span>
                                     </div>
                                     <div class="col-md-5">
-                                        @Html.TextBoxFor(model => model.LastName, new { @class = "txt", placeholder = "Enter last name", @name = "name", required = "" })
+                                        @Html.TextBoxFor(model => model.LastName, new { @class = "txt", placeholder = "Enter last name", @name = "name", required = "Last name is required" })
                                         @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-md-1">
@@ -61,6 +61,10 @@ else
                                         @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "txt", placeholder = "Enter phone number", @name = "name" })
                                         @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
                                     </div>
+                                    <div class="col-md-1">
+                                        <span style="color:red;">*</span>
+                                    </div>
+
                                 </div>
 
                                 <div class="form-group">

@@ -19,7 +19,7 @@ namespace BDMS.Models
         [DisplayName("First Name")]
         public string FirstName { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "First name is required")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Last name is required")]
         [DisplayName("Last Name")]
         public string LastName { get; set; }
 
@@ -34,12 +34,13 @@ namespace BDMS.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Password is required")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Confirm password is required")]
         [DisplayName("Confirm password")]
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Confirm password and password do not match")]
         public string ConfirmPassword { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Phone number is required")]
         public string PhoneNumber { get; set; }
 
         [DisplayName("Is admin")]

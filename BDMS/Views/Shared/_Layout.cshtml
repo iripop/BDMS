@@ -40,9 +40,9 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span><b> User</b> <span class="caret"></span></a>
                         <ul id="login-dp" class="dropdown-menu">
-                            <li><a href="#"><span class="glyphicon glyphicon-envelope"></span> @HttpContext.Current.User.Identity.Name</a></li>
+                            <li style="color:black"><span class="glyphicon glyphicon-envelope"></span> @HttpContext.Current.User.Identity.Name</li>
                             <li class="divider"></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-road"></span>  @Html.ActionLink("Profile", "UserManager","UserProfile", new { id = User.Identity.Name })</a></li>
+                            <li><a href="/UserManager/UserProfile/"><span class="glyphicon glyphicon-road"></span>  Profile</a></li>
                             <li class="divider"></li>
                             <li><a href="/UserManager/ChangePassword/"><span class="glyphicon glyphicon-barcode"></span>  Change Password</a></li>
                         </ul>
@@ -86,6 +86,7 @@
                     <li><a href="/DonationSite/DonationSite/"> Donation site</a></li>
                     <li><a href="/Recipient/Recipients/"> Recipients</a></li>
                     <li><a href="/Home/DonationsByExpirationDate/"> Manage</a></li>
+                    <li><a href="/Chart/Index/"> Count</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><p class="navbar-text"></p></li>

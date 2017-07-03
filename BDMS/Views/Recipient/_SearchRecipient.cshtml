@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<BDMS.Models.RecipientModel>
 
 @if (Model != null)
-            {
-                foreach (var item in Model)
-                {
+{
+    foreach (var item in Model)
+    {
         <tr id="row_@item.RecipientID">
             <td>@item.RecipientID</td>
             <td>@item.DonorFullName</td>
@@ -17,3 +17,4 @@
         </tr>
     }
 }
+

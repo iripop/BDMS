@@ -46,6 +46,7 @@ namespace BDMS.Models
         public string DonorFullName { get; set; }
         public string RecipientCodedName { get; set; }
         public string SiteName { get; set; }
-        public bool Remember { get; set; }
+        public string BloodType { get; set; }
+        public Nullable<int> Count { get; set; }
     }
 }

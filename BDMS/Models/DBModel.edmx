@@ -4,7 +4,15 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BloodforLifeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BloodforLifeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BloodCount">
+          <Key>
+            <PropertyRef Name="BloodTypeID" />
+          </Key>
+          <Property Name="BloodTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BloodType" Type="nvarchar" MaxLength="50" />
+          <Property Name="Count" Type="int" />
+        </EntityType>
         <EntityType Name="Donation">
           <Key>
             <PropertyRef Name="DonationID" />
@@ -93,6 +101,18 @@
           <Property Name="IsEmailVerified" Type="bit" Nullable="false" />
           <Property Name="ActivationCode" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
+        <Association Name="FK_BloodCount_Donation">
+          <End Role="Donation" Type="Self.Donation" Multiplicity="1" />
+          <End Role="BloodCount" Type="Self.BloodCount" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Donation">
+              <PropertyRef Name="DonationID" />
+            </Principal>
+            <Dependent Role="BloodCount">
+              <PropertyRef Name="BloodTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Donation_DonationSite">
           <End Role="DonationSite" Type="Self.DonationSite" Multiplicity="0..1" />
           <End Role="Donation" Type="Self.Donation" Multiplicity="*" />
@@ -129,13 +149,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Recipient_Donation">
+          <End Role="Donation" Type="Self.Donation" Multiplicity="1" />
+          <End Role="Recipient" Type="Self.Recipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Donation">
+              <PropertyRef Name="DonationID" />
+            </Principal>
+            <Dependent Role="Recipient">
+              <PropertyRef Name="DonationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recipient_Donor">
+          <End Role="Donor" Type="Self.Donor" Multiplicity="1" />
+          <End Role="Recipient" Type="Self.Recipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Donor">
+              <PropertyRef Name="DonorID" />
+            </Principal>
+            <Dependent Role="Recipient">
+              <PropertyRef Name="DonorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="BloodforLifeModelStoreContainer">
+          <EntitySet Name="BloodCount" EntityType="Self.BloodCount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Donation" EntityType="Self.Donation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DonationSite" EntityType="Self.DonationSite" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Donor" EntityType="Self.Donor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Recipient" EntityType="Self.Recipient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BloodCount_Donation" Association="Self.FK_BloodCount_Donation">
+            <End Role="Donation" EntitySet="Donation" />
+            <End Role="BloodCount" EntitySet="BloodCount" />
+          </AssociationSet>
           <AssociationSet Name="FK_Donation_DonationSite" Association="Self.FK_Donation_DonationSite">
             <End Role="DonationSite" EntitySet="DonationSite" />
             <End Role="Donation" EntitySet="Donation" />
@@ -148,9 +197,16 @@
             <End Role="Recipient" EntitySet="Recipient" />
             <End Role="Donation" EntitySet="Donation" />
           </AssociationSet>
+          <AssociationSet Name="FK_Recipient_Donation" Association="Self.FK_Recipient_Donation">
+            <End Role="Donation" EntitySet="Donation" />
+            <End Role="Recipient" EntitySet="Recipient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recipient_Donor" Association="Self.FK_Recipient_Donor">
+            <End Role="Donor" EntitySet="Donor" />
+            <End Role="Recipient" EntitySet="Recipient" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BloodforLifeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -175,6 +231,8 @@
           <NavigationProperty Name="DonationSite" Relationship="Self.FK_Donation_DonationSite" FromRole="Donation" ToRole="DonationSite" />
           <NavigationProperty Name="Donor" Relationship="Self.FK_Donation_Donor" FromRole="Donation" ToRole="Donor" />
           <NavigationProperty Name="Recipient" Relationship="Self.FK_Donation_Recipient" FromRole="Donation" ToRole="Recipient" />
+          <NavigationProperty Name="Recipients" Relationship="BloodforLifeModel.FK_Recipient_Donation" FromRole="Donation" ToRole="Recipient" />
+          <NavigationProperty Name="BloodCount" Relationship="BloodforLifeModel.FK_BloodCount_Donation" FromRole="Donation" ToRole="BloodCount" />
         </EntityType>
         <EntityType Name="DonationSite">
           <Key>
@@ -210,6 +268,7 @@
           <Property Name="LastScreeningDate" Type="DateTime" Precision="0" />
           <Property Name="ArchivedDonor" Type="Boolean" />
           <NavigationProperty Name="Donations" Relationship="Self.FK_Donation_Donor" FromRole="Donor" ToRole="Donation" />
+          <NavigationProperty Name="Recipients" Relationship="BloodforLifeModel.FK_Recipient_Donor" FromRole="Donor" ToRole="Recipient" />
         </EntityType>
         <EntityType Name="Recipient">
           <Key>
@@ -223,6 +282,8 @@
           <Property Name="DonorID" Type="Int32" Nullable="false" />
           <Property Name="DonationID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Donations" Relationship="Self.FK_Donation_Recipient" FromRole="Recipient" ToRole="Donation" />
+          <NavigationProperty Name="Donation" Relationship="BloodforLifeModel.FK_Recipient_Donation" FromRole="Recipient" ToRole="Donation" />
+          <NavigationProperty Name="Donor" Relationship="BloodforLifeModel.FK_Recipient_Donor" FromRole="Recipient" ToRole="Donor" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -303,7 +364,65 @@
             <End Role="Recipient" EntitySet="Recipients" />
             <End Role="Donation" EntitySet="Donations" />
           </AssociationSet>
+          <AssociationSet Name="FK_Recipient_Donation" Association="BloodforLifeModel.FK_Recipient_Donation">
+            <End Role="Donation" EntitySet="Donations" />
+            <End Role="Recipient" EntitySet="Recipients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recipient_Donor" Association="BloodforLifeModel.FK_Recipient_Donor">
+            <End Role="Donor" EntitySet="Donors" />
+            <End Role="Recipient" EntitySet="Recipients" />
+          </AssociationSet>
+          <EntitySet Name="BloodCounts" EntityType="BloodforLifeModel.BloodCount" />
+          <AssociationSet Name="FK_BloodCount_Donation" Association="BloodforLifeModel.FK_BloodCount_Donation">
+            <End Role="Donation" EntitySet="Donations" />
+            <End Role="BloodCount" EntitySet="BloodCounts" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Recipient_Donation">
+          <End Type="BloodforLifeModel.Donation" Role="Donation" Multiplicity="1" />
+          <End Type="BloodforLifeModel.Recipient" Role="Recipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Donation">
+              <PropertyRef Name="DonationID" />
+            </Principal>
+            <Dependent Role="Recipient">
+              <PropertyRef Name="DonationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recipient_Donor">
+          <End Type="BloodforLifeModel.Donor" Role="Donor" Multiplicity="1" />
+          <End Type="BloodforLifeModel.Recipient" Role="Recipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Donor">
+              <PropertyRef Name="DonorID" />
+            </Principal>
+            <Dependent Role="Recipient">
+              <PropertyRef Name="DonorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="BloodCount">
+          <Key>
+            <PropertyRef Name="BloodTypeID" />
+          </Key>
+          <Property Name="BloodTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BloodType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Count" Type="Int32" />
+          <NavigationProperty Name="Donation" Relationship="BloodforLifeModel.FK_BloodCount_Donation" FromRole="BloodCount" ToRole="Donation" />
+        </EntityType>
+        <Association Name="FK_BloodCount_Donation">
+          <End Type="BloodforLifeModel.Donation" Role="Donation" Multiplicity="1" />
+          <End Type="BloodforLifeModel.BloodCount" Role="BloodCount" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Donation">
+              <PropertyRef Name="DonationID" />
+            </Principal>
+            <Dependent Role="BloodCount">
+              <PropertyRef Name="BloodTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -401,6 +520,15 @@
                 <ScalarProperty Name="IsUserAdmin" ColumnName="IsUserAdmin" />
                 <ScalarProperty Name="IsEmailVerified" ColumnName="IsEmailVerified" />
                 <ScalarProperty Name="ActivationCode" ColumnName="ActivationCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BloodCounts">
+            <EntityTypeMapping TypeName="BloodforLifeModel.BloodCount">
+              <MappingFragment StoreEntitySet="BloodCount">
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="BloodType" ColumnName="BloodType" />
+                <ScalarProperty Name="BloodTypeID" ColumnName="BloodTypeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

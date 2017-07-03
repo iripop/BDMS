@@ -39,7 +39,7 @@
                                 <div class="col-md-12">
                                     <table class="table table-hover">
 
-                                        <tr>
+                                        <tr style="background:#EFEFEF">
                                             <th>Donation Type</th>
                                             <th>Blood Type</th>
                                             <th>Rh factor</th>
@@ -48,7 +48,9 @@
                                             <th>Expiration date</th>
                                             <th>Accepted</th>
                                             <th>Reason for rejection</th>
-                                            <th><i class="glyphicon glyphicon-cog"></i></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
                                         </tr>
 
                                         <tbody id="donationRow">
@@ -57,19 +59,39 @@
                                             {
                                                 foreach (var item in ViewBag.DonationsList)
                                                 {
-                                                    <tr id="row_@item.DonationID">
-                                                        <td>@item.DonationType</td>
-                                                        <td>@item.CrossBloodType</td>
-                                                        <td>@item.CrossRhFactor</td>
-                                                        <td>@item.DonorFullName</td>
-                                                        <td>@item.CreationDate</td>
-                                                        <td>@item.ExpirationDate</td>
-                                                        <td>@item.AcceptedDonation</td>
-                                                        <td>@item.ReasonsForRejection</td>
-                                                        <td><a href="#" onclick="AddEditDonation(@item.DonationID)"><i class="glyphicon glyphicon-edit" aria-hidden="true" style="color:#6799CC;"></i></a> </td>
-                                                        <td><a href="#" onclick="ShowDonation(@item.DonationID)"><i class="glyphicon glyphicon-eye-open" style="color:#006600;"></i></a> </td>
-                                                        <td><a href="#" onclick="ConfirmDelete(@item.DonationID)"><i class="glyphicon glyphicon-remove" style="color:#C01D01;"></i></a> </td>
-                                                    </tr>
+                                                    if (@item.AcceptedDonation ==true)
+                                                    {
+                                                        <tr id="row_@item.DonationID">
+                                                            <td>@item.DonationType</td>
+                                                            <td>@item.CrossBloodType</td>
+                                                            <td>@item.CrossRhFactor</td>
+                                                            <td>@item.DonorFullName</td>
+                                                            <td>@item.CreationDate</td>
+                                                            <td>@item.ExpirationDate</td>
+                                                            <td style="background:#9CFC7E">@item.AcceptedDonation</td>
+                                                            <td>@item.ReasonsForRejection</td>
+                                                            <td><a href="#" onclick="AddEditDonation(@item.DonationID)"><i class="glyphicon glyphicon-edit" aria-hidden="true" style="color:#6799CC;"></i></a> </td>
+                                                            <td><a href="#" onclick="ShowDonation(@item.DonationID)"><i class="glyphicon glyphicon-eye-open" style="color:#006600;"></i></a> </td>
+                                                            <td><a href="#" onclick="ConfirmDelete(@item.DonationID)"><i class="glyphicon glyphicon-remove" style="color:#C01D01;"></i></a> </td>
+                                                        </tr>
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr id="row_@item.DonationID">
+                                                            <td>@item.DonationType</td>
+                                                            <td>@item.CrossBloodType</td>
+                                                            <td>@item.CrossRhFactor</td>
+                                                            <td>@item.DonorFullName</td>
+                                                            <td>@item.CreationDate</td>
+                                                            <td>@item.ExpirationDate</td>
+                                                            <td style="background:#f8e7e4">@item.AcceptedDonation</td>
+                                                            <td>@item.ReasonsForRejection</td>
+                                                            <td><a href="#" onclick="AddEditDonation(@item.DonationID)"><i class="glyphicon glyphicon-edit" aria-hidden="true" style="color:#6799CC;"></i></a> </td>
+                                                            <td><a href="#" onclick="ShowDonation(@item.DonationID)"><i class="glyphicon glyphicon-eye-open" style="color:#006600;"></i></a> </td>
+                                                            <td><a href="#" onclick="ConfirmDelete(@item.DonationID)"><i class="glyphicon glyphicon-remove" style="color:#C01D01;"></i></a> </td>
+                                                        </tr>
+                                                    }
+
                                                 }
                                             }
                                             <tr></tr>
@@ -331,7 +353,7 @@
 
         $(document).ready(function () {
 
-            $('#donationRow').pageMe({ pagerSelector: '#myPager', showPrevNext: true, hidePageNumbers: false, perPage: 2 });
+            $('#donationRow').pageMe({ pagerSelector: '#myPager', showPrevNext: true, hidePageNumbers: false, perPage: 5 });
 
         });
     </script>

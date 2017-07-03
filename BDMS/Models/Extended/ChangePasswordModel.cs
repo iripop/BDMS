@@ -11,6 +11,11 @@ namespace BDMS.Models
     {
         public int UserID { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Email is required")]
+        [DisplayName("Email address")]
+        [DataType(DataType.EmailAddress)]
+        public string EmailAddress { get; set; }
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "Password is required")]
         [DisplayName("Old Password")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

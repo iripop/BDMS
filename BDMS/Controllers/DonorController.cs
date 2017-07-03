@@ -14,7 +14,7 @@ namespace BMDS.Controllers
         {
             BloodforLifeEntities db = new BloodforLifeEntities();
 
-            List<string> isDonorActive = new List<string>(new string[] { "Yes", "No" });
+            List<string> isDonorActive = new List<string>(new string[] { "True", "False" });
             ViewBag.IsDonorActiveList = new SelectList(isDonorActive);
 
             List<string> bloodType = new List<string>(new string[] { "A", "AB", "B", "0" });
@@ -53,7 +53,7 @@ namespace BMDS.Controllers
             {
                 BloodforLifeEntities db = new BloodforLifeEntities();
 
-                List<string> isDonorActive = new List<string>(new string[] { "Yes", "No" });
+                List<string> isDonorActive = new List<string>(new string[] { "True", "False" });
                 ViewBag.IsDonorActiveList = new SelectList(isDonorActive);
 
                 List<string> bloodType = new List<string>(new string[] { "A", "AB", "B", "0" });
@@ -162,7 +162,7 @@ namespace BMDS.Controllers
         {
             BloodforLifeEntities db = new BloodforLifeEntities();
 
-            List<string> isDonorActive = new List<string>(new string[] { "Yes", "No" });
+            List<string> isDonorActive = new List<string>(new string[] { "True", "False" });
             ViewBag.IsDonorActiveList = new SelectList(isDonorActive);
 
             List<string> bloodType = new List<string>(new string[] { "A", "AB", "B", "0" });
@@ -202,7 +202,7 @@ namespace BMDS.Controllers
             x.ActiveDonor.Contains(SearchText) ||
             x.DonorBloodType.Contains(SearchText) ||
             x.RhFactor.Contains(SearchText) ||
-            x.DonorEmail.Contains(SearchText)).Select(x => new DonorModel
+            x.DonorEmail.Contains(SearchText)).Where(x => x.ArchivedDonor == false).Select(x => new DonorModel
             {
                 DonorID = x.DonorID,
                 ActiveDonor = x.ActiveDonor,

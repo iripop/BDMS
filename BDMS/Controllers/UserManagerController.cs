@@ -10,7 +10,7 @@ using System.Web.Security;
 
 namespace BMDS.Controllers
 {
-    
+    [Authorize]
     public class UserManagerController : Controller
     {
         #region Add  a user action
@@ -150,9 +150,17 @@ namespace BMDS.Controllers
 
         #region Change password get action
         [HttpGet]
-        public ActionResult ChangePassword()
+        public ActionResult ChangePassword(string id)
         {
-            return View();
+            id = User.Identity.Name;
+            BloodforLifeEntities db = new BloodforLifeEntities();
+            ChangePasswordModel user = new ChangePasswordModel();
+            if (id!=null)
+            {
+                User u=db.Users.SingleOrDefault(x => x.EmailAddress == id);
+                user.NewPassword = u.Password;
+            }
+            return View(user);
         }
         #endregion
 
@@ -162,57 +170,51 @@ namespace BMDS.Controllers
         {
             bool Status = false;
             string message = "";
-
-            //Model Validation
             if (ModelState.IsValid)
-            {
+                {
                 #region Password hashing
                 model.NewPassword = Crypto.Hash(model.NewPassword);
                 model.ConfirmPassword = Crypto.Hash(model.ConfirmPassword);
                 #endregion
 
-                #region Save data to database
                 try
                 {
-                    BloodforLifeEntities db = new BloodforLifeEntities();
-                    var v = db.Users.Where(a => a.UserID == model.UserID).FirstOrDefault();
-                    if (v!=null)
+                //string id = User.Identity.Name;
+                BloodforLifeEntities db = new BloodforLifeEntities();
+            
+                    var u = db.Users.Where(x => x.EmailAddress == model.EmailAddress).SingleOrDefault();
+                if (u != null)
+                {
+                    if (string.Compare(Crypto.Hash(model.Password), u.Password) == 0)
                     {
-
-                        if (string.Compare(Crypto.Hash(model.Password), v.Password) == 0)
-                        {
-                            //Update a user password
-                            User user = db.Users.SingleOrDefault(x => x.UserID == model.UserID);
-                            user.Password = model.NewPassword;
-                            db.SaveChanges();
-                            message = "Password change successful";
-                            Status = true;
-
-                        }
-                        else
-                        {
-                            message = "Invalid password";
-                        }
-
+                        User pass = db.Users.SingleOrDefault(x => x.EmailAddress == model.EmailAddress);
+                        pass.Password = model.NewPassword;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        message = "Invalid password";
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    throw (ex);
+                    message = "Invalid request";
                 }
+                   
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
 
-                #endregion
             }
             else
             {
                 message = "Invalid request";
             }
-
             ViewBag.Message = message;
             ViewBag.Status = Status;
             return View(model);
-
-
         }
         #endregion
     
@@ -319,8 +321,9 @@ namespace BMDS.Controllers
         #region User Profile 
         public ActionResult UserProfile(string id)
         {
+            id = User.Identity.Name;
             BloodforLifeEntities db = new BloodforLifeEntities();
-            var user = db.Users.Single(u => u.EmailAddress == id);
+            var user = db.Users.SingleOrDefault(u => u.EmailAddress == id);
             return View(user);
         }
         #endregion

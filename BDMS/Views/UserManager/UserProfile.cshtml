@@ -1,32 +1,27 @@
-﻿@model BDMS.Models.UserModel
+﻿@model BDMS.Models.User
 
 @{
     ViewBag.Title = "UserProfile";
 }
-
 <link href="~/Content/adduser.css" rel="stylesheet" />
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form_main">
+                <h4 class="heading"><strong>User </strong> Profile <span></span></h4>
+                <div class="form">
+                    <form action="contact_send_mail.php" method="post" id="contactFrm" name="contactFrm">
+                        <div class="col-md-12">
+                            First Name: @Model.FirstName <br />
+                            Last Name: @Model.LastName <br />
+                            Email: @Model.EmailAddress <br />
+                            Phone Number: @Model.PhoneNumber <br />
+                        </div>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="form_main">
-                    <h4 class="heading"><strong>User </strong> Profile <span></span></h4>
-                    <div class="form">
-
-                        First Name: @Model.FirstName <br />
-                        Last Name: @Model.LastName <br />
-                        Email: @Model.EmailAddress <br />
-                        Phone: @Model.PhoneNumber <br />
-
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-
-}
+</div>
 

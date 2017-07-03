@@ -14,6 +14,10 @@
         <AssociationConnector Association="BloodforLifeModel.FK_Donation_DonationSite" ManuallyRouted="false" />
         <AssociationConnector Association="BloodforLifeModel.FK_Donation_Donor" ManuallyRouted="false" />
         <AssociationConnector Association="BloodforLifeModel.FK_Donation_Recipient" ManuallyRouted="false" />
+        <AssociationConnector Association="BloodforLifeModel.FK_Recipient_Donation" />
+        <AssociationConnector Association="BloodforLifeModel.FK_Recipient_Donor" />
+        <EntityTypeShape EntityType="BloodforLifeModel.BloodCount" Width="1.5" PointX="4.375" PointY="7.25" />
+        <AssociationConnector Association="BloodforLifeModel.FK_BloodCount_Donation" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

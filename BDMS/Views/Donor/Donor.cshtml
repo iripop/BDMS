@@ -38,14 +38,16 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <table class="table table-hover">
-                                    <tr>
-                                        <th class="danger">Active donor</th>
+                                    <tr style="background:#EFEFEF">
+                                        <th>Active donor</th>
                                         <th>Blood type</th>
                                         <th>Rh factor</th>
                                         <th>Donor Name</th>
                                         <th>Phone number</th>
                                         <th>Email</th>
                                         <th>Last screening date</th>
+                                        <th></th>
+                                        <th></th>
                                         <th></th>
                                     </tr>
 
@@ -55,19 +57,41 @@
                                         {
                                             foreach (var item in ViewBag.DonorsList)
                                             {
-                                                <tr id="row_@item.DonorID">
-                                                    <td class="danger">@item.ActiveDonor</td>
-                                                    <td>@item.DonorBloodType</td>
-                                                    <td>@item.RhFactor</td>
-                                                    <td>@item.DonorFullName</td>
-                                                    <td>@item.DonorPhoneNumber</td>
-                                                    <td>@item.DonorEmail</td>
-                                                    <td>@item.LastScreeningDate</td>
-                                                    <td><a href="#" onclick="AddEditDonor(@item.DonorID)"><i class="glyphicon glyphicon-edit" aria-hidden="true" style="color:#6799CC;"></i> </a></td>
-                                                    <td><a href="#" onclick="ShowDonor(@item.DonorID)"><i class="glyphicon glyphicon-eye-open" style="color:#006600;"></i> </a></td>
-                                                    <td><a href="#" onclick="ConfirmDelete(@item.DonorID)"><i class="glyphicon glyphicon-remove" style="color:#C01D01;"></i> </a></td>
-                                                    
-                                                </tr>
+                                                if (@item.ActiveDonor == "True")
+                                                {
+                                                    <tr id="row_@item.DonorID">
+
+                                                        <td style="background:#9CFC7E">@item.ActiveDonor</td>
+                                                        <td>@item.DonorBloodType</td>
+                                                        <td>@item.RhFactor</td>
+                                                        <td>@item.DonorFullName</td>
+                                                        <td>@item.DonorPhoneNumber</td>
+                                                        <td>@item.DonorEmail</td>
+                                                        <td>@item.LastScreeningDate</td>
+                                                        <td><a href="#" onclick="AddEditDonor(@item.DonorID)"><i class="glyphicon glyphicon-edit" aria-hidden="true" style="color:#6799CC;"></i> </a></td>
+                                                        <td><a href="#" onclick="ShowDonor(@item.DonorID)"><i class="glyphicon glyphicon-eye-open" style="color:#006600;"></i> </a></td>
+                                                        <td><a href="#" onclick="ConfirmDelete(@item.DonorID)"><i class="glyphicon glyphicon-remove" style="color:#C01D01;"></i> </a></td>
+
+                                                    </tr>
+                                                }
+                                                else
+                                                {
+                                                    <tr id="row_@item.DonorID">
+
+                                                        <td style="background:#f8e7e4">@item.ActiveDonor</td>
+                                                        <td>@item.DonorBloodType</td>
+                                                        <td>@item.RhFactor</td>
+                                                        <td>@item.DonorFullName</td>
+                                                        <td>@item.DonorPhoneNumber</td>
+                                                        <td>@item.DonorEmail</td>
+                                                        <td>@item.LastScreeningDate</td>
+                                                        <td><a href="#" onclick="AddEditDonor(@item.DonorID)"><i class="glyphicon glyphicon-edit" aria-hidden="true" style="color:#6799CC;"></i> </a></td>
+                                                        <td><a href="#" onclick="ShowDonor(@item.DonorID)"><i class="glyphicon glyphicon-eye-open" style="color:#006600;"></i> </a></td>
+                                                        <td><a href="#" onclick="ConfirmDelete(@item.DonorID)"><i class="glyphicon glyphicon-remove" style="color:#C01D01;"></i> </a></td>
+
+                                                    </tr>
+                                                }
+
                                             }
                                         }
                                         <tr></tr>
@@ -329,7 +353,7 @@
 
         $(document).ready(function () {
 
-            $('#donationSiteRow').pageMe({ pagerSelector: '#myPager', showPrevNext: true, hidePageNumbers: false, perPage: 5 });
+            $('#donorRow').pageMe({ pagerSelector: '#myPager', showPrevNext: true, hidePageNumbers: false, perPage: 5 });
 
         });
 </script>

@@ -18,6 +18,7 @@ namespace BDMS.Models
         public Donor()
         {
             this.Donations = new HashSet<Donation>();
+            this.Recipients = new HashSet<Recipient>();
         }
     
         public int DonorID { get; set; }
@@ -34,5 +35,7 @@ namespace BDMS.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Donation> Donations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Recipient> Recipients { get; set; }
     }
 }

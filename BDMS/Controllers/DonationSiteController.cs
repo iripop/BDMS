@@ -193,7 +193,7 @@ namespace BMDS.Controllers
             x.EndDate.ToString().Contains(SearchText) ||
             x.RegistrationEmail.Contains(SearchText) ||
             x.RegistrationPhone.Contains(SearchText) ||
-            x.MobileSite.ToString().Contains(SearchText)).Select(x => new DonationSiteModel
+            x.MobileSite.ToString().Contains(SearchText)).Where(x=> x.IsSiteArchived==false).Select(x => new DonationSiteModel
             {
                 SiteName = x.SiteName,
                 Address = x.Address,

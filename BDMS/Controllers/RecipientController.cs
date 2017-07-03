@@ -15,17 +15,18 @@ namespace BMDS.Controllers
         {
             BloodforLifeEntities db = new BloodforLifeEntities();
 
+            List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == "True" && x.ArchivedDonor == false).ToList();
+            ViewBag.DonorsList = new SelectList(listDonor, "DonorID", "DonorFullName");
             List<Donation> donationlist = db.Donations.Where(x => x.IsDeleted == false).ToList();
             ViewBag.DonationList = new SelectList(donationlist, "DonationID", "DonationType");
 
-            List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == "Yes" && x.ArchivedDonor == false).ToList();
-            ViewBag.DonorsList = new SelectList(listDonor, "DonorID", "DonorFullName");
+           
 
             List<RecipientModel> listRec = db.Recipients.Where(x => x.IsRecipientArchived == false).Select(x => new RecipientModel
             {
                 RecipientCodedName = x.RecipientCodedName,
-                //DonorFullName = x.Donor.DonorFullName,
-               // DonationType = x.Donation.DonationType,
+                DonorFullName = x.Donor.DonorFullName,
+                DonationType = x.Donation.DonationType,
                 DateOfUse = x.DateOfUse,
                 RelatedCondition = x.RelatedCondition,
                 RecipientID = x.RecipientID
@@ -47,7 +48,7 @@ namespace BMDS.Controllers
                 List<Donation> donationlist = db.Donations.Where(x => x.IsDeleted == false).ToList();
                 ViewBag.DonationList = new SelectList(donationlist, "DonationID", "DonationType");
 
-                List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == "Yes" && x.ArchivedDonor == false).ToList();
+                List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == "True" && x.ArchivedDonor == false).ToList();
                 ViewBag.DonorsList = new SelectList(listDonor, "DonorID", "DonorFullName");
 
                 if (model.RecipientID > 0)
@@ -117,11 +118,11 @@ namespace BMDS.Controllers
             List<RecipientModel> listRec = db.Recipients.Where(x => x.IsRecipientArchived == false && x.RecipientID == RecipientID).Select(x => new RecipientModel
             {
                 RecipientCodedName = x.RecipientCodedName,
-              //  DonorFullName = x.Donor.DonorFullName,
-               // DonationType = x.Donation.DonationType,
-               // ExpirationDate = x.Donation.ExpirationDate,
-               // CrossBloodType = x.Donation.CrossBloodType,
-               // CrossRhFactor = x.Donation.CrossRhFactor,
+                DonorFullName = x.Donor.DonorFullName,
+                DonationType = x.Donation.DonationType,
+                ExpirationDate = x.Donation.ExpirationDate,
+                CrossBloodType = x.Donation.CrossBloodType,
+                CrossRhFactor = x.Donation.CrossRhFactor,
                 DateOfUse = x.DateOfUse,
                 RelatedCondition = x.RelatedCondition,
                 RecipientID = x.RecipientID
@@ -141,7 +142,7 @@ namespace BMDS.Controllers
             List<Donation> donationlist = db.Donations.Where(x => x.IsDeleted == false).ToList();
             ViewBag.DonationList = new SelectList(donationlist, "DonationID", "DonationType");
 
-            List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == "Yes" && x.ArchivedDonor == false).ToList();
+            List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == "True" && x.ArchivedDonor == false).ToList();
             ViewBag.DonorsList = new SelectList(listDonor, "DonorID", "DonorFullName");
 
             RecipientModel model = new RecipientModel();
@@ -170,13 +171,13 @@ namespace BMDS.Controllers
 
             List<RecipientModel> listRec = db.Recipients.Where(x => x.IsRecipientArchived == false && (x.RecipientCodedName.Contains(SearchText) ||
             x.RelatedCondition.Contains(SearchText) ||
-            x.DateOfUse.ToString().Contains(SearchText))).Select(x => new RecipientModel
-            //  x.Donor.DonorFullName.Contains(SearchText) ||
-            // x.Donation.DonationType.Contains(SearchText)
+            x.DateOfUse.ToString().Contains(SearchText) ||
+            x.Donor.DonorFullName.Contains(SearchText) ||
+            x.Donation.DonationType.Contains(SearchText))).Where(x => x.IsRecipientArchived == false).Select(x => new RecipientModel
             {
                 RecipientCodedName = x.RecipientCodedName,
-               // DonorFullName = x.Donor.DonorFullName,
-               // DonationType = x.Donation.DonationType,
+                DonorFullName = x.Donor.DonorFullName,
+                DonationType = x.Donation.DonationType,
                 DateOfUse = x.DateOfUse,
                 RelatedCondition = x.RelatedCondition,
                 RecipientID = x.RecipientID

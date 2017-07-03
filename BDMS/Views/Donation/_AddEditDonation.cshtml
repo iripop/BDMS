@@ -48,6 +48,7 @@
 
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
 <script>
     $(document).ready(function () {
 
@@ -71,5 +72,19 @@
             });
         });
     });
-
 </script>
+
+<!--
+<script>
+    $(document).ready(function () {
+        $("#DonorID").change(function () {
+            $.get("Donation/GetBloodTypeList", { DonorID: $("#DonorID"), val() }, function (data) {
+                $("#DonorID").empty();
+                $.each(data, function (index, row) {
+                    $("#DonorID").append("<option value='" + row.DonorID + "'>" + row.DonorBloodType + "</option> ")
+                });
+            });
+        });
+    });
+</script>
+-->

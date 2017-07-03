@@ -162,6 +162,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ArchivesController.cs" />
+    <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\DonationController.cs" />
     <Compile Include="Controllers\DonationSiteController.cs" />
     <Compile Include="Controllers\DonorController.cs" />
@@ -173,6 +174,9 @@
     <Compile Include="Crypto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BloodCount.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DBModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -198,6 +202,7 @@
     <Compile Include="Models\Donor.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Extended\BloodCountModel.cs" />
     <Compile Include="Models\Extended\ChangePasswordModel.cs" />
     <Compile Include="Models\Extended\DonationModel.cs" />
     <Compile Include="Models\Extended\DonationSiteModel.cs" />
@@ -306,10 +311,13 @@
     <Content Include="Views\UserManager\VerifyAccount.cshtml" />
     <Content Include="Views\UserManager\Users.cshtml" />
     <Content Include="Views\UserManager\_SearchUser.cshtml" />
-    <Content Include="Views\UserManager\ChangePassword.cshtml" />
-    <Content Include="Views\UserManager\UserProfile.cshtml" />
     <Content Include="Views\Donor\_SearchDonor.cshtml" />
     <Content Include="Views\Donor\_ShowDonorDetail.cshtml" />
+    <Content Include="Views\UserManager\UserProfile.cshtml" />
+    <Content Include="Views\UserManager\ChangePassword.cshtml" />
+    <Content Include="Views\Home\_ShowDonationsByExpirationDateDetails.cshtml" />
+    <Content Include="Views\Home\CountDonationsByType.cshtml" />
+    <Content Include="Views\Chart\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

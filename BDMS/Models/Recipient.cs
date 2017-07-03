@@ -30,5 +30,7 @@ namespace BDMS.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Donation> Donations { get; set; }
+        public virtual Donation Donation { get; set; }
+        public virtual Donor Donor { get; set; }
     }
 }

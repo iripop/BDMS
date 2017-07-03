@@ -31,5 +31,6 @@ namespace BDMS.Models
         public virtual DbSet<Recipient> Recipients { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<BloodCount> BloodCounts { get; set; }
     }
 }

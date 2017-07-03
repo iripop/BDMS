@@ -14,6 +14,12 @@ namespace BDMS.Models
     
     public partial class Donation
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Donation()
+        {
+            this.Recipients = new HashSet<Recipient>();
+        }
+    
         public int DonationID { get; set; }
         public string DonationType { get; set; }
         public string CrossBloodType { get; set; }
@@ -32,5 +38,8 @@ namespace BDMS.Models
         public virtual DonationSite DonationSite { get; set; }
         public virtual Donor Donor { get; set; }
         public virtual Recipient Recipient { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Recipient> Recipients { get; set; }
+        public virtual BloodCount BloodCount { get; set; }
     }
 }
