@@ -64,14 +64,6 @@ namespace BMDS.Controllers
         }
         #endregion
 
-        public JsonResult GetBloodTypeList(int DonorID)
-        {
-            BloodforLifeEntities db = new BloodforLifeEntities();
-            db.Configuration.ProxyCreationEnabled = false;
-            List<Donor> bloodtype = db.Donors.Where(x => x.DonorID == DonorID).ToList();
-            return Json(bloodtype, JsonRequestBehavior.AllowGet);
-        }
-
         #region POST donations
         [HttpPost]
         public ActionResult Donation(DonationModel model)
@@ -115,7 +107,27 @@ namespace BMDS.Controllers
                     donation.DonationSiteID = model.DonationSiteID;
                     donation.AcceptedDonation = model.AcceptedDonation;
                     donation.ReasonsForRejection = model.ReasonsForRejection;
-                  
+
+                    var don1 = db.Donations.Where(x => x.CrossBloodType == "A" && x.IsDeleted==false).Count();
+
+                    var don2 = db.Donations.Where(x => x.CrossBloodType == "B" && x.IsDeleted == false).Count();
+
+                    var don3 = db.Donations.Where(x => x.CrossBloodType == "AB" && x.IsDeleted == false).Count();
+
+                    var don4 = db.Donations.Where(x => x.CrossBloodType == "0" && x.IsDeleted == false).Count();
+
+                    BloodCount id1 = db.BloodCounts.SingleOrDefault(x => x.BloodTypeID == 1);
+                    id1.Count = don1;
+
+                    BloodCount id2 = db.BloodCounts.SingleOrDefault(x => x.BloodTypeID == 2);
+                    id2.Count = don2;
+
+                    BloodCount id3 = db.BloodCounts.SingleOrDefault(x => x.BloodTypeID == 3);
+                    id3.Count = don3;
+
+                    BloodCount id4 = db.BloodCounts.SingleOrDefault(x => x.BloodTypeID == 4);
+                    id4.Count = don4;
+
                     db.SaveChanges();
                 }
                 else
@@ -136,6 +148,28 @@ namespace BMDS.Controllers
                     donation.ReasonsForRejection = model.ReasonsForRejection;
 
                     db.Donations.Add(donation);
+
+                    var don1 = db.Donations.Where(x => x.CrossBloodType == "A" && x.IsDeleted == false).Count();
+
+                    var don2 = db.Donations.Where(x => x.CrossBloodType == "B" && x.IsDeleted == false).Count();
+
+                    var don3 = db.Donations.Where(x => x.CrossBloodType == "AB" && x.IsDeleted == false).Count();
+
+                    var don4 = db.Donations.Where(x => x.CrossBloodType == "0" && x.IsDeleted == false).Count();
+
+                    BloodCount id1 = db.BloodCounts.SingleOrDefault(x => x.BloodTypeID == 1);
+                    id1.Count = don1;
+
+                    BloodCount id2 = db.BloodCounts.SingleOrDefault(x => x.BloodTypeID == 2);
+                    id2.Count = don2;
+
+                    BloodCount id3 = db.BloodCounts.SingleOrDefault(x => x.BloodTypeID == 3);
+                    id3.Count = don3;
+
+                    BloodCount id4 = db.BloodCounts.SingleOrDefault(x => x.BloodTypeID == 4);
+                    id4.Count = don4;
+
+                    db.SaveChanges();
                     db.SaveChanges();
 
                 }
@@ -233,11 +267,11 @@ namespace BMDS.Controllers
                 model.DonationType = donation.DonationType;
                 model.CrossBloodType = donation.CrossBloodType;
                 model.CrossRhFactor = donation.CrossRhFactor;
-                model.ExpirationDate = donation.ExpirationDate;
+                model.ExpirationDate = donation.ExpirationDate.Date;
                 model.NumberOfUnits = donation.NumberOfUnits;
                 model.DonationSiteID = donation.DonationSiteID;
                 model.RecipientID = donation.RecipientID;
-                model.CreationDate = donation.CreationDate;
+                model.CreationDate = donation.CreationDate.Date;
                 model.AcceptedDonation = donation.AcceptedDonation;
                 model.ReasonsForRejection = donation.ReasonsForRejection;
 
@@ -288,14 +322,14 @@ namespace BMDS.Controllers
                 DonationType = x.DonationType,
                 CrossBloodType = x.CrossBloodType,
                 CrossRhFactor = x.CrossRhFactor,
-                ExpirationDate = x.ExpirationDate,
+                ExpirationDate = x.ExpirationDate.Date,
                 NumberOfUnits = x.NumberOfUnits,
                 DonationSiteID = x.DonationSiteID,
                 DonorID = x.DonorID,
                 RecipientID = x.RecipientID,
                 DonorFullName = x.Donor.DonorFullName,
                 SiteName = x.DonationSite.SiteName,
-                CreationDate = x.CreationDate,
+                CreationDate = x.CreationDate.Date,
                 AcceptedDonation = x.AcceptedDonation,
                 ReasonsForRejection = x.ReasonsForRejection
 

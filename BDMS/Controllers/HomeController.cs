@@ -48,8 +48,6 @@ namespace BMDS.Controllers
                 ExpirationDate = x.ExpirationDate
             }).ToList();
             ViewBag.DonationList = listDonations;
-          // Donation don = new Donation();
-           //ViewBag.Count = db.Donations.Where(x => x.ExpirationDate == don.ExpirationDate).Count();
             return View();
         }
 
@@ -79,27 +77,6 @@ namespace BMDS.Controllers
 
             ViewBag.DonationsList = listDonations;
             return PartialView("_ShowDonationsByExpirationDateDetails");
-        }
-        #endregion
-
-        #region Donations count
-        public ActionResult CountDonationsByType()
-        {
-            BloodforLifeEntities db = new BloodforLifeEntities();
-
-            var don1 = db.Donations.Where(x => x.DonationType.Contains("Whole Blood")).Count();
-            ViewBag.Count1 = don1;
-
-            var don2 = db.Donations.Where(x => x.DonationType.Contains("Packed Red Blood Cells")).Count();
-            ViewBag.Count2 = don2;
-
-            var don3 = db.Donations.Where(x => x.DonationType.Contains("Platelets")).Count();
-            ViewBag.Count3 = don3;
-
-            var don4 = db.Donations.Where(x => x.DonationType.Contains("Plasma")).Count();
-            ViewBag.Count4 = don4;
-
-            return View();
         }
         #endregion
 

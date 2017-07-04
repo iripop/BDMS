@@ -88,7 +88,7 @@ else
                                     <div class="col-md-8">
                                         <h5>Is User Admin</h5>
                                         <div class="checkbox">
-                                            @Html.CheckBoxFor(model => model.IsUserAdmin)
+                                            @Html.CheckBoxFor(model => model.IsUserAdmin, new { @class = "check" })
                                             @Html.ValidationMessageFor(model => model.IsUserAdmin, "", new { @class = "text-danger" })
                                         </div>
                                     </div>

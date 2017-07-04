@@ -5,25 +5,25 @@
     <form id="myDonationForm">
         @Html.HiddenFor(m => m.DonationID)
 
-        <p>@Html.DropDownListFor(model => model.DonorID, ViewBag.DonorsList as SelectList, "--Select a donor--", new { @class = "txt" }) </p>
+        <p> @Html.LabelFor(model => model.DonorID) @Html.DropDownListFor(model => model.DonorID, ViewBag.DonorsList as SelectList, "--Select a donor--", new { @class = "txt" }) </p>
 
-        <p>@Html.DropDownListFor(model => model.DonationType, ViewBag.DonationTypeList as SelectList, "--Select a donation type--", new { @class = "txt" }) </p>
+        <p> @Html.LabelFor(model => model.DonationType) @Html.DropDownListFor(model => model.DonationType, ViewBag.DonationTypeList as SelectList, "--Select a donation type--", new { @class = "txt" }) </p>
 
-        <p>@Html.DropDownListFor(model => model.CrossBloodType, ViewBag.BloodTypeList as SelectList, "--Blood type--", new { @class = "txt" }) </p>
+        <p> @Html.LabelFor(model => model.CrossBloodType) @Html.DropDownListFor(model => model.CrossBloodType, ViewBag.BloodTypeList as SelectList, "--Blood type--", new { @class = "txt" }) </p>
 
-        <p>@Html.DropDownListFor(model => model.CrossRhFactor, ViewBag.RhFactorList as SelectList, "--Rh factor--", new { @class = "txt" }) </p>
+        <p> @Html.LabelFor(model => model.CrossRhFactor) @Html.DropDownListFor(model => model.CrossRhFactor, ViewBag.RhFactorList as SelectList, "--Rh factor--", new { @class = "txt" }) </p>
 
-        <p>@Html.TextBoxFor(model => model.NumberOfUnits, new { @class = "txt", @placeholder = "Number of Units" }) </p>
+        <p> @Html.LabelFor(model => model.NumberOfUnits) @Html.TextBoxFor(model => model.NumberOfUnits, new { @class = "txt", @placeholder = "Number of Units" }) </p>
 
-        <p>@Html.DropDownListFor(model => model.DonationSiteID, ViewBag.DonationSiteList as SelectList, "--Select donation site--", new { @class = "txt" }) </p>
+        <p> @Html.LabelFor(model => model.DonationSiteID) @Html.DropDownListFor(model => model.DonationSiteID, ViewBag.DonationSiteList as SelectList, "--Select donation site--", new { @class = "txt" }) </p>
 
-        <p>@Html.DropDownListFor(model => model.RecipientID, ViewBag.RecipientsList as SelectList, "--Select recipient--", new { @class = "txt" }) </p>
+        <p> @Html.LabelFor(model => model.RecipientID) @Html.DropDownListFor(model => model.RecipientID, ViewBag.RecipientsList as SelectList, "--Select recipient--", new { @class = "txt" }) </p>
 
-        <p>@Html.DropDownListFor(model => model.AcceptedDonation, ViewBag.IsAcceptedList as SelectList, "--Is donation accepted?--", new { @class = "txt" }) </p>
+        <p> @Html.LabelFor(model => model.AcceptedDonation) @Html.DropDownListFor(model => model.AcceptedDonation, ViewBag.IsAcceptedList as SelectList, "--Is donation accepted?--", new { @class = "txt" }) </p>
 
         @if (Model.AcceptedDonation == false)
         {
-            <p>@Html.TextBoxFor(model => model.ReasonsForRejection, new { @class = "txt", @placeholder = "Reason for rejection" }) </p>
+            <p> @Html.LabelFor(model => model.ReasonsForRejection) @Html.TextBoxFor(model => model.ReasonsForRejection, new { @class = "txt", @placeholder = "Reason for rejection" }) </p>
         }
         else
         {

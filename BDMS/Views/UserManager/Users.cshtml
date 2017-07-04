@@ -4,27 +4,22 @@
     ViewBag.Title = "Users";
 }
 <link href="~/Content/pageContent.css" rel="stylesheet" />
+<link href="~/Content/adduser.css" rel="stylesheet" />
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-
-    <section id="breadcrumb">
-        <div class="container">
-            <ol class="breadcrumb">
-                <li>@Html.TextBoxFor(m => m.FirstName, new { @class = "txt", @placeholder = "Search here" })</li>
-                <li class="active">System Users</li>
-            </ol>
-        </div>
-    </section>
-
-    <section id="main">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-
-                    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form_main">
+                    <h4 class="heading"><strong>System users </strong> <span></span></h4>
+                    <div class="row">
+                        <div class="col-md-4">@Html.TextBoxFor(m => m.FirstName, new { @class = "txt", @placeholder = "Search system users" })</div>
+                    </div>
+                   
+                           
                     <div class="row">
                         <div class="col-md-12">
                             <table class="table table-hover">
@@ -61,7 +56,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
 
     <div class="modal fade" id="myDeleteModal">

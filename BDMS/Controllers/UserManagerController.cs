@@ -10,10 +10,11 @@ using System.Web.Security;
 
 namespace BMDS.Controllers
 {
-    [Authorize]
+   
     public class UserManagerController : Controller
     {
         #region Add  a user action
+        [Authorize]
         [HttpGet]
         public ActionResult Registration()
         {
@@ -22,6 +23,7 @@ namespace BMDS.Controllers
         #endregion
 
         #region Add a user POST action
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Registration([Bind(Exclude = "IsEmailVerified, ActivationCode")] User userModel)
@@ -149,6 +151,7 @@ namespace BMDS.Controllers
         }
 
         #region Change password get action
+        [Authorize]
         [HttpGet]
         public ActionResult ChangePassword(string id)
         {
@@ -160,7 +163,8 @@ namespace BMDS.Controllers
                 User u=db.Users.SingleOrDefault(x => x.EmailAddress == id);
                 user.NewPassword = u.Password;
             }
-            return View(user);
+            //return View(user);
+            return View();
         }
         #endregion
 

@@ -8,23 +8,27 @@
         {
             @Html.HiddenFor(m => m.DonorID)
 
-            <p>@Html.DropDownListFor(model => model.ActiveDonor, ViewBag.IsDonorActiveList as SelectList, "--Is donor Active--", new { @class = "txt" }) </p>
+            
 
-            <p>@Html.TextBoxFor(model => model.DonorFullName, new { @class = "txt", @placeholder = "First name", @readonly = "readonly" }) </p>
+           
+            <p>@Html.LabelFor(model => model.ActiveDonor)
+        @Html.DropDownListFor(model => model.ActiveDonor, ViewBag.IsDonorActiveList as SelectList, "--Is donor Active--", new { @class = "txt" }) </p>
 
-            <p>@Html.DropDownListFor(model => model.DonorBloodType, ViewBag.BloodTypeList as SelectList, "--Blood type--", new { @class = "txt", @readonly = "readonly" }) </p>
+            <p> @Html.LabelFor(model => model.DonorFullName) @Html.TextBoxFor(model => model.DonorFullName, new { @class = "txt", @placeholder = "First name", @readonly = "readonly" }) </p>
 
-            <p>@Html.DropDownListFor(model => model.RhFactor, ViewBag.RhFactorList as SelectList, "--Rh factor--", new { @class = "txt", @readonly = "readonly" }) </p>
+            <p> @Html.LabelFor(model => model.DonorBloodType) @Html.DropDownListFor(model => model.DonorBloodType, ViewBag.BloodTypeList as SelectList, "--Blood type--", new { @class = "txt", @readonly = "readonly" }) </p>
 
-            <p>@Html.TextBoxFor(model => model.DateOfBirth, new { @class = "txt", @placeholder = "Date of birth", @readonly = "readonly" }) </p>
+            <p> @Html.LabelFor(model => model.RhFactor) @Html.DropDownListFor(model => model.RhFactor, ViewBag.RhFactorList as SelectList, "--Rh factor--", new { @class = "txt", @readonly = "readonly" }) </p>
 
-            <p>@Html.TextBoxFor(model => model.Weight, new { @class = "txt", @placeholder = "Weight", @readonly = "readonly" }) </p>
+            <p> @Html.LabelFor(model => model.DateOfBirth) @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "txt", @placeholder = "Date of birth", @readonly = "readonly" }) </p>
 
-            <p>@Html.TextBoxFor(model => model.DonorEmail, new { @class = "txt", @placeholder = "Email", @readonly = "readonly" }) </p>
+            <p> @Html.LabelFor(model => model.Weight) @Html.TextBoxFor(model => model.Weight, new { @class = "txt", @placeholder = "Weight", @readonly = "readonly" }) </p>
 
-            <p>@Html.TextBoxFor(model => model.DonorPhoneNumber, new { @class = "txt", @placeholder = "Phone number", @readonly = "readonly" }) </p>
+            <p> @Html.LabelFor(model => model.DonorEmail) @Html.TextBoxFor(model => model.DonorEmail, new { @class = "txt", @placeholder = "Email", @readonly = "readonly" }) </p>
 
-            <p>@Html.TextBoxFor(model => model.LastScreeningDate, new { @class = "txt", @placeholder = "Last screening date", @readonly = "readonly" }) </p>
+            <p> @Html.LabelFor(model => model.DonorPhoneNumber) @Html.TextBoxFor(model => model.DonorPhoneNumber, new { @class = "txt", @placeholder = "Phone number", @readonly = "readonly" }) </p>
+
+            <p> @Html.LabelFor(model => model.LastScreeningDate) @Html.TextBoxFor(model => model.LastScreeningDate, new { @class = "txt", @placeholder = "Last screening date", @readonly = "readonly" }) </p>
 
             <a href="#" id="btnSubmit" class="btn btn-success">
                 @if (Model.DonorID > 0)
@@ -37,23 +41,26 @@
         {
             @Html.HiddenFor(m => m.DonorID)
 
-            <p>@Html.DropDownListFor(model => model.ActiveDonor, ViewBag.IsDonorActiveList as SelectList, "--Is donor Active--", new { @class = "txt" }) </p>
+            <p>
+               @Html.LabelFor(model => model.ActiveDonor)
+               @Html.DropDownListFor(model => model.ActiveDonor, ViewBag.IsDonorActiveList as SelectList, "--Is donor Active--", new { @class = "txt" })
+            </p>
 
-            <p>@Html.TextBoxFor(model => model.DonorFullName, new { @class = "txt", @placeholder = "First name" }) </p>
+            <p> @Html.LabelFor(model => model.DonorFullName) @Html.TextBoxFor(model => model.DonorFullName, new { @class = "txt", @placeholder = "First name" }) </p>
 
-            <p>@Html.DropDownListFor(model => model.DonorBloodType, ViewBag.BloodTypeList as SelectList, "--Blood type--", new { @class = "txt" }) </p>
+            <p> @Html.LabelFor(model => model.DonorBloodType) @Html.DropDownListFor(model => model.DonorBloodType, ViewBag.BloodTypeList as SelectList, "--Blood type--", new { @class = "txt" }) </p>
 
-            <p>@Html.DropDownListFor(model => model.RhFactor, ViewBag.RhFactorList as SelectList, "--Rh factor--", new { @class = "txt" }) </p>
+            <p> @Html.LabelFor(model => model.RhFactor) @Html.DropDownListFor(model => model.RhFactor, ViewBag.RhFactorList as SelectList, "--Rh factor--", new { @class = "txt" }) </p>
 
-            <p>@Html.TextBoxFor(model => model.DateOfBirth, new { @class = "txt", @placeholder = "Date of birth", @type = "date" }) </p>
+            <p> @Html.LabelFor(model => model.DateOfBirth) @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "txt", @placeholder = "Date of birth", @type = "date" }) </p>
 
-            <p>@Html.TextBoxFor(model => model.Weight, new { @class = "txt", @placeholder = "Weight" }) </p>
+            <p> @Html.LabelFor(model => model.Weight) @Html.TextBoxFor(model => model.Weight, new { @class = "txt", @placeholder = "Weight" }) </p>
 
-            <p>@Html.TextBoxFor(model => model.DonorEmail, new { @class = "txt", @placeholder = "Email" }) </p>
+            <p> @Html.LabelFor(model => model.DonorEmail) @Html.TextBoxFor(model => model.DonorEmail, new { @class = "txt", @placeholder = "Email" }) </p>
 
-            <p>@Html.TextBoxFor(model => model.DonorPhoneNumber, new { @class = "txt", @placeholder = "Phone number" }) </p>
+            <p> @Html.LabelFor(model => model.DonorPhoneNumber) @Html.TextBoxFor(model => model.DonorPhoneNumber, new { @class = "txt", @placeholder = "Phone number" }) </p>
 
-            <p>@Html.TextBoxFor(model => model.LastScreeningDate, new { @class = "txt", @placeholder = "Last screening date", @type = "date" }) </p>
+            <p> @Html.LabelFor(model => model.LastScreeningDate) @Html.TextBoxFor(model => model.LastScreeningDate, new { @class = "txt", @placeholder = "Last screening date", @type = "date" }) </p>
 
             <a href="#" id="btnSubmit" class="btn btn-success">
                 @if (Model.DonorID > 0)
@@ -97,3 +104,4 @@
     });
 
 </script>
+

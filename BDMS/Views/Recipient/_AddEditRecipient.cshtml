@@ -5,19 +5,19 @@
     <form id="myRecipientsForm">
 
         @Html.HiddenFor(m => m.RecipientID)
-        <p>@Html.DropDownListFor(model => model.DonorID, ViewBag.DonorsList as SelectList, "--Select donor--", new { @class = "txt" }) </p>
+        <p> @Html.LabelFor(model => model.DonorID) @Html.DropDownListFor(model => model.DonorID, ViewBag.DonorsList as SelectList, "--Select donor--", new { @class = "txt" }) </p>
         @Html.ValidationMessageFor(model => model.DonorID, "", new { @class = "text-danger" })
 
-        <p>@Html.DropDownListFor(model => model.DonationID, ViewBag.DonationList as SelectList, "--Select donation type--", new { @class = "txt" }) </p>
+        <p> @Html.LabelFor(model => model.DonationID) @Html.DropDownListFor(model => model.DonationID, ViewBag.DonationList as SelectList, "--Select donation type--", new { @class = "txt" }) </p>
         @Html.ValidationMessageFor(model => model.DonationID, "", new { @class = "text-danger" })
 
-        <p>@Html.TextBoxFor(model => model.DateOfUse, new { @class = "txt", @placeholder = "Date of Use", @type = "date" }) </p>
+        <p> @Html.LabelFor(model => model.DateOfUse) @Html.TextBoxFor(model => model.DateOfUse, new { @class = "txt", @placeholder = "Date of Use", @type = "date" }) </p>
         @Html.ValidationMessageFor(model => model.DateOfUse, "", new { @class = "text-danger" })
 
-        <p>@Html.TextBoxFor(model => model.RelatedCondition, new { @class = "txt", @placeholder = "Related condition" }) </p>
+        <p> @Html.LabelFor(model => model.RelatedCondition) @Html.TextBoxFor(model => model.RelatedCondition, new { @class = "txt", @placeholder = "Related condition" }) </p>
         @Html.ValidationMessageFor(model => model.RelatedCondition, "", new { @class = "text-danger" })
 
-        <p>@Html.TextBoxFor(model => model.RecipientCodedName, new { @class = "txt", @placeholder = "Recipient coded name" }) </p>
+        <p> @Html.LabelFor(model => model.RecipientCodedName) @Html.TextBoxFor(model => model.RecipientCodedName, new { @class = "txt", @placeholder = "Recipient coded name" }) </p>
         @Html.ValidationMessageFor(model => model.RecipientCodedName, "", new { @class = "text-danger" })
 
         <a href="#" id="btnSubmit" class="btn btn-success">
