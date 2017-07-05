@@ -106,50 +106,6 @@ namespace BMDS.Controllers
         }
         #endregion
 
-        [NonAction]
-        public bool IsEmailExist(string userEmail)
-        {
-            using (BloodforLifeEntities db = new BloodforLifeEntities())
-            {
-                var v = db.Users.Where(a => a.EmailAddress == userEmail).FirstOrDefault();
-                return v != null;
-            }
-        }
-
-        [NonAction]
-        protected void SendVerificationLinkEmail(string userEmail, string activationCode, string password)
-        {
-            var verifyUrl = "/UserManager/VerifyAccount/" + activationCode;
-            var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
-
-            var fromEmail = new MailAddress("pop.irina1@gmail.com", "Blood donations management system");
-            var toEmail = new MailAddress(userEmail);
-            var fromEmailPassword = "Frunzulitza.1"; //Replace with actual password
-            string subject = "Your account is succesfully created";
-            string body = "<br/><b/r>We are excited to tell you that your Blood donations management system account is" +
-                " successfully created.Your current password is:" + password + " Please click on the link below to verify your account" +
-                "<b/r><br/> <a href='" + link + "'>" + link + "</a> ";
-
-            var smtp = new SmtpClient
-            {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
-
-            };
-
-            using (var message = new MailMessage(fromEmail, toEmail)
-            {
-                Subject = subject,
-                Body = body,
-                IsBodyHtml = true
-            })
-                smtp.Send(message);
-        }
-
         #region Change password get action
         [Authorize]
         [HttpGet]
@@ -331,6 +287,50 @@ namespace BMDS.Controllers
             return View(user);
         }
         #endregion
+
+        [NonAction]
+        public bool IsEmailExist(string userEmail)
+        {
+            using (BloodforLifeEntities db = new BloodforLifeEntities())
+            {
+                var v = db.Users.Where(a => a.EmailAddress == userEmail).FirstOrDefault();
+                return v != null;
+            }
+        }
+
+        [NonAction]
+        protected void SendVerificationLinkEmail(string userEmail, string activationCode, string password)
+        {
+            var verifyUrl = "/UserManager/VerifyAccount/" + activationCode;
+            var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
+
+            var fromEmail = new MailAddress("pop.irina1@gmail.com", "Blood donations management system");
+            var toEmail = new MailAddress(userEmail);
+            var fromEmailPassword = "Frunzulitza.1"; //Replace with actual password
+            string subject = "Your account is succesfully created";
+            string body = "<br/><b/r>We are excited to tell you that your Blood donations management system account is" +
+                " successfully created.Your current password is:" + password + " Please click on the link below to verify your account" +
+                "<b/r><br/> <a href='" + link + "'>" + link + "</a> ";
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
+
+            };
+
+            using (var message = new MailMessage(fromEmail, toEmail)
+            {
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true
+            })
+                smtp.Send(message);
+        }
 
     }
 }

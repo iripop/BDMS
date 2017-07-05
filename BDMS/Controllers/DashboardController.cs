@@ -12,17 +12,6 @@ namespace BDMS.Controllers
     [Authorize]
     public class DashboardController : Controller
     {
-        // GET: Dashboard
-        public ActionResult Dashboard(ChartDonationsModel cd)
-        {
-            return View(new ChartDonationsModel { Count=new BloodCountModel(), Donation=new DonationModel() } );
-        }
-
-        public ActionResult Dashboard2()
-        {
-            return View();
-        }
-
         #region Donations by expiration date
         public ActionResult DonationsByExpirationDate(ChartDonationsModel cd)
         {

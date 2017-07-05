@@ -34,51 +34,5 @@ namespace BMDS.Controllers
         }
         #endregion
 
-        #region Donations by expiration date
-        public ActionResult DonationsByExpirationDate()
-        {
-            BloodforLifeEntities db = new BloodforLifeEntities();
-
-            DateTime date1 = DateTime.Now;
-            DateTime date2 = DateTime.Now.AddDays(7);
-            List<DonationModel> listDonations = db.Donations.Where(x => (x.ExpirationDate >= date1  && x.ExpirationDate < date2) && x.IsDeleted==false).Select(x => new DonationModel
-            {
-                DonationID = x.DonationID,
-                DonationType = x.DonationType,
-                ExpirationDate = x.ExpirationDate
-            }).ToList();
-            ViewBag.DonationList = listDonations;
-            return View();
-        }
-
-        public ActionResult ShowDonationsByExpirationDateDetails(int DonationID)
-        {
-            BloodforLifeEntities db = new BloodforLifeEntities();
-
-            List<DonationModel> listDonations = db.Donations.Where(x => x.IsDeleted == false && x.DonationID == DonationID).Select(x => new DonationModel
-            {
-                DonationID = x.DonationID,
-                DonationType = x.DonationType,
-                CrossBloodType = x.CrossBloodType,
-                CrossRhFactor = x.CrossRhFactor,
-                ExpirationDate = x.ExpirationDate,
-                NumberOfUnits = x.NumberOfUnits,
-                DonationSiteID = x.DonationSiteID,
-                DonorID = x.DonorID,
-                RecipientID = x.RecipientID,
-                DonorFullName = x.Donor.DonorFullName,
-                SiteName = x.DonationSite.SiteName,
-                CreationDate = x.CreationDate,
-                AcceptedDonation = x.AcceptedDonation,
-                ReasonsForRejection = x.ReasonsForRejection
-
-
-            }).ToList();
-
-            ViewBag.DonationsList = listDonations;
-            return PartialView("_ShowDonationsByExpirationDateDetails");
-        }
-        #endregion
-
     }
 }

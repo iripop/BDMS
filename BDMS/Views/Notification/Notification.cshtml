@@ -1,0 +1,118 @@
+﻿
+@{
+    ViewBag.Title = "Notification";
+}
+
+@{
+    ViewBag.Title = "Notification";
+}
+
+
+<link href="~/Content/adduser.css" rel="stylesheet" />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form_main">
+                <h4 class="heading"><strong>Send </strong> Notifications to donors <span></span></h4>
+                <div class="form">
+                    <div class="col-md-12">
+                        <form role="form">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="title">Notification Title:</label>
+                                    <input type="text" class="txt" id="title">
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="message">Notification Message:</label>
+                                    <textarea rows="5" cols="50" type="text" class="txt" id="message"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="alert-type">Notification Type:</label>
+                                    <select class="txt" id="alert-type">
+                                        <option value="info" selected>Information - new blood drive, your donation saved a life</option>
+                                        <option value="success">Success - donation accepted</option>
+                                        <option value="warning">Warning - Blood shortage</option>
+                                        <option value="danger">Error - donation not accepted</option>
+                                    </select>
+                                </div>
+
+
+                                <button type="button" class="txt2" id="send-notification">Send to All</button>
+                            </div>
+                        </form>
+                 </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="alert-placeholder" style="padding: 5px;"></div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <script src="~/SignalR/Hubs"></script>
+
+<script type="text/javascript">
+        //a helper function to encode HTML values.
+        function htmlEncode(value) {
+            return $('<div />').text(value).html();
+        }
+
+        //execute on document ready
+        $(function () {
+
+            //function that the hub can call when it receives a notification.
+            $.connection.notificationHub.client.displayNotification = function (title, message, alertType) {
+
+                //Create the bootstrap alert html
+                var alertHtml = '<div class="alert alert-' + htmlEncode(alertType) + ' alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span>×</span></button><strong>' + htmlEncode(title) + '</strong> ' + htmlEncode(message) + '</div>';
+
+                $(alertHtml)
+                    .hide()                           //hide the newly created element (this is required for fadeIn to work)
+                    .appendTo('#alert-placeholder')   //add it to the palceholder in the page
+                    .fadeIn(500);                     //little flair to grab user attention
+            };
+
+            window.notifyApp = {
+                hubConnector: $.connection.hub.start()  //start the connection and store object returned globally for access in child views
+            };
+
+        });
+
+</script>
+
+<script type="text/javascript">
+    $(function () {     //execute on document ready
+
+      //access the global hubConnector object created by master page
+      window.notifyApp.hubConnector.done(function () {
+
+        $('#send-notification').click(function () {
+
+          var title = $('#title').val(),
+              message = $('#message').val(),
+              type = $('#alert-type').val();
+
+          //Call the notifyAll method on the hub. Notice camelCasing on the method name.
+          $.connection.notificationHub.server.notifyAll(title, message, type);
+
+          //Clear values and reset focus for next comment.
+          $('#title').val('').focus();
+          $('#message').val('');
+
+        });   //end send notification click handler
+
+      });     //end hub started handler
+
+    });       //end document ready event handler
+</script>
+
+}
