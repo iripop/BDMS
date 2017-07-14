@@ -4,7 +4,7 @@
 {
     foreach (var item in Model)
     {
-        if (@item.AcceptedDonation == true)
+        if (@item.AcceptanceStatus == "Accepted")
         {
             <tr id="row_@item.DonationID">
                 <td>@item.DonationType</td>
@@ -13,7 +13,7 @@
                 <td>@item.DonorFullName</td>
                 <td>@item.CreationDate</td>
                 <td>@item.ExpirationDate</td>
-                <td style="background:#9CFC7E">@item.AcceptedDonation</td>
+                <td style="background:#9CFC7E">@item.AcceptanceStatus</td>
                 <td>@item.ReasonsForRejection</td>
                 <td><a href="#" onclick="AddEditDonation(@item.DonationID)"><i class="glyphicon glyphicon-edit" aria-hidden="true" style="color:#6799CC;"></i></a> </td>
                 <td><a href="#" onclick="ShowDonation(@item.DonationID)"><i class="glyphicon glyphicon-eye-open" style="color:#006600;"></i></a> </td>
@@ -29,7 +29,7 @@
                 <td>@item.DonorFullName</td>
                 <td>@item.CreationDate</td>
                 <td>@item.ExpirationDate</td>
-                <td style="background:#f8e7e4">@item.AcceptedDonation</td>
+                <td style="background:#f8e7e4">@item.AcceptanceStatus</td>
                 <td>@item.ReasonsForRejection</td>
                 <td><a href="#" onclick="AddEditDonation(@item.DonationID)"><i class="glyphicon glyphicon-edit" aria-hidden="true" style="color:#6799CC;"></i></a> </td>
                 <td><a href="#" onclick="ShowDonation(@item.DonationID)"><i class="glyphicon glyphicon-eye-open" style="color:#006600;"></i></a> </td>

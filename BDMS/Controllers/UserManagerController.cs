@@ -14,7 +14,6 @@ namespace BMDS.Controllers
     public class UserManagerController : Controller
     {
         #region Add  a user action
-        [Authorize]
         [HttpGet]
         public ActionResult Registration()
         {
@@ -54,7 +53,7 @@ namespace BMDS.Controllers
                 userModel.IsEmailVerified = false;
 
                 #region Save data to database
-                using (BloodforLifeEntities db = new BloodforLifeEntities())
+                using (BloodForLifeDBEntities db = new BloodForLifeDBEntities())
                 {
                     db.Users.Add(userModel);
                     db.SaveChanges();
@@ -62,7 +61,7 @@ namespace BMDS.Controllers
                     //Send email to user
                     SendVerificationLinkEmail(userModel.EmailAddress, userModel.ActivationCode.ToString(), userModel.Password);
                     message = "Registration successful. Account activation link" +
-                        " has been sent to your email address:" + userModel.EmailAddress;
+                        " has been sent to the email address:" + userModel.EmailAddress;
                     Status = true;
                 }
                 #endregion
@@ -71,12 +70,9 @@ namespace BMDS.Controllers
             {
                 message = "Invalid request";
             }
-
             ViewBag.Message = message;
             ViewBag.Status = Status;
             return View(userModel);
-
-
         }
         #endregion
 
@@ -85,7 +81,7 @@ namespace BMDS.Controllers
         public ActionResult VerifyAccount(string id)
         {
             bool Status = false;
-            using (BloodforLifeEntities db = new BloodforLifeEntities())
+            using (BloodForLifeDBEntities db = new BloodForLifeDBEntities())
             {
                 db.Configuration.ValidateOnSaveEnabled = false; // added to avoid confirm password does 
                                                                 //not match issue on save changes
@@ -112,7 +108,7 @@ namespace BMDS.Controllers
         public ActionResult ChangePassword(string id)
         {
             id = User.Identity.Name;
-            BloodforLifeEntities db = new BloodforLifeEntities();
+            BloodForLifeDBEntities db = new BloodForLifeDBEntities();
             ChangePasswordModel user = new ChangePasswordModel();
             if (id!=null)
             {
@@ -139,8 +135,8 @@ namespace BMDS.Controllers
 
                 try
                 {
-                //string id = User.Identity.Name;
-                BloodforLifeEntities db = new BloodforLifeEntities();
+                    //string id = User.Identity.Name;
+                    BloodForLifeDBEntities db = new BloodForLifeDBEntities();
             
                     var u = db.Users.Where(x => x.EmailAddress == model.EmailAddress).SingleOrDefault();
                 if (u != null)
@@ -181,7 +177,7 @@ namespace BMDS.Controllers
         #region Users GET
         public ActionResult Users()
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
+            BloodForLifeDBEntities db = new BloodForLifeDBEntities();
 
             List<UserModel> listUsers = db.Users.Select(x => new UserModel
             {
@@ -190,7 +186,7 @@ namespace BMDS.Controllers
                 LastName = x.LastName,
                 EmailAddress = x.EmailAddress,
                 PhoneNumber = x.PhoneNumber,
-                IsUserAdmin = x.IsUserAdmin
+                IsAdmin = x.IsAdmin
 
             }).ToList();
 
@@ -206,7 +202,7 @@ namespace BMDS.Controllers
         {
             try
             {
-                BloodforLifeEntities db = new BloodforLifeEntities();
+                BloodForLifeDBEntities db = new BloodForLifeDBEntities();
 
                 if (model.UserID > 0)
                 {
@@ -218,7 +214,7 @@ namespace BMDS.Controllers
                     u.LastName = model.LastName;
                     u.EmailAddress = model.EmailAddress;
                     u.PhoneNumber = model.PhoneNumber;
-                    u.IsUserAdmin = model.IsUserAdmin;
+                    u.IsAdmin = model.IsAdmin;
 
                     db.SaveChanges();
                 }
@@ -240,7 +236,7 @@ namespace BMDS.Controllers
         #region Delete user
         public JsonResult DeleteUser(int userID)
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
+            BloodForLifeDBEntities db = new BloodForLifeDBEntities();
 
             bool result = false;
             User rec = db.Users.SingleOrDefault(x => x.UserID == userID);
@@ -258,20 +254,20 @@ namespace BMDS.Controllers
         #region Search
         public ActionResult GetSearchUser(string SearchText)
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
+            BloodForLifeDBEntities db = new BloodForLifeDBEntities();
 
 
             List<UserModel> listUsers = db.Users.Where(x => x.FirstName.Contains(SearchText) ||
             x.LastName.Contains(SearchText) ||
             x.EmailAddress.ToString().Contains(SearchText) ||
             x.PhoneNumber.Contains(SearchText) ||
-            x.IsUserAdmin.ToString().Contains(SearchText)).Select(x => new UserModel
+            x.IsAdmin.ToString().Contains(SearchText)).Select(x => new UserModel
             {
                 FirstName = x.FirstName,
                 LastName = x.LastName,
                 EmailAddress = x.EmailAddress,
                 PhoneNumber = x.PhoneNumber,
-                IsUserAdmin = x.IsUserAdmin,
+                IsAdmin = x.IsAdmin,
             }).ToList();
 
             return PartialView("_SearchUser", listUsers);
@@ -282,7 +278,7 @@ namespace BMDS.Controllers
         public ActionResult UserProfile(string id)
         {
             id = User.Identity.Name;
-            BloodforLifeEntities db = new BloodforLifeEntities();
+            BloodForLifeDBEntities db = new BloodForLifeDBEntities();
             var user = db.Users.SingleOrDefault(u => u.EmailAddress == id);
             return View(user);
         }
@@ -291,7 +287,7 @@ namespace BMDS.Controllers
         [NonAction]
         public bool IsEmailExist(string userEmail)
         {
-            using (BloodforLifeEntities db = new BloodforLifeEntities())
+            using (BloodForLifeDBEntities db = new BloodForLifeDBEntities())
             {
                 var v = db.Users.Where(a => a.EmailAddress == userEmail).FirstOrDefault();
                 return v != null;

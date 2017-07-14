@@ -24,13 +24,12 @@ namespace BDMS.Models
         public string DonationType { get; set; }
         public string CrossBloodType { get; set; }
         public string CrossRhFactor { get; set; }
-        public System.DateTime CreationDate { get; set; }
-        public System.DateTime ExpirationDate { get; set; }
-        public double NumberOfUnits { get; set; }
-        public Nullable<bool> AcceptedDonation { get; set; }
+        public Nullable<System.DateTime> CreationDate { get; set; }
+        public Nullable<System.DateTime> ExpirationDate { get; set; }
+        public Nullable<double> NumberOfunits { get; set; }
+        public string AcceptanceStatus { get; set; }
         public string ReasonsForRejection { get; set; }
-        public Nullable<bool> IsExpired { get; set; }
-        public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<bool> DonationIsArchived { get; set; }
         public Nullable<int> DonorID { get; set; }
         public Nullable<int> DonationSiteID { get; set; }
         public Nullable<int> RecipientID { get; set; }
@@ -40,6 +39,5 @@ namespace BDMS.Models
         public virtual Recipient Recipient { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Recipient> Recipients { get; set; }
-        public virtual BloodCount BloodCount { get; set; }
     }
 }

@@ -10,12 +10,12 @@ namespace BMDS.Controllers
     [Authorize]
     public class DonationController : Controller
     {
+        BloodForLifeDBEntities db = new BloodForLifeDBEntities();
         #region GET donation
         public ActionResult Donation()
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
-
-            List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == "True" && x.ArchivedDonor == false).ToList();
+            
+            List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == true && x.ArchivedDonor == false).ToList();
             ViewBag.DonorsList = new SelectList(listDonor, "DonorID", "DonorFullName");
 
             List<Recipient> listRecipient = db.Recipients.Where(x => x.IsRecipientArchived == false).ToList();
@@ -33,25 +33,25 @@ namespace BMDS.Controllers
             List<string> rhFactor = new List<string>(new string[] { "+(positive)", "-(negative)" });
             ViewBag.RhFactorList = new SelectList(rhFactor);
 
-            List<string> accepted = new List<string>(new string[] { "True", "False" });
+            List<string> accepted = new List<string>(new string[] { "Accepted", "Rejected" });
             ViewBag.IsAcceptedList = new SelectList(accepted);
 
             // This is for the delete operation, IsDeleted column was added in order to avoid any null exception
-            List<DonationModel> listDonations = db.Donations.Where(x => x.IsDeleted == false).Select(x => new DonationModel
+            List<DonationModel> listDonations = db.Donations.Where(x => x.DonationIsArchived == false).Select(x => new DonationModel
             {
                 DonationID = x.DonationID,
                 DonationType = x.DonationType,
                 CrossBloodType = x.CrossBloodType,
                 CrossRhFactor = x.CrossRhFactor,
                 ExpirationDate = x.ExpirationDate,
-                NumberOfUnits = x.NumberOfUnits,
+                NumberOfunits = x.NumberOfunits,
                 DonationSiteID = x.DonationSiteID,
                 RecipientID = x.RecipientID,
                 RecipientCodedName = x.Recipient.RecipientCodedName,
                 DonorFullName = x.Donor.DonorFullName,
                 SiteName = x.DonationSite.SiteName,
                 CreationDate = x.CreationDate,
-                AcceptedDonation = x.AcceptedDonation,
+                AcceptanceStatus = x.AcceptanceStatus,
                 ReasonsForRejection = x.ReasonsForRejection
 
 
@@ -70,9 +70,7 @@ namespace BMDS.Controllers
         {
             try
             {
-                BloodforLifeEntities db = new BloodforLifeEntities();
-
-                List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == "True" && x.ArchivedDonor == false).ToList();
+                List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == true && x.ArchivedDonor == false).ToList();
                 ViewBag.DonorsList = new SelectList(listDonor, "DonorID", "DonorFullName");
 
                 List<Recipient> listRecipient = db.Recipients.Where(x => x.IsRecipientArchived == false).ToList();
@@ -90,31 +88,31 @@ namespace BMDS.Controllers
                 List<string> rhFactor = new List<string>(new string[] { "+(positive)", "-(negative)" });
                 ViewBag.RhFactorList = new SelectList(rhFactor);
 
-                List<string> accepted = new List<string>(new string[] { "True", "False" });
+                List<string> accepted = new List<string>(new string[] { "Accepted", "Rejected" });
                 ViewBag.IsAcceptedList = new SelectList(accepted);
 
                 if (model.DonationID > 0)
                 {
                     //Update a recipient
-                    Donation donation = db.Donations.SingleOrDefault(x => x.DonationID == model.DonationID && x.IsDeleted == false);
+                    Donation donation = db.Donations.SingleOrDefault(x => x.DonationID == model.DonationID && x.DonationIsArchived == false);
 
                     donation.DonationType = model.DonationType;
                     donation.CrossBloodType = model.CrossBloodType;
                     donation.CrossRhFactor = model.CrossRhFactor;
-                    donation.NumberOfUnits = model.NumberOfUnits;
+                    donation.NumberOfunits = model.NumberOfunits;
                     donation.DonorID = model.DonorID;
                     donation.RecipientID = model.RecipientID;
                     donation.DonationSiteID = model.DonationSiteID;
-                    donation.AcceptedDonation = model.AcceptedDonation;
+                    donation.AcceptanceStatus = model.AcceptanceStatus;
                     donation.ReasonsForRejection = model.ReasonsForRejection;
 
-                    var don1 = db.Donations.Where(x => x.CrossBloodType == "A" && x.IsDeleted==false).Count();
+                    var don1 = db.Donations.Where(x => x.CrossBloodType == "A" && x.DonationIsArchived==false).Count();
 
-                    var don2 = db.Donations.Where(x => x.CrossBloodType == "B" && x.IsDeleted == false).Count();
+                    var don2 = db.Donations.Where(x => x.CrossBloodType == "B" && x.DonationIsArchived == false).Count();
 
-                    var don3 = db.Donations.Where(x => x.CrossBloodType == "AB" && x.IsDeleted == false).Count();
+                    var don3 = db.Donations.Where(x => x.CrossBloodType == "AB" && x.DonationIsArchived == false).Count();
 
-                    var don4 = db.Donations.Where(x => x.CrossBloodType == "0" && x.IsDeleted == false).Count();
+                    var don4 = db.Donations.Where(x => x.CrossBloodType == "0" && x.DonationIsArchived == false).Count();
 
                     BloodCount id1 = db.BloodCounts.SingleOrDefault(x => x.BloodTypeID == 1);
                     id1.Count = don1;
@@ -137,25 +135,25 @@ namespace BMDS.Controllers
                     donation.DonationType = model.DonationType;
                     donation.CrossBloodType = model.CrossBloodType;
                     donation.CrossRhFactor = model.CrossRhFactor;
-                    donation.NumberOfUnits = model.NumberOfUnits;
+                    donation.NumberOfunits = model.NumberOfunits;
                     donation.DonorID = model.DonorID;
                     donation.RecipientID = model.RecipientID;
                     donation.DonationSiteID = model.DonationSiteID;
-                    donation.IsDeleted = false;
+                    donation.DonationIsArchived = false;
                     donation.CreationDate = DateTime.Now.Date;
                     donation.ExpirationDate = DateTime.Now.Date.AddDays(90);
-                    donation.AcceptedDonation = model.AcceptedDonation;
+                    donation.AcceptanceStatus = model.AcceptanceStatus;
                     donation.ReasonsForRejection = model.ReasonsForRejection;
 
                     db.Donations.Add(donation);
 
-                    var don1 = db.Donations.Where(x => x.CrossBloodType == "A" && x.IsDeleted == false).Count();
+                    var don1 = db.Donations.Where(x => x.CrossBloodType == "A" && x.DonationIsArchived == false).Count();
 
-                    var don2 = db.Donations.Where(x => x.CrossBloodType == "B" && x.IsDeleted == false).Count();
+                    var don2 = db.Donations.Where(x => x.CrossBloodType == "B" && x.DonationIsArchived == false).Count();
 
-                    var don3 = db.Donations.Where(x => x.CrossBloodType == "AB" && x.IsDeleted == false).Count();
+                    var don3 = db.Donations.Where(x => x.CrossBloodType == "AB" && x.DonationIsArchived == false).Count();
 
-                    var don4 = db.Donations.Where(x => x.CrossBloodType == "0" && x.IsDeleted == false).Count();
+                    var don4 = db.Donations.Where(x => x.CrossBloodType == "0" && x.DonationIsArchived == false).Count();
 
                     BloodCount id1 = db.BloodCounts.SingleOrDefault(x => x.BloodTypeID == 1);
                     id1.Count = don1;
@@ -169,7 +167,6 @@ namespace BMDS.Controllers
                     BloodCount id4 = db.BloodCounts.SingleOrDefault(x => x.BloodTypeID == 4);
                     id4.Count = don4;
 
-                    db.SaveChanges();
                     db.SaveChanges();
 
                 }
@@ -186,14 +183,13 @@ namespace BMDS.Controllers
         #region Delete donation
         public JsonResult DeleteDonation(int donationID)
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
-
+       
             bool result = false;
-            Donation don = db.Donations.SingleOrDefault(x => x.IsDeleted == false && x.DonationID == donationID);
+            Donation don = db.Donations.SingleOrDefault(x => x.DonationIsArchived == false && x.DonationID == donationID);
 
             if (don != null)
             {
-                don.IsDeleted = true;
+                don.DonationIsArchived = true;
                 db.SaveChanges();
                 result = true;
             }
@@ -205,23 +201,22 @@ namespace BMDS.Controllers
         #region Donation details
         public ActionResult ShowDonationDetail(int DonationID)
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
-
-            List<DonationModel> listDonations = db.Donations.Where(x => x.IsDeleted == false && x.DonationID == DonationID).Select(x => new DonationModel
+  
+            List<DonationModel> listDonations = db.Donations.Where(x => x.DonationIsArchived == false && x.DonationID == DonationID).Select(x => new DonationModel
             {
                 DonationID = x.DonationID,
                 DonationType = x.DonationType,
                 CrossBloodType = x.CrossBloodType,
                 CrossRhFactor = x.CrossRhFactor,
                 ExpirationDate = x.ExpirationDate,
-                NumberOfUnits = x.NumberOfUnits,
+                NumberOfunits = x.NumberOfunits,
                 DonationSiteID = x.DonationSiteID,
                 DonorID = x.DonorID,
                 RecipientID = x.RecipientID,
                 DonorFullName = x.Donor.DonorFullName,
                 SiteName = x.DonationSite.SiteName,
                 CreationDate = x.CreationDate,
-                AcceptedDonation = x.AcceptedDonation,
+                AcceptanceStatus = x.AcceptanceStatus,
                 ReasonsForRejection = x.ReasonsForRejection
 
 
@@ -235,9 +230,8 @@ namespace BMDS.Controllers
         #region Add or edit donation
         public ActionResult AddEditDonation(int DonationID)
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
-
-            List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == "True" && x.ArchivedDonor == false).ToList();
+        
+            List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == true && x.ArchivedDonor == false).ToList();
             ViewBag.DonorsList = new SelectList(listDonor, "DonorID", "DonorFullName");
 
             List<Recipient> listRecipient = db.Recipients.Where(x => x.IsRecipientArchived == false).ToList();
@@ -255,24 +249,24 @@ namespace BMDS.Controllers
             List<string> rhFactor = new List<string>(new string[] { "+(positive)", "-(negative)" });
             ViewBag.RhFactorList = new SelectList(rhFactor);
 
-            List<string> accepted = new List<string>(new string[] { "True", "False" });
+            List<string> accepted = new List<string>(new string[] { "Accepted", "Rejected" });
             ViewBag.IsAcceptedList = new SelectList(accepted);
 
             DonationModel model = new DonationModel();
             if (DonationID > 0)
             {
-                Donation donation = db.Donations.SingleOrDefault(x => x.DonationID == DonationID && x.IsDeleted == false);
+                Donation donation = db.Donations.SingleOrDefault(x => x.DonationID == DonationID && x.DonationIsArchived == false);
                 model.DonationID = donation.DonationID;
                 model.DonorID = donation.DonorID;
                 model.DonationType = donation.DonationType;
                 model.CrossBloodType = donation.CrossBloodType;
                 model.CrossRhFactor = donation.CrossRhFactor;
-                model.ExpirationDate = donation.ExpirationDate.Date;
-                model.NumberOfUnits = donation.NumberOfUnits;
+                model.ExpirationDate = donation.ExpirationDate;
+                model.NumberOfunits = donation.NumberOfunits;
                 model.DonationSiteID = donation.DonationSiteID;
                 model.RecipientID = donation.RecipientID;
-                model.CreationDate = donation.CreationDate.Date;
-                model.AcceptedDonation = donation.AcceptedDonation;
+                model.CreationDate = donation.CreationDate;
+                model.AcceptanceStatus = donation.AcceptanceStatus;
                 model.ReasonsForRejection = donation.ReasonsForRejection;
 
             }
@@ -284,9 +278,8 @@ namespace BMDS.Controllers
         #region Search
         public ActionResult GetSearchDonation(string SearchText)
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
 
-            List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == "True" && x.ArchivedDonor == false).ToList();
+            List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == true && x.ArchivedDonor == false).ToList();
             ViewBag.DonorsList = new SelectList(listDonor, "DonorID", "DonorFullName");
 
             List<Recipient> listRecipient = db.Recipients.Where(x => x.IsRecipientArchived == false).ToList();
@@ -304,33 +297,33 @@ namespace BMDS.Controllers
             List<string> rhFactor = new List<string>(new string[] { "+(positive)", "-(negative)" });
             ViewBag.RhFactorList = new SelectList(rhFactor);
 
-            List<string> accepted = new List<string>(new string[] { "True", "False" });
+            List<string> accepted = new List<string>(new string[] { "Accepted", "Rejected" });
             ViewBag.IsAcceptedList = new SelectList(accepted);
 
-            List<DonationModel> listDonations = db.Donations.Where(x => x.IsDeleted == false && x.DonationType.Contains(SearchText) ||
+            List<DonationModel> listDonations = db.Donations.Where(x => x.DonationIsArchived == false && x.DonationType.Contains(SearchText) ||
             x.CrossBloodType.Contains(SearchText) ||
             x.CrossRhFactor.Contains(SearchText) ||
-            x.NumberOfUnits.ToString().Contains(SearchText) ||
+            x.NumberOfunits.ToString().Contains(SearchText) ||
             x.DonationSite.SiteName.ToString().Contains(SearchText) ||
             x.Recipient.RecipientCodedName.Contains(SearchText) ||
             x.Donor.DonorFullName.Contains(SearchText) ||
-            x.AcceptedDonation.ToString().Contains(SearchText) ||
+            x.AcceptanceStatus.ToString().Contains(SearchText) ||
             x.ReasonsForRejection.Contains(SearchText) ||
-            x.DonationID.ToString().Contains(SearchText)).Where(x=> x.IsDeleted==false).Select(x => new DonationModel
+            x.DonationID.ToString().Contains(SearchText)).Where(x=> x.DonationIsArchived==false).Select(x => new DonationModel
             {
                 DonationID = x.DonationID,
                 DonationType = x.DonationType,
                 CrossBloodType = x.CrossBloodType,
                 CrossRhFactor = x.CrossRhFactor,
-                ExpirationDate = x.ExpirationDate.Date,
-                NumberOfUnits = x.NumberOfUnits,
+                ExpirationDate = x.ExpirationDate,
+                NumberOfunits = x.NumberOfunits,
                 DonationSiteID = x.DonationSiteID,
                 DonorID = x.DonorID,
                 RecipientID = x.RecipientID,
                 DonorFullName = x.Donor.DonorFullName,
                 SiteName = x.DonationSite.SiteName,
-                CreationDate = x.CreationDate.Date,
-                AcceptedDonation = x.AcceptedDonation,
+                CreationDate = x.CreationDate,
+                AcceptanceStatus = x.AcceptanceStatus,
                 ReasonsForRejection = x.ReasonsForRejection
 
             }).ToList();

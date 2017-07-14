@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("head_scripts", required: false)
+
+    <style>
+        .img-responsive {
+            width: 100px;
+            margin-top: -30px;
+            margin-bottom: -20px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- logo -->
+                <a class="navbar-left"><img src="~/Content/LOGO.png" class="img-responsive" /></a>
+            </div>
+            <div class="collapse navbar-collapse animated fadeIn" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav animated fadeIn text16">
+                    <li class="active"><a href="#"><span class="glyphicon glyphicon-cog"></span></a></li>
+
+                    <li class="dropdown">
+                        <a href="/Notification/Notification/"><span class="glyphicon glyphicon-bell"></span> Notify donors </a>
+                        <!--
+                                                <ul class="dropdown-menu animated flipInX" role="menu">
+                                                    <li><a href="/Notification/Notification/"><span class="glyphicon glyphicon-tint"></span>   Blood shortage</a></li>
+                                                    <li class="divider"></li>
+                                                    <li><a href=""/Notification/Notification/""><span class="glyphicon glyphicon-road"></span>   New blood drive</a></li>
+                                                </ul>
+                        -->
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span><b> User</b> <span class="caret"></span></a>
+                        <ul id="login-dp" class="dropdown-menu">
+                            <li style="color:black"><a href="#"><span class="glyphicon glyphicon-envelope"></span> @HttpContext.Current.User.Identity.Name</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/UserManager/UserProfile/"><span class="glyphicon glyphicon-user"></span>  Profile</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/UserManager/ChangePassword/"><span class="glyphicon glyphicon-cog"></span>  Change Password</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-off"></span></a>
+                        <ul class="dropdown-menu animated flipInX" role="menu">
+                            <li>
+                                @if (Request.IsAuthenticated)
+                                {
+                                    using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
+                                    {
+                                        <a href="javascript:document.getElementById('logoutForm').submit()" style="color:black;padding-left:20px;"><span class="glyphicon glyphicon-log-out"></span>  Sign Out</a>
+                                    }
+                                }
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <!-- Second Nav -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- Brand -->
+                <a class="navbar-brand" href="#">Blood Donations Management System</a>
+            </div>
+            <div class="collapse navbar-collapse animated fadeIn" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav animated fadeIn">
+                    <li><a href="/Dashboard/DonationsByExpirationDate/"> Home</a></li>
+                    <li><a href="/Donor/Donor/"> Donors</a></li>
+                    <li><a href="/Donation/Donation/"> Donations</a></li>
+                    <li><a href="/DonationSite/DonationSite/"> Donation sites</a></li>
+                    <li><a href="/Recipient/Recipients/"> Recipients</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><p class="navbar-text"></p></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Settings <span class="caret"></span></a>
+                        <ul class="dropdown-menu animated flipInX" role="menu">
+                            <li><a href="/EventsScheduler/Scheduler/"><span class="glyphicon glyphicon-calendar"></span> Calendar</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/Home/Contact/"><span class="glyphicon glyphicon-phone-alt"></span> Contact</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/Home/About/"><span class="glyphicon glyphicon-question-sign"></span> About</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Archives <span class="caret"></span></a>
+                        <ul class="dropdown-menu animated flipInX" role="menu">
+                            <li><a href="/Archives/DonorArchive/"><span class="glyphicon glyphicon-folder-close"></span> Donors archive</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/Archives/DonationArchive/"><span class="glyphicon glyphicon-folder-close"></span> Donations archive</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/Archives/DonationSitesArchive/"><span class="glyphicon glyphicon-folder-close"></span> Donation sites archive</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/Archives/RecipientsArchive/"><span class="glyphicon glyphicon-folder-close"></span> Recipients archive</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+
+
+    <nav class="navbar navbar-fixed-bottom">
+        &copy; @DateTime.Now.Year - Copyright <strong> Pop Irina</strong>
+    </nav>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

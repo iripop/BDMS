@@ -47,7 +47,7 @@ namespace BDMS.Models
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Mobile site is required")]
         [DisplayName("Is blood drive?")]
-        public bool MobileSite { get; set; }
+        public Nullable<bool> MobileSite { get; set; }
         public bool IsSiteArchived { get; set; }
     }
 }

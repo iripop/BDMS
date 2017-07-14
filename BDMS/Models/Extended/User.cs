@@ -25,7 +25,8 @@ namespace BDMS.Models
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Email is required")]
         [DisplayName("Email address")]
-        [DataType(DataType.EmailAddress)]
+        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
+                ErrorMessage = "Please enter a valid email address")]
         public string EmailAddress { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Password is required")]
@@ -44,6 +45,6 @@ namespace BDMS.Models
         public string PhoneNumber { get; set; }
 
         [DisplayName("Is admin")]
-        public bool IsUserAdmin { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }

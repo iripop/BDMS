@@ -12,16 +12,14 @@ namespace BDMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Event
     {
-        public int UserID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string EmailAddress { get; set; }
-        public string Password { get; set; }
-        public string PhoneNumber { get; set; }
-        public bool IsAdmin { get; set; }
-        public Nullable<bool> IsEmailVerified { get; set; }
-        public Nullable<System.Guid> ActivationCode { get; set; }
+        public int EventID { get; set; }
+        public string Subject { get; set; }
+        public string Description { get; set; }
+        public System.DateTime Start { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
+        public string ThemeColor { get; set; }
+        public bool IsFullDay { get; set; }
     }
 }

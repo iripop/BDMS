@@ -30,79 +30,80 @@ else
                             <form action="contact_send_mail.php" method="post" id="contactFrm" name="contactFrm">
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-
-                                <div class="form-group">
-                                    <div class="col-md-5">
-                                        @Html.TextBoxFor(model => model.FirstName, new { @class = "txt", placeholder = "Enter first name", @name = "name", required = "Required" })
-                                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-                                    </div>
-                                    <div class="col-md-1">
-                                        <span style="color:red;">*</span>
-                                    </div>
-                                    <div class="col-md-5">
-                                        @Html.TextBoxFor(model => model.LastName, new { @class = "txt", placeholder = "Enter last name", @name = "name", required = "Last name is required" })
-                                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-                                    </div>
-                                    <div class="col-md-1">
-                                        <span style="color:red; position:relative">*</span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-5">
-                                        @Html.TextBoxFor(model => model.EmailAddress, new { @class = "txt", placeholder = "Enter email address", @name = "name", required = "" })
-                                        @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
-                                        @Html.ValidationMessage("EmailExist", new { @class = "text-danger" }) <!--Added for email already exist validation-->
-                                    </div>
-                                    <div class="col-md-1">
-                                        <span style="color:red;">*</span>
-                                    </div>
-                                    <div class="col-md-5">
-                                        @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "txt", placeholder = "Enter phone number", @name = "name" })
-                                        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
-                                    </div>
-                                    <div class="col-md-1">
-                                        <span style="color:red;">*</span>
-                                    </div>
-
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-5">
-                                        @Html.TextBoxFor(model => model.Password, new { @class = "txt", placeholder = "Enter password", @name = "name", required = "", @type = "password" })
-                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                                    </div>
-                                    <div class="col-md-1">
-                                        <span style="color:red;">*</span>
-                                    </div>
-                                    <div class="col-md-5">
-                                        @Html.TextBoxFor(model => model.ConfirmPassword, new { @class = "txt", placeholder = "Confirm password", @name = "name", required = "", @type = "password" })
-                                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-                                    </div>
-                                    <div class="col-md-1">
-                                        <span style="color:red;">*</span>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="col-md-10">
+                                            @Html.TextBoxFor(model => model.FirstName, new { @class = "txt", placeholder = "Enter first name", @name = "name", required = "" })
+                                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span style="color:red;">*</span>
+                                        </div>
+                                        <div class="col-md-10">
+                                            @Html.TextBoxFor(model => model.EmailAddress, new { @class = "txt", placeholder = "Enter email address", @name = "name", required = "" })
+                                            @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
+                                            @Html.ValidationMessage("EmailExist", new { @class = "text-danger" }) <!--Added for email already exist validation-->
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span style="color:red;">*</span>
+                                        </div>
+                                        <div class="col-md-10">
+                                            @Html.TextBoxFor(model => model.Password, new { @class = "txt", placeholder = "Enter password", @name = "name", required = "", @type = "password" })
+                                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span style="color:red;">*</span>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-8">
-                                        <h5>Is User Admin</h5>
-                                        <div class="checkbox">
-                                            @Html.CheckBoxFor(model => model.IsUserAdmin, new { @class = "check" })
-                                            @Html.ValidationMessageFor(model => model.IsUserAdmin, "", new { @class = "text-danger" })
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="col-md-10">
+                                            @Html.TextBoxFor(model => model.LastName, new { @class = "txt", placeholder = "Enter last name", @name = "name", required = "" })
+                                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span style="color:red; position:relative">*</span>
+                                        </div>
+                                        <div class="col-md-10">
+                                            @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "txt", placeholder = "Enter phone number", @name = "name" })
+                                            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span style="color:red;">*</span>
+                                        </div>
+                                        <div class="col-md-10">
+                                            @Html.TextBoxFor(model => model.ConfirmPassword, new { @class = "txt", placeholder = "Confirm password", @name = "name", required = "", @type = "password" })
+                                            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="col-md-1">
+                                            <span style="color:red;">*</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="col-md-8">
+                                            <h5>Is User Admin?</h5>
+                                            <div class="checkbox">
+                                                @Html.CheckBoxFor(model => model.IsAdmin, new { @class = "check" })
+                                                @Html.ValidationMessageFor(model => model.IsAdmin, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="col-md-7" style="padding-top:50px">
+                                            <input type="submit" value="Create" class="txt2" />
+                                        </div>
+                                        <div class="col-md-4" style="padding-top:50px">
+                                            <span class="text-muted"><em><span style="color:red;">*</span> Indicates mandatory field</em></span>
                                         </div>
                                     </div>
                                 </div>
 
-
-                                <div class="form-group">
-                                    <div class="col-md-7" style="padding-top:50px">
-                                        <input type="submit" value="Create" class="txt2" />
-                                    </div>
-                                    <div class="col-md-4" style="padding-top:50px">
-                                        <span class="text-muted"><em><span style="color:red;">*</span> Indicates mandatory field</em></span>
-                                    </div>
-                                </div>
+                              
 
 
 

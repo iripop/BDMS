@@ -1,3 +1,13 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿
+    @{
+        if (User.Identity.Name == "pop.irina1@gmail.com")
+        {
+            Layout = "~/Views/Shared/_Layout.cshtml";
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_LayoutUser.cshtml";
+        }
+
+    }
+

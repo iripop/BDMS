@@ -2,7 +2,8 @@
 
 @{
     ViewBag.Title = "DonationSitesArchive";
-    var grid = new WebGrid(source: Model, canPage: false);
+    var grid = new WebGrid(rowsPerPage: ViewBag.PageSize, canPage: true);
+    grid.Bind(source: Model, rowCount: ViewBag.TotalRows, autoSortAndPage: false);
 }
 
 <link href="~/Content/archives.css" rel="stylesheet" />
@@ -13,7 +14,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="form_main">
                     <h4 class="heading"><strong>Donation sites </strong> Archive <span></span></h4>
                     <div class="form">
@@ -37,8 +38,11 @@
                     )
                 )
                             </div>
-                            <div class="col-md-12" style="padding-top:40px;">
+                            <div class="col-md-6" style="padding-top:40px;">
                                 <p style="font-size:18px;"> <i class="glyphicon glyphicon-download-alt"></i> Export Data : @Html.ActionLink("Export to PDF", "GETPdf", "Archives") </p>
+                            </div>
+                            <div class="col-md-6" style="padding-top:40px;">
+                                <p style="font-size:18px;"> <i class="glyphicon glyphicon-download-alt"></i> Export Data : @Html.ActionLink("Export to Excel", "GETExcel", "Archives") </p>
                             </div>
 
                         </form>

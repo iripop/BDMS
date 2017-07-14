@@ -10,11 +10,12 @@ namespace BMDS.Controllers
     [Authorize]
     public class DonationSiteController : Controller
     {
+        BloodForLifeDBEntities db = new BloodForLifeDBEntities();
+
         #region DonationSite GET
         public ActionResult DonationSite()
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
-
+            
             List<string> mobile = new List<string>(new string[] { "True", "False" });
             ViewBag.MobileSiteList = new SelectList(mobile);
 
@@ -47,8 +48,7 @@ namespace BMDS.Controllers
         {
             try
             {
-                BloodforLifeEntities db = new BloodforLifeEntities();
-
+             
                 List<string> mobile = new List<string>(new string[] { "True", "False" });
                 ViewBag.MobileSiteList = new SelectList(mobile);
 
@@ -105,7 +105,7 @@ namespace BMDS.Controllers
         #region Delete donation site
         public JsonResult DeleteDonationSite(int donationSiteID)
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
+            BloodForLifeDBEntities db = new BloodForLifeDBEntities();
 
             bool result = false;
             DonationSite don = db.DonationSites.SingleOrDefault(x => x.IsSiteArchived == false && x.DonationSiteID == donationSiteID);
@@ -124,8 +124,6 @@ namespace BMDS.Controllers
         #region Donation site details
         public ActionResult ShowDonationSiteDetail(int DonationSiteID)
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
-
             List<DonationSiteModel> listDonationSites = db.DonationSites.Where(x => x.IsSiteArchived == false && x.DonationSiteID == DonationSiteID).Select(x => new DonationSiteModel
             {
                 DonationSiteID = x.DonationSiteID,
@@ -152,8 +150,7 @@ namespace BMDS.Controllers
         #region Add or edit recipient
         public ActionResult AddEditDonationSite(int DonationSiteID)
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
-
+           
             List<string> mobile = new List<string>(new string[] { "True", "False" });
             ViewBag.MobileSiteList = new SelectList(mobile);
 
@@ -184,7 +181,7 @@ namespace BMDS.Controllers
         #region Search
         public ActionResult GetSearchDonationSite(string SearchText)
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
+           
             List<DonationSiteModel> list = db.DonationSites.Where(x =>x.IsSiteArchived==false && x.SiteName.Contains(SearchText) ||
             x.Address.Contains(SearchText) ||
             x.City.Contains(SearchText) ||

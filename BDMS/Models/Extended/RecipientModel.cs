@@ -28,14 +28,15 @@ namespace BDMS.Models
         public bool IsRecipientArchived { get; set; }
 
         [DisplayName("Donor")]
-        public int DonorID { get; set; }
+        public Nullable<int> DonorID { get; set; }
         [DisplayName("Donation")]
-        public int DonationID { get; set; }
+        public Nullable<int> DonationID { get; set; }
+
 
         //Custom attributes
         public string CrossBloodType { get; set; }
         public string CrossRhFactor { get; set; }
-        public System.DateTime ExpirationDate { get; set; }
+        public Nullable<System.DateTime> ExpirationDate { get; set; }
         public string DonorFullName { get; set; }
         public string DonationType { get; set; }
         public bool IsDeleted { get; set; }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BloodforLifeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="BloodForLifeDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BloodCount">
           <Key>
             <PropertyRef Name="BloodTypeID" />
@@ -18,16 +18,15 @@
             <PropertyRef Name="DonationID" />
           </Key>
           <Property Name="DonationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DonationType" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="CrossBloodType" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CrossRhFactor" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CreationDate" Type="date" Nullable="false" />
-          <Property Name="ExpirationDate" Type="date" Nullable="false" />
-          <Property Name="NumberOfUnits" Type="float" Nullable="false" />
-          <Property Name="AcceptedDonation" Type="bit" />
+          <Property Name="DonationType" Type="nvarchar" MaxLength="500" />
+          <Property Name="CrossBloodType" Type="nvarchar" MaxLength="50" />
+          <Property Name="CrossRhFactor" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreationDate" Type="date" />
+          <Property Name="ExpirationDate" Type="date" />
+          <Property Name="NumberOfunits" Type="float" />
+          <Property Name="AcceptanceStatus" Type="nvarchar" MaxLength="50" />
           <Property Name="ReasonsForRejection" Type="nvarchar" MaxLength="2000" />
-          <Property Name="IsExpired" Type="bit" />
-          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="DonationIsArchived" Type="bit" />
           <Property Name="DonorID" Type="int" />
           <Property Name="DonationSiteID" Type="int" />
           <Property Name="RecipientID" Type="int" />
@@ -37,33 +36,48 @@
             <PropertyRef Name="DonationSiteID" />
           </Key>
           <Property Name="DonationSiteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SiteName" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="SiteName" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="StartDate" Type="date" />
           <Property Name="EndDate" Type="date" />
           <Property Name="RegistrationEmail" Type="nvarchar" MaxLength="500" />
           <Property Name="RegistrationPhone" Type="nvarchar" MaxLength="50" />
-          <Property Name="Address" Type="nvarchar" MaxLength="1000" Nullable="false" />
-          <Property Name="City" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
           <Property Name="Zip" Type="nvarchar" MaxLength="50" />
           <Property Name="StaffingRequired" Type="int" />
-          <Property Name="MobileSite" Type="bit" Nullable="false" />
-          <Property Name="IsSiteArchived" Type="bit" Nullable="false" />
+          <Property Name="MobileSite" Type="bit" />
+          <Property Name="IsSiteArchived" Type="bit" />
         </EntityType>
         <EntityType Name="Donor">
           <Key>
             <PropertyRef Name="DonorID" />
           </Key>
           <Property Name="DonorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ActiveDonor" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="DonorFullName" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="DonorBloodType" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="RhFactor" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="ActiveDonor" Type="bit" />
+          <Property Name="DonorFullName" Type="nvarchar" MaxLength="500" />
+          <Property Name="DonorBloodType" Type="nvarchar" MaxLength="50" />
+          <Property Name="RhFactor" Type="nvarchar" MaxLength="50" />
           <Property Name="DateOfBirth" Type="date" />
           <Property Name="Weight" Type="float" />
           <Property Name="DonorEmail" Type="nvarchar" MaxLength="500" />
           <Property Name="DonorPhoneNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="LastScreeningDate" Type="date" />
           <Property Name="ArchivedDonor" Type="bit" />
+          <Property Name="DonationID" Type="int" />
+        </EntityType>
+        <EntityType Name="Events">
+          <Key>
+            <PropertyRef Name="EventID" />
+          </Key>
+          <Property Name="EventID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="Start" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="ThemeColor" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsFullDay" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Recipient">
           <Key>
@@ -71,11 +85,18 @@
           </Key>
           <Property Name="RecipientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DateOfUse" Type="date" />
-          <Property Name="RelatedCondition" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="RelatedCondition" Type="nvarchar" MaxLength="500" />
           <Property Name="RecipientCodedName" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="IsRecipientArchived" Type="bit" Nullable="false" />
-          <Property Name="DonorID" Type="int" Nullable="false" />
-          <Property Name="DonationID" Type="int" Nullable="false" />
+          <Property Name="DonationID" Type="int" />
+          <Property Name="DonorID" Type="int" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -95,25 +116,21 @@
           <Property Name="FirstName" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="EmailAddress" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="1000" Nullable="false" />
-          <Property Name="PhoneNumber" Type="nchar" MaxLength="50" />
-          <Property Name="IsUserAdmin" Type="bit" Nullable="false" />
-          <Property Name="IsEmailVerified" Type="bit" Nullable="false" />
-          <Property Name="ActivationCode" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="1500" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
+          <Property Name="IsEmailVerified" Type="bit" />
+          <Property Name="ActivationCode" Type="uniqueidentifier" />
         </EntityType>
-        <Association Name="FK_BloodCount_Donation">
-          <End Role="Donation" Type="Self.Donation" Multiplicity="1" />
-          <End Role="BloodCount" Type="Self.BloodCount" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Donation">
-              <PropertyRef Name="DonationID" />
-            </Principal>
-            <Dependent Role="BloodCount">
-              <PropertyRef Name="BloodTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Donation_DonationSite">
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="UserRoleID" />
+          </Key>
+          <Property Name="UserRoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Donation_DonationSite1">
           <End Role="DonationSite" Type="Self.DonationSite" Multiplicity="0..1" />
           <End Role="Donation" Type="Self.Donation" Multiplicity="*" />
           <ReferentialConstraint>
@@ -125,7 +142,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Donation_Donor">
+        <Association Name="FK_Donation_Donor2">
           <End Role="Donor" Type="Self.Donor" Multiplicity="0..1" />
           <End Role="Donation" Type="Self.Donation" Multiplicity="*" />
           <ReferentialConstraint>
@@ -149,8 +166,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Recipient_Donation">
-          <End Role="Donation" Type="Self.Donation" Multiplicity="1" />
+        <Association Name="FK_Recipient_Donation1">
+          <End Role="Donation" Type="Self.Donation" Multiplicity="0..1" />
           <End Role="Recipient" Type="Self.Recipient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Donation">
@@ -162,7 +179,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Recipient_Donor">
-          <End Role="Donor" Type="Self.Donor" Multiplicity="1" />
+          <End Role="Donor" Type="Self.Donor" Multiplicity="0..1" />
           <End Role="Recipient" Type="Self.Recipient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Donor">
@@ -173,23 +190,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="BloodforLifeModelStoreContainer">
+        <EntityContainer Name="BloodForLifeDBModelStoreContainer">
           <EntitySet Name="BloodCount" EntityType="Self.BloodCount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Donation" EntityType="Self.Donation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DonationSite" EntityType="Self.DonationSite" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Donor" EntityType="Self.Donor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Recipient" EntityType="Self.Recipient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_BloodCount_Donation" Association="Self.FK_BloodCount_Donation">
-            <End Role="Donation" EntitySet="Donation" />
-            <End Role="BloodCount" EntitySet="BloodCount" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Donation_DonationSite" Association="Self.FK_Donation_DonationSite">
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Donation_DonationSite1" Association="Self.FK_Donation_DonationSite1">
             <End Role="DonationSite" EntitySet="DonationSite" />
             <End Role="Donation" EntitySet="Donation" />
           </AssociationSet>
-          <AssociationSet Name="FK_Donation_Donor" Association="Self.FK_Donation_Donor">
+          <AssociationSet Name="FK_Donation_Donor2" Association="Self.FK_Donation_Donor2">
             <End Role="Donor" EntitySet="Donor" />
             <End Role="Donation" EntitySet="Donation" />
           </AssociationSet>
@@ -197,7 +213,7 @@
             <End Role="Recipient" EntitySet="Recipient" />
             <End Role="Donation" EntitySet="Donation" />
           </AssociationSet>
-          <AssociationSet Name="FK_Recipient_Donation" Association="Self.FK_Recipient_Donation">
+          <AssociationSet Name="FK_Recipient_Donation1" Association="Self.FK_Recipient_Donation1">
             <End Role="Donation" EntitySet="Donation" />
             <End Role="Recipient" EntitySet="Recipient" />
           </AssociationSet>
@@ -206,69 +222,91 @@
             <End Role="Recipient" EntitySet="Recipient" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="BloodforLifeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="BloodForLifeDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BloodCount">
+          <Key>
+            <PropertyRef Name="BloodTypeID" />
+          </Key>
+          <Property Name="BloodTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BloodType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Count" Type="Int32" />
+        </EntityType>
         <EntityType Name="Donation">
           <Key>
             <PropertyRef Name="DonationID" />
           </Key>
           <Property Name="DonationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DonationType" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CrossBloodType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CrossRhFactor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="NumberOfUnits" Type="Double" Nullable="false" />
-          <Property Name="AcceptedDonation" Type="Boolean" />
+          <Property Name="DonationType" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CrossBloodType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CrossRhFactor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreationDate" Type="DateTime" Precision="0" />
+          <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
+          <Property Name="NumberOfunits" Type="Double" />
+          <Property Name="AcceptanceStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ReasonsForRejection" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="IsExpired" Type="Boolean" />
-          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="DonationIsArchived" Type="Boolean" />
           <Property Name="DonorID" Type="Int32" />
           <Property Name="DonationSiteID" Type="Int32" />
           <Property Name="RecipientID" Type="Int32" />
-          <NavigationProperty Name="DonationSite" Relationship="Self.FK_Donation_DonationSite" FromRole="Donation" ToRole="DonationSite" />
-          <NavigationProperty Name="Donor" Relationship="Self.FK_Donation_Donor" FromRole="Donation" ToRole="Donor" />
+          <NavigationProperty Name="DonationSite" Relationship="Self.FK_Donation_DonationSite1" FromRole="Donation" ToRole="DonationSite" />
+          <NavigationProperty Name="Donor" Relationship="Self.FK_Donation_Donor2" FromRole="Donation" ToRole="Donor" />
           <NavigationProperty Name="Recipient" Relationship="Self.FK_Donation_Recipient" FromRole="Donation" ToRole="Recipient" />
-          <NavigationProperty Name="Recipients" Relationship="BloodforLifeModel.FK_Recipient_Donation" FromRole="Donation" ToRole="Recipient" />
-          <NavigationProperty Name="BloodCount" Relationship="BloodforLifeModel.FK_BloodCount_Donation" FromRole="Donation" ToRole="BloodCount" />
+          <NavigationProperty Name="Recipients" Relationship="Self.FK_Recipient_Donation1" FromRole="Donation" ToRole="Recipient" />
         </EntityType>
         <EntityType Name="DonationSite">
           <Key>
             <PropertyRef Name="DonationSiteID" />
           </Key>
           <Property Name="DonationSiteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SiteName" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SiteName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="StartDate" Type="DateTime" Precision="0" />
           <Property Name="EndDate" Type="DateTime" Precision="0" />
           <Property Name="RegistrationEmail" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="RegistrationPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="City" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Zip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StaffingRequired" Type="Int32" />
-          <Property Name="MobileSite" Type="Boolean" Nullable="false" />
-          <Property Name="IsSiteArchived" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Donations" Relationship="Self.FK_Donation_DonationSite" FromRole="DonationSite" ToRole="Donation" />
+          <Property Name="MobileSite" Type="Boolean" />
+          <Property Name="IsSiteArchived" Type="Boolean" />
+          <NavigationProperty Name="Donations" Relationship="Self.FK_Donation_DonationSite1" FromRole="DonationSite" ToRole="Donation" />
         </EntityType>
         <EntityType Name="Donor">
           <Key>
             <PropertyRef Name="DonorID" />
           </Key>
           <Property Name="DonorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ActiveDonor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DonorFullName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DonorBloodType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RhFactor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ActiveDonor" Type="Boolean" />
+          <Property Name="DonorFullName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DonorBloodType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RhFactor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
           <Property Name="Weight" Type="Double" />
           <Property Name="DonorEmail" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="DonorPhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastScreeningDate" Type="DateTime" Precision="0" />
           <Property Name="ArchivedDonor" Type="Boolean" />
-          <NavigationProperty Name="Donations" Relationship="Self.FK_Donation_Donor" FromRole="Donor" ToRole="Donation" />
-          <NavigationProperty Name="Recipients" Relationship="BloodforLifeModel.FK_Recipient_Donor" FromRole="Donor" ToRole="Recipient" />
+          <Property Name="DonationID" Type="Int32" />
+          <NavigationProperty Name="Donations" Relationship="Self.FK_Donation_Donor2" FromRole="Donor" ToRole="Donation" />
+          <NavigationProperty Name="Recipients" Relationship="Self.FK_Recipient_Donor" FromRole="Donor" ToRole="Recipient" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="EventID" />
+          </Key>
+          <Property Name="EventID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Subject" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Start" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="ThemeColor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsFullDay" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Recipient">
           <Key>
@@ -276,14 +314,21 @@
           </Key>
           <Property Name="RecipientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DateOfUse" Type="DateTime" Precision="0" />
-          <Property Name="RelatedCondition" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RelatedCondition" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="RecipientCodedName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IsRecipientArchived" Type="Boolean" Nullable="false" />
-          <Property Name="DonorID" Type="Int32" Nullable="false" />
-          <Property Name="DonationID" Type="Int32" Nullable="false" />
+          <Property Name="DonationID" Type="Int32" />
+          <Property Name="DonorID" Type="Int32" />
           <NavigationProperty Name="Donations" Relationship="Self.FK_Donation_Recipient" FromRole="Recipient" ToRole="Donation" />
-          <NavigationProperty Name="Donation" Relationship="BloodforLifeModel.FK_Recipient_Donation" FromRole="Recipient" ToRole="Donation" />
-          <NavigationProperty Name="Donor" Relationship="BloodforLifeModel.FK_Recipient_Donor" FromRole="Recipient" ToRole="Donor" />
+          <NavigationProperty Name="Donation" Relationship="Self.FK_Recipient_Donation1" FromRole="Recipient" ToRole="Donation" />
+          <NavigationProperty Name="Donor" Relationship="Self.FK_Recipient_Donor" FromRole="Recipient" ToRole="Donor" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -303,13 +348,21 @@
           <Property Name="FirstName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="EmailAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="IsUserAdmin" Type="Boolean" Nullable="false" />
-          <Property Name="IsEmailVerified" Type="Boolean" Nullable="false" />
-          <Property Name="ActivationCode" Type="Guid" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+          <Property Name="IsEmailVerified" Type="Boolean" />
+          <Property Name="ActivationCode" Type="Guid" />
         </EntityType>
-        <Association Name="FK_Donation_DonationSite">
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="UserRoleID" />
+          </Key>
+          <Property Name="UserRoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Donation_DonationSite1">
           <End Role="DonationSite" Type="Self.DonationSite" Multiplicity="0..1" />
           <End Role="Donation" Type="Self.Donation" Multiplicity="*" />
           <ReferentialConstraint>
@@ -321,7 +374,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Donation_Donor">
+        <Association Name="FK_Donation_Donor2">
           <End Role="Donor" Type="Self.Donor" Multiplicity="0..1" />
           <End Role="Donation" Type="Self.Donation" Multiplicity="*" />
           <ReferentialConstraint>
@@ -345,42 +398,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="BloodforLifeEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Donations" EntityType="Self.Donation" />
-          <EntitySet Name="DonationSites" EntityType="Self.DonationSite" />
-          <EntitySet Name="Donors" EntityType="Self.Donor" />
-          <EntitySet Name="Recipients" EntityType="Self.Recipient" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK_Donation_DonationSite" Association="Self.FK_Donation_DonationSite">
-            <End Role="DonationSite" EntitySet="DonationSites" />
-            <End Role="Donation" EntitySet="Donations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Donation_Donor" Association="Self.FK_Donation_Donor">
-            <End Role="Donor" EntitySet="Donors" />
-            <End Role="Donation" EntitySet="Donations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Donation_Recipient" Association="Self.FK_Donation_Recipient">
-            <End Role="Recipient" EntitySet="Recipients" />
-            <End Role="Donation" EntitySet="Donations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Recipient_Donation" Association="BloodforLifeModel.FK_Recipient_Donation">
-            <End Role="Donation" EntitySet="Donations" />
-            <End Role="Recipient" EntitySet="Recipients" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Recipient_Donor" Association="BloodforLifeModel.FK_Recipient_Donor">
-            <End Role="Donor" EntitySet="Donors" />
-            <End Role="Recipient" EntitySet="Recipients" />
-          </AssociationSet>
-          <EntitySet Name="BloodCounts" EntityType="BloodforLifeModel.BloodCount" />
-          <AssociationSet Name="FK_BloodCount_Donation" Association="BloodforLifeModel.FK_BloodCount_Donation">
-            <End Role="Donation" EntitySet="Donations" />
-            <End Role="BloodCount" EntitySet="BloodCounts" />
-          </AssociationSet>
-        </EntityContainer>
-        <Association Name="FK_Recipient_Donation">
-          <End Type="BloodforLifeModel.Donation" Role="Donation" Multiplicity="1" />
-          <End Type="BloodforLifeModel.Recipient" Role="Recipient" Multiplicity="*" />
+        <Association Name="FK_Recipient_Donation1">
+          <End Role="Donation" Type="Self.Donation" Multiplicity="0..1" />
+          <End Role="Recipient" Type="Self.Recipient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Donation">
               <PropertyRef Name="DonationID" />
@@ -391,8 +411,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Recipient_Donor">
-          <End Type="BloodforLifeModel.Donor" Role="Donor" Multiplicity="1" />
-          <End Type="BloodforLifeModel.Recipient" Role="Recipient" Multiplicity="*" />
+          <End Role="Donor" Type="Self.Donor" Multiplicity="0..1" />
+          <End Role="Recipient" Type="Self.Recipient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Donor">
               <PropertyRef Name="DonorID" />
@@ -402,35 +422,55 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="BloodCount">
-          <Key>
-            <PropertyRef Name="BloodTypeID" />
-          </Key>
-          <Property Name="BloodTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BloodType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Count" Type="Int32" />
-          <NavigationProperty Name="Donation" Relationship="BloodforLifeModel.FK_BloodCount_Donation" FromRole="BloodCount" ToRole="Donation" />
-        </EntityType>
-        <Association Name="FK_BloodCount_Donation">
-          <End Type="BloodforLifeModel.Donation" Role="Donation" Multiplicity="1" />
-          <End Type="BloodforLifeModel.BloodCount" Role="BloodCount" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Donation">
-              <PropertyRef Name="DonationID" />
-            </Principal>
-            <Dependent Role="BloodCount">
-              <PropertyRef Name="BloodTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityContainer Name="BloodForLifeDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BloodCounts" EntityType="Self.BloodCount" />
+          <EntitySet Name="Donations" EntityType="Self.Donation" />
+          <EntitySet Name="DonationSites" EntityType="Self.DonationSite" />
+          <EntitySet Name="Donors" EntityType="Self.Donor" />
+          <EntitySet Name="Events" EntityType="Self.Event" />
+          <EntitySet Name="Recipients" EntityType="Self.Recipient" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+          <AssociationSet Name="FK_Donation_DonationSite1" Association="Self.FK_Donation_DonationSite1">
+            <End Role="DonationSite" EntitySet="DonationSites" />
+            <End Role="Donation" EntitySet="Donations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Donation_Donor2" Association="Self.FK_Donation_Donor2">
+            <End Role="Donor" EntitySet="Donors" />
+            <End Role="Donation" EntitySet="Donations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Donation_Recipient" Association="Self.FK_Donation_Recipient">
+            <End Role="Recipient" EntitySet="Recipients" />
+            <End Role="Donation" EntitySet="Donations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recipient_Donation1" Association="Self.FK_Recipient_Donation1">
+            <End Role="Donation" EntitySet="Donations" />
+            <End Role="Recipient" EntitySet="Recipients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recipient_Donor" Association="Self.FK_Recipient_Donor">
+            <End Role="Donor" EntitySet="Donors" />
+            <End Role="Recipient" EntitySet="Recipients" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="BloodforLifeModelStoreContainer" CdmEntityContainer="BloodforLifeEntities">
+        <EntityContainerMapping StorageEntityContainer="BloodForLifeDBModelStoreContainer" CdmEntityContainer="BloodForLifeDBEntities">
+          <EntitySetMapping Name="BloodCounts">
+            <EntityTypeMapping TypeName="BloodForLifeDBModel.BloodCount">
+              <MappingFragment StoreEntitySet="BloodCount">
+                <ScalarProperty Name="BloodTypeID" ColumnName="BloodTypeID" />
+                <ScalarProperty Name="BloodType" ColumnName="BloodType" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Donations">
-            <EntityTypeMapping TypeName="BloodforLifeModel.Donation">
+            <EntityTypeMapping TypeName="BloodForLifeDBModel.Donation">
               <MappingFragment StoreEntitySet="Donation">
                 <ScalarProperty Name="DonationID" ColumnName="DonationID" />
                 <ScalarProperty Name="DonationType" ColumnName="DonationType" />
@@ -438,11 +478,10 @@
                 <ScalarProperty Name="CrossRhFactor" ColumnName="CrossRhFactor" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-                <ScalarProperty Name="NumberOfUnits" ColumnName="NumberOfUnits" />
-                <ScalarProperty Name="AcceptedDonation" ColumnName="AcceptedDonation" />
+                <ScalarProperty Name="NumberOfunits" ColumnName="NumberOfunits" />
+                <ScalarProperty Name="AcceptanceStatus" ColumnName="AcceptanceStatus" />
                 <ScalarProperty Name="ReasonsForRejection" ColumnName="ReasonsForRejection" />
-                <ScalarProperty Name="IsExpired" ColumnName="IsExpired" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="DonationIsArchived" ColumnName="DonationIsArchived" />
                 <ScalarProperty Name="DonorID" ColumnName="DonorID" />
                 <ScalarProperty Name="DonationSiteID" ColumnName="DonationSiteID" />
                 <ScalarProperty Name="RecipientID" ColumnName="RecipientID" />
@@ -450,7 +489,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DonationSites">
-            <EntityTypeMapping TypeName="BloodforLifeModel.DonationSite">
+            <EntityTypeMapping TypeName="BloodForLifeDBModel.DonationSite">
               <MappingFragment StoreEntitySet="DonationSite">
                 <ScalarProperty Name="DonationSiteID" ColumnName="DonationSiteID" />
                 <ScalarProperty Name="SiteName" ColumnName="SiteName" />
@@ -468,9 +507,11 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Donors">
-            <EntityTypeMapping TypeName="BloodforLifeModel.Donor">
+            <EntityTypeMapping TypeName="BloodForLifeDBModel.Donor">
               <MappingFragment StoreEntitySet="Donor">
                 <ScalarProperty Name="DonorID" ColumnName="DonorID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="ActiveDonor" ColumnName="ActiveDonor" />
                 <ScalarProperty Name="DonorFullName" ColumnName="DonorFullName" />
                 <ScalarProperty Name="DonorBloodType" ColumnName="DonorBloodType" />
@@ -481,24 +522,46 @@
                 <ScalarProperty Name="DonorPhoneNumber" ColumnName="DonorPhoneNumber" />
                 <ScalarProperty Name="LastScreeningDate" ColumnName="LastScreeningDate" />
                 <ScalarProperty Name="ArchivedDonor" ColumnName="ArchivedDonor" />
+                <ScalarProperty Name="DonationID" ColumnName="DonationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="BloodForLifeDBModel.Event">
+              <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Start" ColumnName="Start" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="ThemeColor" ColumnName="ThemeColor" />
+                <ScalarProperty Name="IsFullDay" ColumnName="IsFullDay" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Recipients">
-            <EntityTypeMapping TypeName="BloodforLifeModel.Recipient">
+            <EntityTypeMapping TypeName="BloodForLifeDBModel.Recipient">
               <MappingFragment StoreEntitySet="Recipient">
                 <ScalarProperty Name="RecipientID" ColumnName="RecipientID" />
                 <ScalarProperty Name="DateOfUse" ColumnName="DateOfUse" />
                 <ScalarProperty Name="RelatedCondition" ColumnName="RelatedCondition" />
                 <ScalarProperty Name="RecipientCodedName" ColumnName="RecipientCodedName" />
                 <ScalarProperty Name="IsRecipientArchived" ColumnName="IsRecipientArchived" />
-                <ScalarProperty Name="DonorID" ColumnName="DonorID" />
                 <ScalarProperty Name="DonationID" ColumnName="DonationID" />
+                <ScalarProperty Name="DonorID" ColumnName="DonorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="BloodForLifeDBModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="BloodforLifeModel.sysdiagram">
+            <EntityTypeMapping TypeName="BloodForLifeDBModel.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -509,7 +572,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="BloodforLifeModel.User">
+            <EntityTypeMapping TypeName="BloodForLifeDBModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -517,18 +580,18 @@
                 <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="IsUserAdmin" ColumnName="IsUserAdmin" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
                 <ScalarProperty Name="IsEmailVerified" ColumnName="IsEmailVerified" />
                 <ScalarProperty Name="ActivationCode" ColumnName="ActivationCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BloodCounts">
-            <EntityTypeMapping TypeName="BloodforLifeModel.BloodCount">
-              <MappingFragment StoreEntitySet="BloodCount">
-                <ScalarProperty Name="Count" ColumnName="Count" />
-                <ScalarProperty Name="BloodType" ColumnName="BloodType" />
-                <ScalarProperty Name="BloodTypeID" ColumnName="BloodTypeID" />
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="BloodForLifeDBModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

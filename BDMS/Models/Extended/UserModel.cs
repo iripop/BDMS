@@ -29,6 +29,6 @@ namespace BDMS.Models
         public Nullable<bool> UserIsDeleted { get; set; }
 
         [DisplayName("Is admin")]
-        public bool IsUserAdmin { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }

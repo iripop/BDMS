@@ -30,8 +30,8 @@ namespace BDMS.Models
         public string City { get; set; }
         public string Zip { get; set; }
         public Nullable<int> StaffingRequired { get; set; }
-        public bool MobileSite { get; set; }
-        public bool IsSiteArchived { get; set; }
+        public Nullable<bool> MobileSite { get; set; }
+        public Nullable<bool> IsSiteArchived { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Donation> Donations { get; set; }

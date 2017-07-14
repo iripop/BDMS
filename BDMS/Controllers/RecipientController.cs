@@ -10,14 +10,14 @@ namespace BMDS.Controllers
     [Authorize]
     public class RecipientController : Controller
     {
+        BloodForLifeDBEntities db = new BloodForLifeDBEntities();
+
         #region Recipients GET
         public ActionResult Recipients()
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
-
-            List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == "True" && x.ArchivedDonor == false).ToList();
+            List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor==true && x.ArchivedDonor == false).ToList();
             ViewBag.DonorsList = new SelectList(listDonor, "DonorID", "DonorFullName");
-            List<Donation> donationlist = db.Donations.Where(x => x.IsDeleted == false).ToList();
+            List<Donation> donationlist = db.Donations.Where(x => x.DonationIsArchived == false).ToList();
             ViewBag.DonationList = new SelectList(donationlist, "DonationID", "DonationType");
 
            
@@ -44,12 +44,10 @@ namespace BMDS.Controllers
         {
             try
             {
-                BloodforLifeEntities db = new BloodforLifeEntities();
-                List<Donation> donationlist = db.Donations.Where(x => x.IsDeleted == false).ToList();
-                ViewBag.DonationList = new SelectList(donationlist, "DonationID", "DonationType");
-
-                List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == "True" && x.ArchivedDonor == false).ToList();
+                List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == true && x.ArchivedDonor == false).ToList();
                 ViewBag.DonorsList = new SelectList(listDonor, "DonorID", "DonorFullName");
+                List<Donation> donationlist = db.Donations.Where(x => x.DonationIsArchived == false).ToList();
+                ViewBag.DonationList = new SelectList(donationlist, "DonationID", "DonationType");
 
                 if (model.RecipientID > 0)
                 {
@@ -66,7 +64,7 @@ namespace BMDS.Controllers
                 }
                 else
                 {
-                    //Insert a recipient in database
+                    //Insert a recipient into database
                     Recipient rec = new Recipient();
                     rec.DateOfUse = model.DateOfUse;
                     rec.RelatedCondition = model.RelatedCondition;
@@ -94,8 +92,6 @@ namespace BMDS.Controllers
         #region Delete recipients
         public JsonResult DeleteRecipient(int recipientID)
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
-
             bool result = false;
             Recipient rec = db.Recipients.SingleOrDefault(x => x.IsRecipientArchived == false && x.RecipientID == recipientID);
 
@@ -113,8 +109,7 @@ namespace BMDS.Controllers
         #region Recipient details
         public ActionResult ShowRecipientDetail(int RecipientID)
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
-
+          
             List<RecipientModel> listRec = db.Recipients.Where(x => x.IsRecipientArchived == false && x.RecipientID == RecipientID).Select(x => new RecipientModel
             {
                 RecipientCodedName = x.RecipientCodedName,
@@ -138,12 +133,10 @@ namespace BMDS.Controllers
         #region Add or edit recipient
         public ActionResult AddEditRecipient(int RecipientID)
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
-            List<Donation> donationlist = db.Donations.Where(x => x.IsDeleted == false).ToList();
-            ViewBag.DonationList = new SelectList(donationlist, "DonationID", "DonationType");
-
-            List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == "True" && x.ArchivedDonor == false).ToList();
+            List<Donor> listDonor = db.Donors.Where(x => x.ActiveDonor == true && x.ArchivedDonor == false).ToList();
             ViewBag.DonorsList = new SelectList(listDonor, "DonorID", "DonorFullName");
+            List<Donation> donationlist = db.Donations.Where(x => x.DonationIsArchived == false).ToList();
+            ViewBag.DonationList = new SelectList(donationlist, "DonationID", "DonationType");
 
             RecipientModel model = new RecipientModel();
 
@@ -167,8 +160,7 @@ namespace BMDS.Controllers
         #region Search
         public ActionResult GetSearchRecipient(string SearchText)
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
-
+            
             List<RecipientModel> listRec = db.Recipients.Where(x => x.IsRecipientArchived == false && (x.RecipientCodedName.Contains(SearchText) ||
             x.RelatedCondition.Contains(SearchText) ||
             x.DateOfUse.ToString().Contains(SearchText) ||

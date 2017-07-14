@@ -12,16 +12,10 @@ namespace BDMS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class UserRole
     {
+        public int UserRoleID { get; set; }
         public int UserID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string EmailAddress { get; set; }
-        public string Password { get; set; }
-        public string PhoneNumber { get; set; }
-        public bool IsAdmin { get; set; }
-        public Nullable<bool> IsEmailVerified { get; set; }
-        public Nullable<System.Guid> ActivationCode { get; set; }
+        public int RoleID { get; set; }
     }
 }

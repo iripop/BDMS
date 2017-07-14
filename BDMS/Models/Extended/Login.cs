@@ -9,10 +9,10 @@ namespace BDMS.Models
 {
     public class Login
     {
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Email is required")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Email is required!")]
         public string EmailAddress { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Password is required")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Password is required!")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 

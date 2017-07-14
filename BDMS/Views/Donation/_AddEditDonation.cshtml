@@ -13,15 +13,15 @@
 
         <p> @Html.LabelFor(model => model.CrossRhFactor) @Html.DropDownListFor(model => model.CrossRhFactor, ViewBag.RhFactorList as SelectList, "--Rh factor--", new { @class = "txt" }) </p>
 
-        <p> @Html.LabelFor(model => model.NumberOfUnits) @Html.TextBoxFor(model => model.NumberOfUnits, new { @class = "txt", @placeholder = "Number of Units" }) </p>
+        <p> @Html.LabelFor(model => model.NumberOfunits) @Html.TextBoxFor(model => model.NumberOfunits, new { @class = "txt", @placeholder = "Number of Units" }) </p>
 
         <p> @Html.LabelFor(model => model.DonationSiteID) @Html.DropDownListFor(model => model.DonationSiteID, ViewBag.DonationSiteList as SelectList, "--Select donation site--", new { @class = "txt" }) </p>
 
         <p> @Html.LabelFor(model => model.RecipientID) @Html.DropDownListFor(model => model.RecipientID, ViewBag.RecipientsList as SelectList, "--Select recipient--", new { @class = "txt" }) </p>
 
-        <p> @Html.LabelFor(model => model.AcceptedDonation) @Html.DropDownListFor(model => model.AcceptedDonation, ViewBag.IsAcceptedList as SelectList, "--Is donation accepted?--", new { @class = "txt" }) </p>
+        <p> @Html.LabelFor(model => model.AcceptanceStatus) @Html.DropDownListFor(model => model.AcceptanceStatus, ViewBag.IsAcceptedList as SelectList, "--Is donation accepted?--", new { @class = "txt" }) </p>
 
-        @if (Model.AcceptedDonation == false)
+        @if (Model.AcceptanceStatus=="Rejected")
         {
             <p> @Html.LabelFor(model => model.ReasonsForRejection) @Html.TextBoxFor(model => model.ReasonsForRejection, new { @class = "txt", @placeholder = "Reason for rejection" }) </p>
         }

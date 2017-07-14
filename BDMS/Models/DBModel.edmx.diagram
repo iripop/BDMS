@@ -4,20 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e8023c625c8a464b92e44654a410ee3a" Name="Diagram1">
-        <EntityTypeShape EntityType="BloodforLifeModel.Donation" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="BloodforLifeModel.DonationSite" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="BloodforLifeModel.Donor" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="BloodforLifeModel.Recipient" Width="1.5" PointX="0.75" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="BloodforLifeModel.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BloodforLifeModel.User" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
-        <AssociationConnector Association="BloodforLifeModel.FK_Donation_DonationSite" ManuallyRouted="false" />
-        <AssociationConnector Association="BloodforLifeModel.FK_Donation_Donor" ManuallyRouted="false" />
-        <AssociationConnector Association="BloodforLifeModel.FK_Donation_Recipient" ManuallyRouted="false" />
-        <AssociationConnector Association="BloodforLifeModel.FK_Recipient_Donation" />
-        <AssociationConnector Association="BloodforLifeModel.FK_Recipient_Donor" />
-        <EntityTypeShape EntityType="BloodforLifeModel.BloodCount" Width="1.5" PointX="4.375" PointY="7.25" />
-        <AssociationConnector Association="BloodforLifeModel.FK_BloodCount_Donation" />
+      <Diagram DiagramId="f334be415a2f4d448d2be2f6d2a0dc05" Name="Diagram1">
+        <EntityTypeShape EntityType="BloodForLifeDBModel.BloodCount" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BloodForLifeDBModel.Donation" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="BloodForLifeDBModel.DonationSite" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BloodForLifeDBModel.Donor" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BloodForLifeDBModel.Event" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BloodForLifeDBModel.Recipient" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BloodForLifeDBModel.Role" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BloodForLifeDBModel.sysdiagram" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BloodForLifeDBModel.User" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BloodForLifeDBModel.UserRole" Width="1.5" PointX="4.75" PointY="8.75" IsExpanded="true" />
+        <AssociationConnector Association="BloodForLifeDBModel.FK_Donation_DonationSite1" ManuallyRouted="false" />
+        <AssociationConnector Association="BloodForLifeDBModel.FK_Donation_Donor2" ManuallyRouted="false" />
+        <AssociationConnector Association="BloodForLifeDBModel.FK_Donation_Recipient" ManuallyRouted="false" />
+        <AssociationConnector Association="BloodForLifeDBModel.FK_Recipient_Donation1" ManuallyRouted="false" />
+        <AssociationConnector Association="BloodForLifeDBModel.FK_Recipient_Donor" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

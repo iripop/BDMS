@@ -11,7 +11,7 @@ namespace BDMS.Models
         public int DonorID { get; set; }
 
         [DisplayName("Active donor")]
-        public string ActiveDonor { get; set; }
+        public Nullable<bool> ActiveDonor { get; set; }
         [DisplayName("Donor name")]
         public string DonorFullName { get; set; }
         [DisplayName("Donor blood type")]

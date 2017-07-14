@@ -22,7 +22,9 @@ namespace BDMS.Models
         }
     
         public int DonorID { get; set; }
-        public string ActiveDonor { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public Nullable<bool> ActiveDonor { get; set; }
         public string DonorFullName { get; set; }
         public string DonorBloodType { get; set; }
         public string RhFactor { get; set; }
@@ -32,6 +34,7 @@ namespace BDMS.Models
         public string DonorPhoneNumber { get; set; }
         public Nullable<System.DateTime> LastScreeningDate { get; set; }
         public Nullable<bool> ArchivedDonor { get; set; }
+        public Nullable<int> DonationID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Donation> Donations { get; set; }

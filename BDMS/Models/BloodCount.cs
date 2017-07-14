@@ -17,7 +17,5 @@ namespace BDMS.Models
         public int BloodTypeID { get; set; }
         public string BloodType { get; set; }
         public Nullable<int> Count { get; set; }
-    
-        public virtual Donation Donation { get; set; }
     }
 }

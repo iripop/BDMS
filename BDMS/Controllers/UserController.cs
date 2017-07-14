@@ -12,6 +12,7 @@ namespace BMDS.Controllers
 {
     public class UserController : Controller
     {
+
         #region Login GET
         [HttpGet]
         public ActionResult Login()
@@ -26,7 +27,7 @@ namespace BMDS.Controllers
         public ActionResult Login(Login login, string ReturnUrl = "")
         {
             string message = "";
-            using (BloodforLifeEntities db = new BloodforLifeEntities())
+            using (BloodForLifeDBEntities db = new BloodForLifeDBEntities())
             {
                 var v = db.Users.Where(a => a.EmailAddress == login.EmailAddress).FirstOrDefault();
                 if (v != null)
@@ -47,7 +48,7 @@ namespace BMDS.Controllers
                         }
                         else
                         {
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("DonationsByExpirationDate", "Dashboard");
                         }
 
                     }
@@ -102,7 +103,7 @@ namespace BMDS.Controllers
                 model.IsEmailVerified = false;
 
                 #region Save data to DB
-                using (BloodforLifeEntities db = new BloodforLifeEntities())
+                using (BloodForLifeDBEntities db = new BloodForLifeDBEntities())
                 {
                     var v = db.Users.Where(a => a.EmailAddress == model.EmailAddress).FirstOrDefault();
                     if (v != null)
@@ -150,7 +151,7 @@ namespace BMDS.Controllers
         public ActionResult VerifyAccount(string id)
         {
             bool Status = false;
-            using (BloodforLifeEntities db = new BloodforLifeEntities())
+            using (BloodForLifeDBEntities db = new BloodForLifeDBEntities())
             {
                 db.Configuration.ValidateOnSaveEnabled = false; // added to avoid confirm password does 
                                                                 //not match issue on save changes

@@ -9,11 +9,12 @@ namespace BMDS.Controllers
     [Authorize]
     public class DonorController : Controller
     {
+        BloodForLifeDBEntities db = new BloodForLifeDBEntities();
+
         #region Donors GET
         public ActionResult Donor()
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
-
+           
             List<string> isDonorActive = new List<string>(new string[] { "True", "False" });
             ViewBag.IsDonorActiveList = new SelectList(isDonorActive);
 
@@ -51,8 +52,7 @@ namespace BMDS.Controllers
         {
             try
             {
-                BloodforLifeEntities db = new BloodforLifeEntities();
-
+                
                 List<string> isDonorActive = new List<string>(new string[] { "True", "False" });
                 ViewBag.IsDonorActiveList = new SelectList(isDonorActive);
 
@@ -114,8 +114,7 @@ namespace BMDS.Controllers
         #region Delete donor
         public JsonResult DeleteDonor(int donorID)
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
-
+            
             bool result = false;
             Donor don = db.Donors.SingleOrDefault(x => x.ArchivedDonor == false && x.DonorID == donorID);
 
@@ -133,8 +132,7 @@ namespace BMDS.Controllers
         #region Donor Details
         public ActionResult ShowDonorDetail(int DonorID)
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
-
+            
             List<DonorModel> listDon = db.Donors.Where(x => x.ArchivedDonor == false && x.DonorID == DonorID).Select(x => new DonorModel
             {
                 DonorID = x.DonorID,
@@ -160,8 +158,7 @@ namespace BMDS.Controllers
         #region Add Edit donor
         public ActionResult AddEditDonor(int DonorID)
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
-
+           
             List<string> isDonorActive = new List<string>(new string[] { "True", "False" });
             ViewBag.IsDonorActiveList = new SelectList(isDonorActive);
 
@@ -197,9 +194,9 @@ namespace BMDS.Controllers
         #region Search
         public ActionResult GetSearchDonor(string SearchText)
         {
-            BloodforLifeEntities db = new BloodforLifeEntities();
+           
             List<DonorModel> list = db.Donors.Where(x =>x.ArchivedDonor==false && x.DonorFullName.Contains(SearchText) ||
-            x.ActiveDonor.Contains(SearchText) ||
+            x.ActiveDonor.ToString().Contains(SearchText) ||
             x.DonorBloodType.Contains(SearchText) ||
             x.RhFactor.Contains(SearchText) ||
             x.DonorEmail.Contains(SearchText)).Where(x => x.ArchivedDonor == false).Select(x => new DonorModel

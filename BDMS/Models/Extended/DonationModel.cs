@@ -23,14 +23,9 @@ namespace BDMS.Models
         [DisplayName("Cross Rh factor")]
         public string CrossRhFactor { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter the expiration date")]
-        public System.DateTime ExpirationDate { get; set; }
-
-        public System.DateTime CreationDate { get; set; }
-
         [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter the number of units")]
         [DisplayName("Number of units")]
-        public double NumberOfUnits { get; set; }
+        public Nullable<double> NumberOfunits { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Please select a donation site")]
         [DisplayName("Donation site")]
@@ -43,12 +38,11 @@ namespace BDMS.Models
         [DisplayName("Donor")]
         public Nullable<int> DonorID { get; set; }
 
-
-
-        public Nullable<bool> AcceptedDonation { get; set; }
+        public Nullable<System.DateTime> ExpirationDate { get; set; }
+        public Nullable<System.DateTime> CreationDate { get; set; }
+        public string AcceptanceStatus { get; set; }
         public string ReasonsForRejection { get; set; }
-        public Nullable<bool> IsExpired { get; set; }
-        public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<bool> DonationIsArchived { get; set; }
 
         //Custom attributes
         public string DonorFullName { get; set; }
